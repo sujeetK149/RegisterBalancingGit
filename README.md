@@ -5,8 +5,6 @@ Fast Register Balancing at behavioral level for generating minimum latency desig
 
 ## Installing the dependencies
 
-Install my-project with npm
-
 ```bash
   pip install -r requirements.txt
 ```
