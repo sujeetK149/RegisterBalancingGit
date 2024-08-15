@@ -1,0 +1,99 @@
+\doxysection{inliner.\+py}
+\hypertarget{inliner_8py_source}{}\label{inliner_8py_source}\index{Inliner/inliner.py@{Inliner/inliner.py}}
+\mbox{\hyperlink{inliner_8py}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00001}\mbox{\hyperlink{namespaceinliner}{00001}}\ }
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00002}00002\ \textcolor{keyword}{import}\ sys}
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00003}00003\ \textcolor{keyword}{import}\ json}
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00004}00004\ \textcolor{keyword}{from}\ DiGraph\ \textcolor{keyword}{import}\ DiGraph}
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00005}00005\ \textcolor{keyword}{from}\ Visitors\ \textcolor{keyword}{import}\ FunctionVisitor,DeclVisitor,ArrayValueReplacer,AssignmentChecker,ConstToVar}
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00006}00006\ \textcolor{keyword}{from}\ utils\ \textcolor{keyword}{import}\ extractFunctionInfo,processDependantFunctions,generate\_c\_file,insertAssignmentsAndDeclForConstants}
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00008}00008\ sys.path.extend([\textcolor{stringliteral}{'.'},\ \textcolor{stringliteral}{'..'}])}
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00010}00010\ \textcolor{keyword}{from}\ pycparser\ \textcolor{keyword}{import}\ parse\_file,\ c\_ast}
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00011}00011\ }
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00012}\mbox{\hyperlink{namespaceinliner_a56297b7fef6c00ea6e9222890e0bd94e}{00012}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespaceinliner_a56297b7fef6c00ea6e9222890e0bd94e}{mainInline}}(inputFile,outputFile,topModule):}
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00013}00013\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00014}00014\ \textcolor{stringliteral}{\ \ \ \ @brief\ Processes\ a\ C\ source\ file\ to\ inline\ functions,\ handle\ constants,\ and\ generate\ a\ new\ C\ file.}}
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00015}00015\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00016}00016\ \textcolor{stringliteral}{\ \ \ \ This\ function\ parses\ the\ provided\ C\ source\ file,\ constructs\ a\ directed\ graph\ of\ functions,\ performs\ topological}}
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00017}00017\ \textcolor{stringliteral}{\ \ \ \ sorting,\ processes\ functions\ based\ on\ dependencies,\ handles\ array\ and\ constant\ values,\ and\ finally\ generates}}
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00018}00018\ \textcolor{stringliteral}{\ \ \ \ an\ updated\ C\ source\ file.}}
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00019}00019\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00020}00020\ \textcolor{stringliteral}{\ \ \ \ @param\ inputFile:\ The\ path\ to\ the\ input\ C\ source\ file\ to\ be\ processed.}}
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00021}00021\ \textcolor{stringliteral}{\ \ \ \ @type\ inputFile:\ str}}
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00022}00022\ \textcolor{stringliteral}{\ \ \ \ @param\ outputFile:\ The\ path\ where\ the\ processed\ C\ source\ file\ will\ be\ saved.}}
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00023}00023\ \textcolor{stringliteral}{\ \ \ \ @type\ outputFile:\ str}}
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00024}00024\ \textcolor{stringliteral}{\ \ \ \ @param\ topModule:\ The\ name\ of\ the\ top-\/level\ module\ (function)\ to\ be\ used\ as\ the\ entry\ point.}}
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00025}00025\ \textcolor{stringliteral}{\ \ \ \ @type\ topModule:\ str}}
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00026}00026\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00027}00027\ \textcolor{stringliteral}{\ \ \ \ @raises\ SystemExit:\ If\ the\ top\ module\ is\ not\ found\ in\ the\ sorted\ function\ list\ or\ if\ no\ functions\ are\ present.}}
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00028}00028\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00029}00029\ \ \ \ \ ast\ =\ parse\_file(inputFile,\ use\_cpp=\textcolor{keyword}{True})}
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00030}00030\ \ \ \ \ arrMap\ =\ \{\}}
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00031}00031\ \ \ \ \ arrVisitor\ =\ \mbox{\hyperlink{classVisitors_1_1DeclVisitor}{DeclVisitor}}(arrayMap=arrMap,ast=ast)}
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00032}00032\ \ \ \ \ arrVisitor.visit(ast)}
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00033}00033\ \ \ \ \ functionGraph\ =\ \mbox{\hyperlink{classDiGraph_1_1DiGraph}{DiGraph}}()}
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00034}00034\ \ \ \ \ functionInfo\ =\ \{\}}
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00035}00035\ }
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00036}00036\ \ \ \ \ \textcolor{keywordflow}{for}\ fDef\ \textcolor{keywordflow}{in}\ ast.ext:}
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00037}00037\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isinstance(fDef,c\_ast.FuncDef):}
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ functionGraph.addFunction(fDef.decl.name)}
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ visitor\ =\ \mbox{\hyperlink{classVisitors_1_1FunctionVisitor}{FunctionVisitor}}(functionGraph,fDef.decl.name)}
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ visitor.visit(fDef)}
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00041}00041\ }
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00042}00042\ \ \ \ \ sortedList\ =\ functionGraph.topoSort()}
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00043}00043\ \ \ \ \ \textcolor{keywordflow}{if}\ topModule\ \textcolor{keywordflow}{not}\ \textcolor{keywordflow}{in}\ sortedList:}
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00044}00044\ \ \ \ \ \ \ \ \ print(f\textcolor{stringliteral}{"{}No\ top\ module\ named\ \{topModule\}\ in\ given\ input\ file."{}})}
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00045}00045\ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}Note\ :\ The\ name\ of\ module\ is\ case\ sensitive"{}})}
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00046}00046\ \ \ \ \ \ \ \ \ sys.exit(1)}
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00047}00047\ \ \ \ \ if(len(sortedList)\ ==\ 1):}
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00048}00048\ \ \ \ \ \ \ \ \ generate\_c\_file(ast,outputFile)}
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00049}00049\ }
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00050}00050\ }
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00051}00051\ \ \ \ \ \textcolor{keywordflow}{for}\ function\ \textcolor{keywordflow}{in}\ sortedList:}
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00052}00052\ \ \ \ \ \ \ \ \ inDegree\ =\ functionGraph.getIndegreeOf(function)}
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00053}00053\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ inDegree\ ==\ 0:}
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ fDef\ \textcolor{keywordflow}{in}\ ast.ext[:]:}
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isinstance(fDef,c\_ast.FuncDef)\ \textcolor{keywordflow}{and}\ fDef.decl.name\ ==\ function:}
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ extractFunctionInfo(fDef,functionInfo)}
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ast.ext.remove(fDef)}
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break}}
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00059}00059\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00060}00060\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ function\ !=\ topModule:}
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ fDef\ \textcolor{keywordflow}{in}\ ast.ext[:]:}
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isinstance(fDef,c\_ast.FuncDef)\ \textcolor{keywordflow}{and}\ fDef.decl.name\ ==\ function:}
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ processDependantFunctions(fDef,functionInfo,\textcolor{keyword}{False})}
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ extractFunctionInfo(fDef,functionInfo)}
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ast.ext.remove(fDef)}
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break}}
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00067}00067\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ fDef\ \textcolor{keywordflow}{in}\ ast.ext[:]:}
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isinstance(fDef,c\_ast.FuncDef)\ \textcolor{keywordflow}{and}\ fDef.decl.name\ ==\ function:}
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ processDependantFunctions(fDef,functionInfo,\textcolor{keyword}{True})}
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00071}00071\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00072}00072\ \ \ \ \ \textcolor{keywordflow}{for}\ fDef\ \textcolor{keywordflow}{in}\ ast.ext[:]:}
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00073}00073\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isinstance(fDef,c\_ast.Decl)\ \textcolor{keywordflow}{and}\ isinstance(fDef.type,c\_ast.ArrayDecl):}
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ ast.ext.remove(fDef)}
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00075}00075\ }
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00076}00076\ \ \ \ \ constArr\ =\ []}
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00077}00077\ \ \ \ \ arrValueReplacer\ =\ \mbox{\hyperlink{classVisitors_1_1ArrayValueReplacer}{ArrayValueReplacer}}(arrMap,constArr)}
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00078}00078\ \ \ \ \ arrValueReplacer.visit(ast)}
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00079}00079\ }
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00080}00080\ \ \ \ \ constToVar\ =\ \mbox{\hyperlink{classVisitors_1_1ConstToVar}{ConstToVar}}()}
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00081}00081\ \ \ \ \ constToVar.visit(ast)}
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00082}00082\ \ \ \ \ insertAssignmentsAndDeclForConstants(ast,constArr)}
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00083}00083\ }
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00084}00084\ \ \ \ \ assignmentChecker\ =\ \mbox{\hyperlink{classVisitors_1_1AssignmentChecker}{AssignmentChecker}}();}
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00085}00085\ \ \ \ \ assignmentChecker.visit(ast)}
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00086}00086\ \ \ \ \ generate\_c\_file(ast,outputFile)}
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00087}00087\ }
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00088}00088\ }
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00089}00089\ }
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00090}00090\ \textcolor{keywordflow}{if}\ \_\_name\_\_\ ==\ \textcolor{stringliteral}{"{}\_\_main\_\_"{}}:}
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00091}00091\ \ \ \ \ \textcolor{keyword}{with}\ open(\textcolor{stringliteral}{'./systemArgs.json'},\ \textcolor{stringliteral}{'r'})\ \textcolor{keyword}{as}\ file:}
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00092}\mbox{\hyperlink{namespaceinliner_a8187411843a6284ffb964ef3fb9fcab3}{00092}}\ \ \ \ \ \ \ \ \ args\ =\ json.load(file)}
+\DoxyCodeLine{\Hypertarget{inliner_8py_source_l00093}00093\ \ \ \ \ \mbox{\hyperlink{namespaceinliner_a56297b7fef6c00ea6e9222890e0bd94e}{mainInline}}(args[\textcolor{stringliteral}{'inputFile'}],args[\textcolor{stringliteral}{"{}inlinerOutput"{}}],args[\textcolor{stringliteral}{'topModule'}])}
+
+\end{DoxyCode}

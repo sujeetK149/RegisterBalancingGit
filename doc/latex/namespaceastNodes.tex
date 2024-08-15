@@ -1,0 +1,133 @@
+\doxysection{ast\+Nodes Namespace Reference}
+\hypertarget{namespaceastNodes}{}\label{namespaceastNodes}\index{astNodes@{astNodes}}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{namespaceastNodes_a6ced6199d6aaaa78844aa78db139f4ec}{get\+Const\+Assignment\+Node}} (lvalue, rvalue)
+\item 
+\mbox{\hyperlink{namespaceastNodes_a534bfba8974cc96ff24d6d6d0e8c4b37}{get\+Declaration\+Node}} (id\+Name, type)
+\item 
+\mbox{\hyperlink{namespaceastNodes_a7cf6fff12c1730216ea4d4f05b68fe2c}{get\+Simple\+Assignment\+Node}} (lvalue, rvalue)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{namespaceastNodes_a6ced6199d6aaaa78844aa78db139f4ec}\index{astNodes@{astNodes}!getConstAssignmentNode@{getConstAssignmentNode}}
+\index{getConstAssignmentNode@{getConstAssignmentNode}!astNodes@{astNodes}}
+\doxysubsubsection{\texorpdfstring{getConstAssignmentNode()}{getConstAssignmentNode()}}
+{\footnotesize\ttfamily \label{namespaceastNodes_a6ced6199d6aaaa78844aa78db139f4ec} 
+get\+Const\+Assignment\+Node (\begin{DoxyParamCaption}\item[{}]{lvalue}{, }\item[{}]{rvalue}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Creates an assignment node where the right-hand side is a constant integer.
+
+@param lvalue: The left-hand side of the assignment, typically a variable name.
+@type lvalue: str
+@param rvalue: The constant integer value for the right-hand side of the assignment.
+@type rvalue: int
+
+@return: A `c_ast.Assignment` node representing the assignment of a constant integer value.
+@rtype: c_ast.Assignment
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{Inliner_2astNodes_8py_source_l00021}{21}} of file \mbox{\hyperlink{Inliner_2astNodes_8py_source}{ast\+Nodes.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00021\ \textcolor{keyword}{def\ }getConstAssignmentNode(lvalue,rvalue): }
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{} }}
+\DoxyCodeLine{00023\ \textcolor{stringliteral}{\ \ \ \ Creates\ an\ assignment\ node\ where\ the\ right-\/hand\ side\ is\ a\ constant\ integer. }}
+\DoxyCodeLine{00024\ \textcolor{stringliteral}{ }}
+\DoxyCodeLine{00025\ \textcolor{stringliteral}{\ \ \ \ @param\ lvalue:\ The\ left-\/hand\ side\ of\ the\ assignment,\ typically\ a\ variable\ name. }}
+\DoxyCodeLine{00026\ \textcolor{stringliteral}{\ \ \ \ @type\ lvalue:\ str }}
+\DoxyCodeLine{00027\ \textcolor{stringliteral}{\ \ \ \ @param\ rvalue:\ The\ constant\ integer\ value\ for\ the\ right-\/hand\ side\ of\ the\ assignment. }}
+\DoxyCodeLine{00028\ \textcolor{stringliteral}{\ \ \ \ @type\ rvalue:\ int }}
+\DoxyCodeLine{00029\ \textcolor{stringliteral}{ }}
+\DoxyCodeLine{00030\ \textcolor{stringliteral}{\ \ \ \ @return:\ A\ \`{}c\_ast.Assignment\`{}\ node\ representing\ the\ assignment\ of\ a\ constant\ integer\ value. }}
+\DoxyCodeLine{00031\ \textcolor{stringliteral}{\ \ \ \ @rtype:\ c\_ast.Assignment }}
+\DoxyCodeLine{00032\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}} }
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordflow}{return}\ c\_ast.Assignment(lvalue=c\_ast.ID(name=lvalue),rvalue=c\_ast.Constant(type=\textcolor{stringliteral}{"{}int"{}},value=rvalue),op=\textcolor{stringliteral}{'='}) }
+\DoxyCodeLine{00034\  }
+
+\end{DoxyCode}
+\Hypertarget{namespaceastNodes_a534bfba8974cc96ff24d6d6d0e8c4b37}\index{astNodes@{astNodes}!getDeclarationNode@{getDeclarationNode}}
+\index{getDeclarationNode@{getDeclarationNode}!astNodes@{astNodes}}
+\doxysubsubsection{\texorpdfstring{getDeclarationNode()}{getDeclarationNode()}}
+{\footnotesize\ttfamily \label{namespaceastNodes_a534bfba8974cc96ff24d6d6d0e8c4b37} 
+get\+Declaration\+Node (\begin{DoxyParamCaption}\item[{}]{id\+Name}{, }\item[{}]{type}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Creates a declaration node for a variable with the specified name and type.
+
+@param idName: The name of the variable to declare.
+@type idName: str
+@param type: The type of the variable, e.g., 'int' or 'float'.
+@type type: str
+
+@return: A `c_ast.Decl` node representing the variable declaration.
+@rtype: c_ast.Decl
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{Inliner_2astNodes_8py_source_l00035}{35}} of file \mbox{\hyperlink{Inliner_2astNodes_8py_source}{ast\+Nodes.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00035\ \textcolor{keyword}{def\ }getDeclarationNode(idName,type): }
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{} }}
+\DoxyCodeLine{00037\ \textcolor{stringliteral}{\ \ \ \ Creates\ a\ declaration\ node\ for\ a\ variable\ with\ the\ specified\ name\ and\ type. }}
+\DoxyCodeLine{00038\ \textcolor{stringliteral}{ }}
+\DoxyCodeLine{00039\ \textcolor{stringliteral}{\ \ \ \ @param\ idName:\ The\ name\ of\ the\ variable\ to\ declare. }}
+\DoxyCodeLine{00040\ \textcolor{stringliteral}{\ \ \ \ @type\ idName:\ str }}
+\DoxyCodeLine{00041\ \textcolor{stringliteral}{\ \ \ \ @param\ type:\ The\ type\ of\ the\ variable,\ e.g.,\ 'int'\ or\ 'float'. }}
+\DoxyCodeLine{00042\ \textcolor{stringliteral}{\ \ \ \ @type\ type:\ str }}
+\DoxyCodeLine{00043\ \textcolor{stringliteral}{ }}
+\DoxyCodeLine{00044\ \textcolor{stringliteral}{\ \ \ \ @return:\ A\ \`{}c\_ast.Decl\`{}\ node\ representing\ the\ variable\ declaration. }}
+\DoxyCodeLine{00045\ \textcolor{stringliteral}{\ \ \ \ @rtype:\ c\_ast.Decl }}
+\DoxyCodeLine{00046\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}} }
+\DoxyCodeLine{00047\  }
+\DoxyCodeLine{00048\ \ \ \ \ typeDeclNode\ =\ c\_ast.TypeDecl(declname\ =\ idName,quals\ =\ [],align\ =\ \textcolor{keywordtype}{None}, }
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ type=c\_ast.IdentifierType(names=[type])) }
+\DoxyCodeLine{00050\ \ \ \ \ declNode\ =\ c\_ast.Decl(name=idName,\ quals=[],\ storage=[],\ funcspec=[], }
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ type=typeDeclNode,\ init=\textcolor{keywordtype}{None}, }
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ bitsize=\textcolor{keywordtype}{None},\ align=[]) }
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keywordflow}{return}\ declNode}
+
+\end{DoxyCode}
+\Hypertarget{namespaceastNodes_a7cf6fff12c1730216ea4d4f05b68fe2c}\index{astNodes@{astNodes}!getSimpleAssignmentNode@{getSimpleAssignmentNode}}
+\index{getSimpleAssignmentNode@{getSimpleAssignmentNode}!astNodes@{astNodes}}
+\doxysubsubsection{\texorpdfstring{getSimpleAssignmentNode()}{getSimpleAssignmentNode()}}
+{\footnotesize\ttfamily \label{namespaceastNodes_a7cf6fff12c1730216ea4d4f05b68fe2c} 
+get\+Simple\+Assignment\+Node (\begin{DoxyParamCaption}\item[{}]{lvalue}{, }\item[{}]{rvalue}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Creates a simple assignment node with the specified left-hand side and right-hand side.
+
+@param lvalue: The left-hand side of the assignment, typically a variable name.
+@type lvalue: str
+@param rvalue: The right-hand side of the assignment, typically a variable name or expression.
+@type rvalue: str
+
+@return: A `c_ast.Assignment` node representing the assignment operation.
+@rtype: c_ast.Assignment
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{Inliner_2astNodes_8py_source_l00007}{7}} of file \mbox{\hyperlink{Inliner_2astNodes_8py_source}{ast\+Nodes.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00007\ \textcolor{keyword}{def\ }getSimpleAssignmentNode(lvalue,rvalue): }
+\DoxyCodeLine{00008\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{} }}
+\DoxyCodeLine{00009\ \textcolor{stringliteral}{\ \ \ \ Creates\ a\ simple\ assignment\ node\ with\ the\ specified\ left-\/hand\ side\ and\ right-\/hand\ side. }}
+\DoxyCodeLine{00010\ \textcolor{stringliteral}{ }}
+\DoxyCodeLine{00011\ \textcolor{stringliteral}{\ \ \ \ @param\ lvalue:\ The\ left-\/hand\ side\ of\ the\ assignment,\ typically\ a\ variable\ name. }}
+\DoxyCodeLine{00012\ \textcolor{stringliteral}{\ \ \ \ @type\ lvalue:\ str }}
+\DoxyCodeLine{00013\ \textcolor{stringliteral}{\ \ \ \ @param\ rvalue:\ The\ right-\/hand\ side\ of\ the\ assignment,\ typically\ a\ variable\ name\ or\ expression. }}
+\DoxyCodeLine{00014\ \textcolor{stringliteral}{\ \ \ \ @type\ rvalue:\ str }}
+\DoxyCodeLine{00015\ \textcolor{stringliteral}{ }}
+\DoxyCodeLine{00016\ \textcolor{stringliteral}{\ \ \ \ @return:\ A\ \`{}c\_ast.Assignment\`{}\ node\ representing\ the\ assignment\ operation. }}
+\DoxyCodeLine{00017\ \textcolor{stringliteral}{\ \ \ \ @rtype:\ c\_ast.Assignment }}
+\DoxyCodeLine{00018\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}} }
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keywordflow}{return}\ c\_ast.Assignment(lvalue=c\_ast.ID(name=lvalue),rvalue=c\_ast.ID(name=rvalue),op=\textcolor{stringliteral}{'='}) }
+\DoxyCodeLine{00020\  }
+
+\end{DoxyCode}

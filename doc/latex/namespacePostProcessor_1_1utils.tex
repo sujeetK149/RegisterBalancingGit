@@ -1,0 +1,404 @@
+\doxysection{Post\+Processor.\+utils Namespace Reference}
+\hypertarget{namespacePostProcessor_1_1utils}{}\label{namespacePostProcessor_1_1utils}\index{PostProcessor.utils@{PostProcessor.utils}}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{namespacePostProcessor_1_1utils_a4213fd6150ba598f8069318e8f79a143}{change\+Binary\+Ops}} (node, body\+Nodes, assgn\+No)
+\item 
+\mbox{\hyperlink{namespacePostProcessor_1_1utils_a0daca5ec30609ece30e8345cbe182c19}{change\+Binary\+Op\+Util}} (node, var\+For\+Binary\+Op, body\+Nodes)
+\item 
+\mbox{\hyperlink{namespacePostProcessor_1_1utils_ae4220af5b012b0e0141a406e1367c9ee}{extract\+Operands}} (node)
+\item 
+\mbox{\hyperlink{namespacePostProcessor_1_1utils_a78d4c1eea6eb65a4bdd659bb059bedbf}{generate\+\_\+c\+\_\+file}} (ast, filename)
+\item 
+\mbox{\hyperlink{namespacePostProcessor_1_1utils_acbd1f10c401d485b16b004cf1df9f695}{get\+New\+Var\+Name}} (assgn\+No)
+\item 
+\mbox{\hyperlink{namespacePostProcessor_1_1utils_a5362d93de6d108f99d5b14cb488da574}{get\+Variable\+Name\+From\+Operands}} (operands, operator\+Name\+Map, operator="{}"{})
+\item 
+\mbox{\hyperlink{namespacePostProcessor_1_1utils_a85fa38c396b96e7963b25fc09eaaa2a7}{handle\+Assignment\+Nodes}} (node, body\+Nodes, operator\+Name\+Map, assgn\+No)
+\item 
+\mbox{\hyperlink{namespacePostProcessor_1_1utils_a267480218d8114a58cb68e3298c792f1}{is\+Nested\+Reg\+Call}} (node)
+\item 
+\mbox{\hyperlink{namespacePostProcessor_1_1utils_a0d08eaf5f4a344d0f540bf01f67168c2}{is\+Reg\+Call}} (node)
+\item 
+\mbox{\hyperlink{namespacePostProcessor_1_1utils_a97cdd373adad783e43c269f7056d3a53}{none\+Operand\+Starts\+Withv}} (operands)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{namespacePostProcessor_1_1utils_a4213fd6150ba598f8069318e8f79a143}\index{PostProcessor.utils@{PostProcessor.utils}!changeBinaryOps@{changeBinaryOps}}
+\index{changeBinaryOps@{changeBinaryOps}!PostProcessor.utils@{PostProcessor.utils}}
+\doxysubsubsection{\texorpdfstring{changeBinaryOps()}{changeBinaryOps()}}
+{\footnotesize\ttfamily \label{namespacePostProcessor_1_1utils_a4213fd6150ba598f8069318e8f79a143} 
+change\+Binary\+Ops (\begin{DoxyParamCaption}\item[{}]{node}{, }\item[{}]{body\+Nodes}{, }\item[{}]{assgn\+No}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Modifies binary operations in the AST.
+
+@param node: The node containing the binary operation to modify.
+@param bodyNodes: The list of body nodes to append the modified nodes to.
+@param assgnNo: The current assignment number used for generating new variable names.
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{PostProcessor_2utils_8py_source_l00114}{114}} of file \mbox{\hyperlink{PostProcessor_2utils_8py_source}{utils.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00114\ \textcolor{keyword}{def\ }changeBinaryOps(node,bodyNodes,assgnNo): }
+\DoxyCodeLine{00115\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{} }}
+\DoxyCodeLine{00116\ \textcolor{stringliteral}{\ \ \ \ Modifies\ binary\ operations\ in\ the\ AST. }}
+\DoxyCodeLine{00117\ \textcolor{stringliteral}{ }}
+\DoxyCodeLine{00118\ \textcolor{stringliteral}{\ \ \ \ @param\ node:\ The\ node\ containing\ the\ binary\ operation\ to\ modify. }}
+\DoxyCodeLine{00119\ \textcolor{stringliteral}{\ \ \ \ @param\ bodyNodes:\ The\ list\ of\ body\ nodes\ to\ append\ the\ modified\ nodes\ to. }}
+\DoxyCodeLine{00120\ \textcolor{stringliteral}{\ \ \ \ @param\ assgnNo:\ The\ current\ assignment\ number\ used\ for\ generating\ new\ variable\ names. }}
+\DoxyCodeLine{00121\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}} }
+\DoxyCodeLine{00122\ \ \ \ \ currNode\ =\ node.rvalue }
+\DoxyCodeLine{00123\ \ \ \ \ \textcolor{keywordflow}{if}\ isinstance(currNode,c\_ast.BinaryOp): }
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ origLeft\ =\ currNode.left }
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ origRight\ =\ currNode.right }
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \  }
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isNestedRegCall(currNode.right): }
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \ \ \ \ varForBinaryOp\ =\ getNewVarName(assgnNo) }
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \ \ \ \ changeBinaryOpUtil(currNode.right,varForBinaryOp,bodyNodes) }
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ \ \ \ \ origRight\ =\ c\_ast.ID(varForBinaryOp) }
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isNestedRegCall(currNode.left): }
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \ \ \ \ varForBinaryOp\ =\ getNewVarName(assgnNo+1) }
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \ \ \ \ changeBinaryOpUtil(currNode.left,varForBinaryOp,bodyNodes) }
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ \ \ \ \ origLeft\ =\ c\_ast.ID(varForBinaryOp) }
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ binaryOpNode\ =\ c\_ast.BinaryOp(op=currNode.op,left=origLeft,right=origRight) }
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ bodyNodes.append(c\_ast.Assignment(op=\textcolor{stringliteral}{'='},lvalue=node.lvalue,rvalue=binaryOpNode)) }
+\DoxyCodeLine{00137\ \ \ \ \ \textcolor{keywordflow}{else}: }
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ bodyNodes.append(node) }
+\DoxyCodeLine{00139\  }
+
+\end{DoxyCode}
+\Hypertarget{namespacePostProcessor_1_1utils_a0daca5ec30609ece30e8345cbe182c19}\index{PostProcessor.utils@{PostProcessor.utils}!changeBinaryOpUtil@{changeBinaryOpUtil}}
+\index{changeBinaryOpUtil@{changeBinaryOpUtil}!PostProcessor.utils@{PostProcessor.utils}}
+\doxysubsubsection{\texorpdfstring{changeBinaryOpUtil()}{changeBinaryOpUtil()}}
+{\footnotesize\ttfamily \label{namespacePostProcessor_1_1utils_a0daca5ec30609ece30e8345cbe182c19} 
+change\+Binary\+Op\+Util (\begin{DoxyParamCaption}\item[{}]{node}{, }\item[{}]{var\+For\+Binary\+Op}{, }\item[{}]{body\+Nodes}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Utility function for changing binary operations.
+
+@param node: The node representing the binary operation.
+@param varForBinaryOp: The variable name for the binary operation.
+@param bodyNodes: The list of body nodes to append the new nodes to.
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{PostProcessor_2utils_8py_source_l00103}{103}} of file \mbox{\hyperlink{PostProcessor_2utils_8py_source}{utils.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00103\ \textcolor{keyword}{def\ }changeBinaryOpUtil(node,varForBinaryOp,bodyNodes): }
+\DoxyCodeLine{00104\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{} }}
+\DoxyCodeLine{00105\ \textcolor{stringliteral}{\ \ \ \ Utility\ function\ for\ changing\ binary\ operations. }}
+\DoxyCodeLine{00106\ \textcolor{stringliteral}{ }}
+\DoxyCodeLine{00107\ \textcolor{stringliteral}{\ \ \ \ @param\ node:\ The\ node\ representing\ the\ binary\ operation. }}
+\DoxyCodeLine{00108\ \textcolor{stringliteral}{\ \ \ \ @param\ varForBinaryOp:\ The\ variable\ name\ for\ the\ binary\ operation. }}
+\DoxyCodeLine{00109\ \textcolor{stringliteral}{\ \ \ \ @param\ bodyNodes:\ The\ list\ of\ body\ nodes\ to\ append\ the\ new\ nodes\ to. }}
+\DoxyCodeLine{00110\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}} }
+\DoxyCodeLine{00111\ \ \ \ \ bodyNodes.append(getDeclarationNode(varForBinaryOp)) }
+\DoxyCodeLine{00112\ \ \ \ \ bodyNodes.append(getSimpleAssignmentNode(varForBinaryOp,node)) }
+\DoxyCodeLine{00113\  }
+
+\end{DoxyCode}
+\Hypertarget{namespacePostProcessor_1_1utils_ae4220af5b012b0e0141a406e1367c9ee}\index{PostProcessor.utils@{PostProcessor.utils}!extractOperands@{extractOperands}}
+\index{extractOperands@{extractOperands}!PostProcessor.utils@{PostProcessor.utils}}
+\doxysubsubsection{\texorpdfstring{extractOperands()}{extractOperands()}}
+{\footnotesize\ttfamily \label{namespacePostProcessor_1_1utils_ae4220af5b012b0e0141a406e1367c9ee} 
+extract\+Operands (\begin{DoxyParamCaption}\item[{}]{node}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Extracts operands from a node, handling different node types.
+
+@param node: The node from which to extract operands.
+
+@return: A list of operands or a string representing the operand.
+@raises ValueError: If the node type is unsupported.
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{PostProcessor_2utils_8py_source_l00043}{43}} of file \mbox{\hyperlink{PostProcessor_2utils_8py_source}{utils.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00043\ \textcolor{keyword}{def\ }extractOperands(node): }
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{} }}
+\DoxyCodeLine{00045\ \textcolor{stringliteral}{\ \ \ \ Extracts\ operands\ from\ a\ node,\ handling\ different\ node\ types. }}
+\DoxyCodeLine{00046\ \textcolor{stringliteral}{ }}
+\DoxyCodeLine{00047\ \textcolor{stringliteral}{\ \ \ \ @param\ node:\ The\ node\ from\ which\ to\ extract\ operands. }}
+\DoxyCodeLine{00048\ \textcolor{stringliteral}{ }}
+\DoxyCodeLine{00049\ \textcolor{stringliteral}{\ \ \ \ @return:\ A\ list\ of\ operands\ or\ a\ string\ representing\ the\ operand. }}
+\DoxyCodeLine{00050\ \textcolor{stringliteral}{\ \ \ \ @raises\ ValueError:\ If\ the\ node\ type\ is\ unsupported. }}
+\DoxyCodeLine{00051\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}} }
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordflow}{if}\ (isinstance(node,\ c\_ast.BinaryOp)): }
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ leftOperand\ =\ extractOperands(node.left)\  }
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ rightOperand\ =\ extractOperands(node.right) }
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ [leftOperand,rightOperand] }
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keywordflow}{elif}\ isRegCall(node): }
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}v\_reg\_"{}}\ +\ node.args.exprs[0].name }
+\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keywordflow}{elif}\ isinstance(node,c\_ast.ID): }
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ node.name }
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{keywordflow}{elif}\ isinstance(node,c\_ast.UnaryOp): }
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}v\_neg\_"{}}\ +\ extractOperands(node.expr) }
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keywordflow}{else}: }
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{raise}\ ValueError(f\textcolor{stringliteral}{"{}Unsupported\ node\ type:\ \{type(node).\_\_name\_\_\}"{}}) }
+\DoxyCodeLine{00064\ \ \ \ \  }
+
+\end{DoxyCode}
+\Hypertarget{namespacePostProcessor_1_1utils_a78d4c1eea6eb65a4bdd659bb059bedbf}\index{PostProcessor.utils@{PostProcessor.utils}!generate\_c\_file@{generate\_c\_file}}
+\index{generate\_c\_file@{generate\_c\_file}!PostProcessor.utils@{PostProcessor.utils}}
+\doxysubsubsection{\texorpdfstring{generate\_c\_file()}{generate\_c\_file()}}
+{\footnotesize\ttfamily \label{namespacePostProcessor_1_1utils_a78d4c1eea6eb65a4bdd659bb059bedbf} 
+generate\+\_\+c\+\_\+file (\begin{DoxyParamCaption}\item[{}]{ast}{, }\item[{}]{filename}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Generates C code from the provided Abstract Syntax Tree (AST) and saves it to a file.
+
+@param ast: The Abstract Syntax Tree (AST) to generate C code from.
+@param filename: The path to the file where the generated C code will be saved.
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{PostProcessor_2utils_8py_source_l00140}{140}} of file \mbox{\hyperlink{PostProcessor_2utils_8py_source}{utils.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00140\ \textcolor{keyword}{def\ }generate\_c\_file(ast,filename): }
+\DoxyCodeLine{00141\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{} }}
+\DoxyCodeLine{00142\ \textcolor{stringliteral}{\ \ \ \ Generates\ C\ code\ from\ the\ provided\ Abstract\ Syntax\ Tree\ (AST)\ and\ saves\ it\ to\ a\ file. }}
+\DoxyCodeLine{00143\ \textcolor{stringliteral}{ }}
+\DoxyCodeLine{00144\ \textcolor{stringliteral}{\ \ \ \ @param\ ast:\ The\ Abstract\ Syntax\ Tree\ (AST)\ to\ generate\ C\ code\ from. }}
+\DoxyCodeLine{00145\ \textcolor{stringliteral}{\ \ \ \ @param\ filename:\ The\ path\ to\ the\ file\ where\ the\ generated\ C\ code\ will\ be\ saved. }}
+\DoxyCodeLine{00146\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}} }
+\DoxyCodeLine{00147\ \ \ \ \ generator\ =\ c\_generator.CGenerator() }
+\DoxyCodeLine{00148\ \ \ \ \ \textcolor{keyword}{with}\ open(filename,\ \textcolor{stringliteral}{'w'})\ \textcolor{keyword}{as}\ output\_file: }
+\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ print(generator.visit(ast),\ file=output\_file) }
+\DoxyCodeLine{00150\  }
+\DoxyCodeLine{00151\  }
+
+\end{DoxyCode}
+\Hypertarget{namespacePostProcessor_1_1utils_acbd1f10c401d485b16b004cf1df9f695}\index{PostProcessor.utils@{PostProcessor.utils}!getNewVarName@{getNewVarName}}
+\index{getNewVarName@{getNewVarName}!PostProcessor.utils@{PostProcessor.utils}}
+\doxysubsubsection{\texorpdfstring{getNewVarName()}{getNewVarName()}}
+{\footnotesize\ttfamily \label{namespacePostProcessor_1_1utils_acbd1f10c401d485b16b004cf1df9f695} 
+get\+New\+Var\+Name (\begin{DoxyParamCaption}\item[{}]{assgn\+No}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Generates a new variable name for assignments.
+
+@param assgnNo: The assignment number to include in the variable name.
+
+@return: A string representing the new variable name.
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{PostProcessor_2utils_8py_source_l00093}{93}} of file \mbox{\hyperlink{PostProcessor_2utils_8py_source}{utils.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00093\ \textcolor{keyword}{def\ }getNewVarName(assgnNo): }
+\DoxyCodeLine{00094\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{} }}
+\DoxyCodeLine{00095\ \textcolor{stringliteral}{\ \ \ \ Generates\ a\ new\ variable\ name\ for\ assignments. }}
+\DoxyCodeLine{00096\ \textcolor{stringliteral}{ }}
+\DoxyCodeLine{00097\ \textcolor{stringliteral}{\ \ \ \ @param\ assgnNo:\ The\ assignment\ number\ to\ include\ in\ the\ variable\ name. }}
+\DoxyCodeLine{00098\ \textcolor{stringliteral}{ }}
+\DoxyCodeLine{00099\ \textcolor{stringliteral}{\ \ \ \ @return:\ A\ string\ representing\ the\ new\ variable\ name. }}
+\DoxyCodeLine{00100\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}} }
+\DoxyCodeLine{00101\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}z"{}}\ +\ str(assgnNo)\ +\ \textcolor{stringliteral}{"{}\_assgn"{}}\ +\ str(assgnNo) }
+\DoxyCodeLine{00102\  }
+
+\end{DoxyCode}
+\Hypertarget{namespacePostProcessor_1_1utils_a5362d93de6d108f99d5b14cb488da574}\index{PostProcessor.utils@{PostProcessor.utils}!getVariableNameFromOperands@{getVariableNameFromOperands}}
+\index{getVariableNameFromOperands@{getVariableNameFromOperands}!PostProcessor.utils@{PostProcessor.utils}}
+\doxysubsubsection{\texorpdfstring{getVariableNameFromOperands()}{getVariableNameFromOperands()}}
+{\footnotesize\ttfamily \label{namespacePostProcessor_1_1utils_a5362d93de6d108f99d5b14cb488da574} 
+get\+Variable\+Name\+From\+Operands (\begin{DoxyParamCaption}\item[{}]{operands}{, }\item[{}]{operator\+Name\+Map}{, }\item[{}]{operator}{ = {\ttfamily "{}"{}}}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Constructs a variable name based on operands and operator.
+
+@param operands: The list of operands.
+@param operatorNameMap: A dictionary mapping operators to their names.
+@param operator: The operator to include in the variable name.
+
+@return: A string representing the variable name.
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{PostProcessor_2utils_8py_source_l00065}{65}} of file \mbox{\hyperlink{PostProcessor_2utils_8py_source}{utils.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00065\ \textcolor{keyword}{def\ }getVariableNameFromOperands(operands,operatorNameMap,operator\ =\ "{}"{}): }
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{} }}
+\DoxyCodeLine{00067\ \textcolor{stringliteral}{\ \ \ \ Constructs\ a\ variable\ name\ based\ on\ operands\ and\ operator. }}
+\DoxyCodeLine{00068\ \textcolor{stringliteral}{ }}
+\DoxyCodeLine{00069\ \textcolor{stringliteral}{\ \ \ \ @param\ operands:\ The\ list\ of\ operands. }}
+\DoxyCodeLine{00070\ \textcolor{stringliteral}{\ \ \ \ @param\ operatorNameMap:\ A\ dictionary\ mapping\ operators\ to\ their\ names. }}
+\DoxyCodeLine{00071\ \textcolor{stringliteral}{\ \ \ \ @param\ operator:\ The\ operator\ to\ include\ in\ the\ variable\ name. }}
+\DoxyCodeLine{00072\ \textcolor{stringliteral}{ }}
+\DoxyCodeLine{00073\ \textcolor{stringliteral}{\ \ \ \ @return:\ A\ string\ representing\ the\ variable\ name. }}
+\DoxyCodeLine{00074\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}} }
+\DoxyCodeLine{00075\ \ \ \ \ variableName\ =\ operands[0] }
+\DoxyCodeLine{00076\ \ \ \ \ if(len(operands)\ >\ 1): }
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ variableName\ +=\ (\textcolor{stringliteral}{"{}\_"{}}\ +\ operatorNameMap[operator]\ +\ \textcolor{stringliteral}{"{}\_"{}}\ +\ operands[1]) }
+\DoxyCodeLine{00078\ \ \ \ \ \textcolor{keywordflow}{return}\ variableName }
+\DoxyCodeLine{00079\  }
+
+\end{DoxyCode}
+\Hypertarget{namespacePostProcessor_1_1utils_a85fa38c396b96e7963b25fc09eaaa2a7}\index{PostProcessor.utils@{PostProcessor.utils}!handleAssignmentNodes@{handleAssignmentNodes}}
+\index{handleAssignmentNodes@{handleAssignmentNodes}!PostProcessor.utils@{PostProcessor.utils}}
+\doxysubsubsection{\texorpdfstring{handleAssignmentNodes()}{handleAssignmentNodes()}}
+{\footnotesize\ttfamily \label{namespacePostProcessor_1_1utils_a85fa38c396b96e7963b25fc09eaaa2a7} 
+handle\+Assignment\+Nodes (\begin{DoxyParamCaption}\item[{}]{node}{, }\item[{}]{body\+Nodes}{, }\item[{}]{operator\+Name\+Map}{, }\item[{}]{assgn\+No}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Processes and handles assignment nodes in the AST.
+
+@param node: The assignment node to process.
+@param bodyNodes: The list of body nodes to append the processed nodes to.
+@param operatorNameMap: A dictionary mapping operators to their names.
+@param assgnNo: The current assignment number used for generating new variable names.
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{PostProcessor_2utils_8py_source_l00152}{152}} of file \mbox{\hyperlink{PostProcessor_2utils_8py_source}{utils.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00152\ \textcolor{keyword}{def\ }handleAssignmentNodes(node,bodyNodes,operatorNameMap,assgnNo): }
+\DoxyCodeLine{00153\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{} }}
+\DoxyCodeLine{00154\ \textcolor{stringliteral}{\ \ \ \ Processes\ and\ handles\ assignment\ nodes\ in\ the\ AST. }}
+\DoxyCodeLine{00155\ \textcolor{stringliteral}{ }}
+\DoxyCodeLine{00156\ \textcolor{stringliteral}{\ \ \ \ @param\ node:\ The\ assignment\ node\ to\ process. }}
+\DoxyCodeLine{00157\ \textcolor{stringliteral}{\ \ \ \ @param\ bodyNodes:\ The\ list\ of\ body\ nodes\ to\ append\ the\ processed\ nodes\ to. }}
+\DoxyCodeLine{00158\ \textcolor{stringliteral}{\ \ \ \ @param\ operatorNameMap:\ A\ dictionary\ mapping\ operators\ to\ their\ names. }}
+\DoxyCodeLine{00159\ \textcolor{stringliteral}{\ \ \ \ @param\ assgnNo:\ The\ current\ assignment\ number\ used\ for\ generating\ new\ variable\ names. }}
+\DoxyCodeLine{00160\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}} }
+\DoxyCodeLine{00161\ \ \ \ \ count\ =\ 1; }
+\DoxyCodeLine{00162\ \ \ \ \ currNode\ =\ node.rvalue }
+\DoxyCodeLine{00163\ \ \ \ \ \textcolor{keywordflow}{if}\ isRegCall(currNode): }
+\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ isRegCall(currNode.args.exprs[0]): }
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ \ \ \ \ count\ +=\ 1 }
+\DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ \ \ \ \ currNode\ =\ currNode.args.exprs[0] }
+\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ currNode\ =\ currNode.args.exprs[0] }
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ operands\ =\ extractOperands(currNode) }
+\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keywordflow}{not}\ isinstance(operands,list): }
+\DoxyCodeLine{00170\ \ \ \ \ \ \ \ \ \ \ \ \ operands\ =\ [operands] }
+\DoxyCodeLine{00171\  }
+\DoxyCodeLine{00172\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ count\ ==\ 1\ \textcolor{keywordflow}{and}\ noneOperandStartsWithv(operands): }
+\DoxyCodeLine{00173\ \ \ \ \ \ \ \ \ \ \ \ \ \ bodyNodes.append(node) }
+\DoxyCodeLine{00174\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return} }
+\DoxyCodeLine{00175\  }
+\DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ op\ =\ currNode.op\ \textcolor{keywordflow}{if}\ isinstance(currNode,\ c\_ast.BinaryOp)\ \textcolor{keywordflow}{else}\ \textcolor{stringliteral}{"{}"{}} }
+\DoxyCodeLine{00177\ \ \ \ \ \ \ \ \ variableName\ =\ getNewVarName(assgnNo) }
+\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ assignmentNode\ =\ getAssignmentNode(operands,op,variableName) }
+\DoxyCodeLine{00179\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ if\ len(operands)\ >\ 1: }}
+\DoxyCodeLine{00180\ \ \ \ \ \ \ \ \ bodyNodes.append(getDeclarationNode(variableName)) }
+\DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ bodyNodes.append(assignmentNode) }
+\DoxyCodeLine{00182\ \ \ \ \ \ \ \ \ prevVarName\ =\ variableName }
+\DoxyCodeLine{00183\  }
+\DoxyCodeLine{00184\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ index\ \textcolor{keywordflow}{in}\ range(count): }
+\DoxyCodeLine{00185\ \ \ \ \ \ \ \ \ \ \ \ \ newVarName\ =\ variableName\ +\ str(index) }
+\DoxyCodeLine{00186\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ index\ !=\ count\ -\/\ 1: }
+\DoxyCodeLine{00187\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ bodyNodes.append(getDeclarationNode(newVarName)) }
+\DoxyCodeLine{00188\ \ \ \ \ \ \ \ \ \ \ \ \ regCallNode\ =\ getRegFuncCallNode(prevVarName) }
+\DoxyCodeLine{00189\ \ \ \ \ \ \ \ \ \ \ \ \ lvalue\ =\ c\_ast.ID(newVarName)\ \textcolor{keywordflow}{if}\ index\ !=\ count\ -\/1\ \textcolor{keywordflow}{else}\ node.lvalue }
+\DoxyCodeLine{00190\ \ \ \ \ \ \ \ \ \ \ \ \ bodyNodes.append(c\_ast.Assignment(op=\textcolor{stringliteral}{'='},lvalue=lvalue,rvalue=regCallNode)) }
+\DoxyCodeLine{00191\ \ \ \ \ \ \ \ \ \ \ \ \ prevVarName\ =\ newVarName }
+\DoxyCodeLine{00192\ \ \ \ \ \ \ \ \  }
+\DoxyCodeLine{00193\ \ \ \ \ \textcolor{keywordflow}{else}: }
+\DoxyCodeLine{00194\ \ \ \ \ \ \ \ \ bodyNodes.append(node) }
+\DoxyCodeLine{00195\ \ \ \ \ }
+
+\end{DoxyCode}
+\Hypertarget{namespacePostProcessor_1_1utils_a267480218d8114a58cb68e3298c792f1}\index{PostProcessor.utils@{PostProcessor.utils}!isNestedRegCall@{isNestedRegCall}}
+\index{isNestedRegCall@{isNestedRegCall}!PostProcessor.utils@{PostProcessor.utils}}
+\doxysubsubsection{\texorpdfstring{isNestedRegCall()}{isNestedRegCall()}}
+{\footnotesize\ttfamily \label{namespacePostProcessor_1_1utils_a267480218d8114a58cb68e3298c792f1} 
+is\+Nested\+Reg\+Call (\begin{DoxyParamCaption}\item[{}]{node}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Checks if a node is a nested register function call.
+
+@param node: The node to check.
+
+@return: True if the node is a nested `reg` function call, False otherwise.
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{PostProcessor_2utils_8py_source_l00033}{33}} of file \mbox{\hyperlink{PostProcessor_2utils_8py_source}{utils.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00033\ \textcolor{keyword}{def\ }isNestedRegCall(node): }
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{} }}
+\DoxyCodeLine{00035\ \textcolor{stringliteral}{\ \ \ \ Checks\ if\ a\ node\ is\ a\ nested\ register\ function\ call. }}
+\DoxyCodeLine{00036\ \textcolor{stringliteral}{ }}
+\DoxyCodeLine{00037\ \textcolor{stringliteral}{\ \ \ \ @param\ node:\ The\ node\ to\ check. }}
+\DoxyCodeLine{00038\ \textcolor{stringliteral}{ }}
+\DoxyCodeLine{00039\ \textcolor{stringliteral}{\ \ \ \ @return:\ True\ if\ the\ node\ is\ a\ nested\ \`{}reg\`{}\ function\ call,\ False\ otherwise. }}
+\DoxyCodeLine{00040\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}} }
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keywordflow}{return}\ isRegCall(node)\ \textcolor{keywordflow}{and}\ isRegCall(node.args.exprs[0]) }
+\DoxyCodeLine{00042\  }
+
+\end{DoxyCode}
+\Hypertarget{namespacePostProcessor_1_1utils_a0d08eaf5f4a344d0f540bf01f67168c2}\index{PostProcessor.utils@{PostProcessor.utils}!isRegCall@{isRegCall}}
+\index{isRegCall@{isRegCall}!PostProcessor.utils@{PostProcessor.utils}}
+\doxysubsubsection{\texorpdfstring{isRegCall()}{isRegCall()}}
+{\footnotesize\ttfamily \label{namespacePostProcessor_1_1utils_a0d08eaf5f4a344d0f540bf01f67168c2} 
+is\+Reg\+Call (\begin{DoxyParamCaption}\item[{}]{node}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Checks if a node represents a call to the "reg" function.
+
+@param node: The node to check.
+
+@return: True if the node is a `reg` function call, False otherwise.
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{PostProcessor_2utils_8py_source_l00023}{23}} of file \mbox{\hyperlink{PostProcessor_2utils_8py_source}{utils.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00023\ \textcolor{keyword}{def\ }isRegCall(node): }
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{} }}
+\DoxyCodeLine{00025\ \textcolor{stringliteral}{\ \ \ \ Checks\ if\ a\ node\ represents\ a\ call\ to\ the\ "{}reg"{}\ function. }}
+\DoxyCodeLine{00026\ \textcolor{stringliteral}{ }}
+\DoxyCodeLine{00027\ \textcolor{stringliteral}{\ \ \ \ @param\ node:\ The\ node\ to\ check. }}
+\DoxyCodeLine{00028\ \textcolor{stringliteral}{ }}
+\DoxyCodeLine{00029\ \textcolor{stringliteral}{\ \ \ \ @return:\ True\ if\ the\ node\ is\ a\ \`{}reg\`{}\ function\ call,\ False\ otherwise. }}
+\DoxyCodeLine{00030\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}} }
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keywordflow}{return}\ isinstance(node,c\_ast.FuncCall)\ \textcolor{keywordflow}{and}\ node.name.name\ ==\ \textcolor{stringliteral}{'reg'} }
+\DoxyCodeLine{00032\  }
+
+\end{DoxyCode}
+\Hypertarget{namespacePostProcessor_1_1utils_a97cdd373adad783e43c269f7056d3a53}\index{PostProcessor.utils@{PostProcessor.utils}!noneOperandStartsWithv@{noneOperandStartsWithv}}
+\index{noneOperandStartsWithv@{noneOperandStartsWithv}!PostProcessor.utils@{PostProcessor.utils}}
+\doxysubsubsection{\texorpdfstring{noneOperandStartsWithv()}{noneOperandStartsWithv()}}
+{\footnotesize\ttfamily \label{namespacePostProcessor_1_1utils_a97cdd373adad783e43c269f7056d3a53} 
+none\+Operand\+Starts\+Withv (\begin{DoxyParamCaption}\item[{}]{operands}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Checks if none of the operands start with 'v'.
+
+@param operands: The list of operands.
+
+@return: True if none of the operands start with 'v', False otherwise.
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{PostProcessor_2utils_8py_source_l00080}{80}} of file \mbox{\hyperlink{PostProcessor_2utils_8py_source}{utils.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00080\ \textcolor{keyword}{def\ }noneOperandStartsWithv(operands): }
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{} }}
+\DoxyCodeLine{00082\ \textcolor{stringliteral}{\ \ \ \ Checks\ if\ none\ of\ the\ operands\ start\ with\ 'v'. }}
+\DoxyCodeLine{00083\ \textcolor{stringliteral}{ }}
+\DoxyCodeLine{00084\ \textcolor{stringliteral}{\ \ \ \ @param\ operands:\ The\ list\ of\ operands. }}
+\DoxyCodeLine{00085\ \textcolor{stringliteral}{ }}
+\DoxyCodeLine{00086\ \textcolor{stringliteral}{\ \ \ \ @return:\ True\ if\ none\ of\ the\ operands\ start\ with\ 'v',\ False\ otherwise. }}
+\DoxyCodeLine{00087\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}} }
+\DoxyCodeLine{00088\ \ \ \ \ \textcolor{keywordflow}{for}\ operand\ \textcolor{keywordflow}{in}\ operands: }
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ operand.startswith(\textcolor{stringliteral}{"{}v"{}}): }
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{False} }
+\DoxyCodeLine{00091\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{True} }
+\DoxyCodeLine{00092\  }
+
+\end{DoxyCode}

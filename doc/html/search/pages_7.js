@@ -1,0 +1,6 @@
+var searchData=
+[
+  ['securehls_0',['SecureHLS',['../md_Compiler_2README.html',1,'']]],
+  ['synthesis_1',['DOM_HLS:  Automatic Synthesis of Domain Oriented Masked Circuits through High-Level Synthesis',['../md_RegBalancer_2README.html',1,'']]],
+  ['synthesis_20of_20domain_20oriented_20masked_20circuits_20through_20high_20level_20synthesis_2',['DOM_HLS:  Automatic Synthesis of Domain Oriented Masked Circuits through High-Level Synthesis',['../md_RegBalancer_2README.html',1,'']]]
+];

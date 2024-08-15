@@ -1,0 +1,161 @@
+\doxysection{Array\+Value\+Replacer Class Reference}
+\hypertarget{classVisitors_1_1ArrayValueReplacer}{}\label{classVisitors_1_1ArrayValueReplacer}\index{ArrayValueReplacer@{ArrayValueReplacer}}
+Inheritance diagram for Array\+Value\+Replacer\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classVisitors_1_1ArrayValueReplacer}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classVisitors_1_1ArrayValueReplacer_adb72276f4bb9c36a4e6abe5375229983}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, \mbox{\hyperlink{classVisitors_1_1ArrayValueReplacer_a3c14dac355802b0266a75f0ee417c14b}{array\+Map}}, \mbox{\hyperlink{classVisitors_1_1ArrayValueReplacer_af8146ce56c53debb8b28c2c19e357077}{constant\+Array}})
+\item 
+\mbox{\hyperlink{classVisitors_1_1ArrayValueReplacer_a9e92beaff94ac47de44785afbac8787f}{visit\+\_\+\+Binary\+Op}} (self, node)
+\item 
+\mbox{\hyperlink{classVisitors_1_1ArrayValueReplacer_ae613561ea9dc3acb5bfe136b5290888a}{visit\+\_\+\+Constant}} (self, node)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classVisitors_1_1ArrayValueReplacer_a3c14dac355802b0266a75f0ee417c14b}{array\+Map}} = array\+Map
+\item 
+\mbox{\hyperlink{classVisitors_1_1ArrayValueReplacer_af8146ce56c53debb8b28c2c19e357077}{constant\+Array}} = constant\+Array
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb}@brief Replaces array references with their actual values.
+
+This visitor converts array references in expressions to their constant values.
+
+@param arrayMap: Dictionary mapping array names to their values.
+@type arrayMap: dict
+@param constantArray: List to store unique constants found during replacement.
+@type constantArray: list of str
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{Visitors_8py_source_l00152}{152}} of file \mbox{\hyperlink{Visitors_8py_source}{Visitors.\+py}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classVisitors_1_1ArrayValueReplacer_adb72276f4bb9c36a4e6abe5375229983}\index{ArrayValueReplacer@{ArrayValueReplacer}!\_\_init\_\_@{\_\_init\_\_}}
+\index{\_\_init\_\_@{\_\_init\_\_}!ArrayValueReplacer@{ArrayValueReplacer}}
+\doxysubsubsection{\texorpdfstring{\_\_init\_\_()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily \label{classVisitors_1_1ArrayValueReplacer_adb72276f4bb9c36a4e6abe5375229983} 
+\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{array\+Map}{, }\item[{}]{constant\+Array}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{Visitors_8py_source_l00163}{163}} of file \mbox{\hyperlink{Visitors_8py_source}{Visitors.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00163\ \ \ \ \ \textcolor{keyword}{def\ }\_\_init\_\_(self,arrayMap,constantArray): }
+\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ self.arrayMap\ =\ arrayMap }
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ self.constantArray\ =\ constantArray }
+\DoxyCodeLine{00166\  }
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classVisitors_1_1ArrayValueReplacer_a9e92beaff94ac47de44785afbac8787f}\index{ArrayValueReplacer@{ArrayValueReplacer}!visit\_BinaryOp@{visit\_BinaryOp}}
+\index{visit\_BinaryOp@{visit\_BinaryOp}!ArrayValueReplacer@{ArrayValueReplacer}}
+\doxysubsubsection{\texorpdfstring{visit\_BinaryOp()}{visit\_BinaryOp()}}
+{\footnotesize\ttfamily \label{classVisitors_1_1ArrayValueReplacer_a9e92beaff94ac47de44785afbac8787f} 
+visit\+\_\+\+Binary\+Op (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{node}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Replaces array references in binary operations with their constant values.
+
+@param node: The binary operation node containing the array reference.
+@type node: pycparser.c_ast.BinaryOp
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{Visitors_8py_source_l00167}{167}} of file \mbox{\hyperlink{Visitors_8py_source}{Visitors.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00167\ \ \ \ \ \textcolor{keyword}{def\ }visit\_BinaryOp(self,node): }
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{} }}
+\DoxyCodeLine{00169\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @brief\ Replaces\ array\ references\ in\ binary\ operations\ with\ their\ constant\ values. }}
+\DoxyCodeLine{00170\ \textcolor{stringliteral}{ }}
+\DoxyCodeLine{00171\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @param\ node:\ The\ binary\ operation\ node\ containing\ the\ array\ reference. }}
+\DoxyCodeLine{00172\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @type\ node:\ pycparser.c\_ast.BinaryOp }}
+\DoxyCodeLine{00173\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ "{}"{}"{}} }
+\DoxyCodeLine{00174\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isinstance(node.right,c\_ast.ArrayRef): }
+\DoxyCodeLine{00175\ \ \ \ \ \ \ \ \ \ \ \ \ arrName\ =\ node.right.name.name }
+\DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ \ \ \ \ contents\ =\ self.arrayMap[arrName] }
+\DoxyCodeLine{00177\ \ \ \ \ \ \ \ \ \ \ \ \ value\ =\ contents[int(node.right.subscript.value)] }
+\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ \ \ \ \ node.right\ =\ c\_ast.Constant(type=\textcolor{stringliteral}{'int'},value=str(value)) }
+\DoxyCodeLine{00179\ \ \ \ \ \ \ \ \ self.generic\_visit(node) }
+\DoxyCodeLine{00180\ \ \ \ \  }
+
+\end{DoxyCode}
+\Hypertarget{classVisitors_1_1ArrayValueReplacer_ae613561ea9dc3acb5bfe136b5290888a}\index{ArrayValueReplacer@{ArrayValueReplacer}!visit\_Constant@{visit\_Constant}}
+\index{visit\_Constant@{visit\_Constant}!ArrayValueReplacer@{ArrayValueReplacer}}
+\doxysubsubsection{\texorpdfstring{visit\_Constant()}{visit\_Constant()}}
+{\footnotesize\ttfamily \label{classVisitors_1_1ArrayValueReplacer_ae613561ea9dc3acb5bfe136b5290888a} 
+visit\+\_\+\+Constant (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{node}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Converts constant values to decimal and stores unique constants.
+
+@param node: The constant node being processed.
+@type node: pycparser.c_ast.Constant
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{Visitors_8py_source_l00181}{181}} of file \mbox{\hyperlink{Visitors_8py_source}{Visitors.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00181\ \ \ \ \ \textcolor{keyword}{def\ }visit\_Constant(self,node): }
+\DoxyCodeLine{00182\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{} }}
+\DoxyCodeLine{00183\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @brief\ Converts\ constant\ values\ to\ decimal\ and\ stores\ unique\ constants. }}
+\DoxyCodeLine{00184\ \textcolor{stringliteral}{ }}
+\DoxyCodeLine{00185\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @param\ node:\ The\ constant\ node\ being\ processed. }}
+\DoxyCodeLine{00186\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @type\ node:\ pycparser.c\_ast.Constant }}
+\DoxyCodeLine{00187\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ "{}"{}"{}} }
+\DoxyCodeLine{00188\ \ \ \ \ \ \ \ \ value\ =\ node.value }
+\DoxyCodeLine{00189\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ value.startswith(\textcolor{stringliteral}{"{}0x"{}}): }
+\DoxyCodeLine{00190\ \ \ \ \ \ \ \ \ \ \ \ \ decVal\ =\ str(int(value[2:],16)) }
+\DoxyCodeLine{00191\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}: }
+\DoxyCodeLine{00192\ \ \ \ \ \ \ \ \ \ \ \ \ decVal\ =\ value }
+\DoxyCodeLine{00193\ \ \ \ \ \ \ \ \ node.value\ =\ decVal }
+\DoxyCodeLine{00194\ \ \ \ \ \ \ \ \ const\ =\ \textcolor{stringliteral}{"{}dec\_"{}}\ +\ decVal }
+\DoxyCodeLine{00195\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ const\ \textcolor{keywordflow}{not}\ \textcolor{keywordflow}{in}\ self.constantArray: }
+\DoxyCodeLine{00196\ \ \ \ \ \ \ \ \ \ \ \ \ self.constantArray.append(\textcolor{stringliteral}{"{}dec\_"{}}\ +\ decVal) }
+\DoxyCodeLine{00197\  }
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classVisitors_1_1ArrayValueReplacer_a3c14dac355802b0266a75f0ee417c14b}\index{ArrayValueReplacer@{ArrayValueReplacer}!arrayMap@{arrayMap}}
+\index{arrayMap@{arrayMap}!ArrayValueReplacer@{ArrayValueReplacer}}
+\doxysubsubsection{\texorpdfstring{arrayMap}{arrayMap}}
+{\footnotesize\ttfamily \label{classVisitors_1_1ArrayValueReplacer_a3c14dac355802b0266a75f0ee417c14b} 
+array\+Map = array\+Map}
+
+
+
+Definition at line \mbox{\hyperlink{Visitors_8py_source_l00164}{164}} of file \mbox{\hyperlink{Visitors_8py_source}{Visitors.\+py}}.
+
+\Hypertarget{classVisitors_1_1ArrayValueReplacer_af8146ce56c53debb8b28c2c19e357077}\index{ArrayValueReplacer@{ArrayValueReplacer}!constantArray@{constantArray}}
+\index{constantArray@{constantArray}!ArrayValueReplacer@{ArrayValueReplacer}}
+\doxysubsubsection{\texorpdfstring{constantArray}{constantArray}}
+{\footnotesize\ttfamily \label{classVisitors_1_1ArrayValueReplacer_af8146ce56c53debb8b28c2c19e357077} 
+constant\+Array = constant\+Array}
+
+
+
+Definition at line \mbox{\hyperlink{Visitors_8py_source_l00165}{165}} of file \mbox{\hyperlink{Visitors_8py_source}{Visitors.\+py}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Inliner/\mbox{\hyperlink{Visitors_8py}{Visitors.\+py}}\end{DoxyCompactItemize}

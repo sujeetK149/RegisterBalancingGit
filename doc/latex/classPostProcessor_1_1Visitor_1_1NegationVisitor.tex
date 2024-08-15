@@ -1,0 +1,245 @@
+\doxysection{Negation\+Visitor Class Reference}
+\hypertarget{classPostProcessor_1_1Visitor_1_1NegationVisitor}{}\label{classPostProcessor_1_1Visitor_1_1NegationVisitor}\index{NegationVisitor@{NegationVisitor}}
+Inheritance diagram for Negation\+Visitor\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classPostProcessor_1_1Visitor_1_1NegationVisitor}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classPostProcessor_1_1Visitor_1_1NegationVisitor_ac152702bca0990afd2c250b695650b20}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, \mbox{\hyperlink{classPostProcessor_1_1Visitor_1_1NegationVisitor_afde190707204b09a99ff642a6afa5695}{body\+Nodes}})
+\item 
+\mbox{\hyperlink{classPostProcessor_1_1Visitor_1_1NegationVisitor_ac6393736fa9ce70a0640e0c792f0a2d4}{visit\+\_\+\+Assignment}} (self, node)
+\item 
+\mbox{\hyperlink{classPostProcessor_1_1Visitor_1_1NegationVisitor_ab8a51ec3b8cdf3c34881859017860d2b}{visit\+\_\+\+Decl}} (self, node)
+\item 
+\mbox{\hyperlink{classPostProcessor_1_1Visitor_1_1NegationVisitor_a58ebde8d335250e4b13d0c8d936fb973}{visit\+\_\+\+Func\+Def}} (self, node)
+\item 
+\mbox{\hyperlink{classPostProcessor_1_1Visitor_1_1NegationVisitor_aa0f44df06867f6e92ce7392dcde6f36f}{visit\+\_\+\+Unary\+Op}} (self, node)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{classPostProcessor_1_1Visitor_1_1NegationVisitor_a358730c079de9fb1326346a1deaba97d}{assgn\+No}} = 1
+\item 
+\mbox{\hyperlink{classPostProcessor_1_1Visitor_1_1NegationVisitor_afde190707204b09a99ff642a6afa5695}{body\+Nodes}} = body\+Nodes
+\item 
+dict \mbox{\hyperlink{classPostProcessor_1_1Visitor_1_1NegationVisitor_ac075da589eeb6e43758583ed82dc2eda}{unary\+Var\+To\+Name\+Map}} = \{\}
+\item 
+str \mbox{\hyperlink{classPostProcessor_1_1Visitor_1_1NegationVisitor_a9802b432ba5e426181c5b0f0cd17a375}{unary\+Var\+To\+Name\+Map}} = \textquotesingle{}\texorpdfstring{$\sim$}{\string~}\textquotesingle{}\+:
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb}Visitor for handling negation operations and replacing unary operations with equivalent assignments.
+
+@param bodyNodes: A list to store transformed nodes.
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{Visitor_8py_source_l00061}{61}} of file \mbox{\hyperlink{Visitor_8py_source}{Visitor.\+py}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classPostProcessor_1_1Visitor_1_1NegationVisitor_ac152702bca0990afd2c250b695650b20}\index{NegationVisitor@{NegationVisitor}!\_\_init\_\_@{\_\_init\_\_}}
+\index{\_\_init\_\_@{\_\_init\_\_}!NegationVisitor@{NegationVisitor}}
+\doxysubsubsection{\texorpdfstring{\_\_init\_\_()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily \label{classPostProcessor_1_1Visitor_1_1NegationVisitor_ac152702bca0990afd2c250b695650b20} 
+\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{body\+Nodes}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Initializes the NegationVisitor.
+
+@param bodyNodes: A list to store transformed nodes.
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{Visitor_8py_source_l00067}{67}} of file \mbox{\hyperlink{Visitor_8py_source}{Visitor.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00067\ \ \ \ \ \textcolor{keyword}{def\ }\_\_init\_\_(self,bodyNodes): }
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{} }}
+\DoxyCodeLine{00069\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ Initializes\ the\ NegationVisitor. }}
+\DoxyCodeLine{00070\ \textcolor{stringliteral}{ }}
+\DoxyCodeLine{00071\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @param\ bodyNodes:\ A\ list\ to\ store\ transformed\ nodes. }}
+\DoxyCodeLine{00072\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ "{}"{}"{}} }
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ self.bodyNodes\ =\ bodyNodes }
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ self.assgnNo\ =\ 1 }
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ self.unaryVarToNameMap\ =\ \{\} }
+\DoxyCodeLine{00076\  }
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classPostProcessor_1_1Visitor_1_1NegationVisitor_ac6393736fa9ce70a0640e0c792f0a2d4}\index{NegationVisitor@{NegationVisitor}!visit\_Assignment@{visit\_Assignment}}
+\index{visit\_Assignment@{visit\_Assignment}!NegationVisitor@{NegationVisitor}}
+\doxysubsubsection{\texorpdfstring{visit\_Assignment()}{visit\_Assignment()}}
+{\footnotesize\ttfamily \label{classPostProcessor_1_1Visitor_1_1NegationVisitor_ac6393736fa9ce70a0640e0c792f0a2d4} 
+visit\+\_\+\+Assignment (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{node}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Visits assignment nodes and processes the right-hand side based on its type.
+
+@param node: The assignment node to visit.
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{Visitor_8py_source_l00095}{95}} of file \mbox{\hyperlink{Visitor_8py_source}{Visitor.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00095\ \ \ \ \ \textcolor{keyword}{def\ }visit\_Assignment(self,node): }
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{} }}
+\DoxyCodeLine{00097\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ Visits\ assignment\ nodes\ and\ processes\ the\ right-\/hand\ side\ based\ on\ its\ type. }}
+\DoxyCodeLine{00098\ \textcolor{stringliteral}{ }}
+\DoxyCodeLine{00099\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @param\ node:\ The\ assignment\ node\ to\ visit. }}
+\DoxyCodeLine{00100\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ "{}"{}"{}} }
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isinstance(node.rvalue,c\_ast.BinaryOp)\ \textcolor{keywordflow}{or}\ isRegCall(node.rvalue): }
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \ \ \ \ self.generic\_visit(node.rvalue) }
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \ \ \ \ self.bodyNodes.append(node) }
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}: }
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \ \ \ \ self.bodyNodes.append(node) }
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return} }
+\DoxyCodeLine{00107\  }
+
+\end{DoxyCode}
+\Hypertarget{classPostProcessor_1_1Visitor_1_1NegationVisitor_ab8a51ec3b8cdf3c34881859017860d2b}\index{NegationVisitor@{NegationVisitor}!visit\_Decl@{visit\_Decl}}
+\index{visit\_Decl@{visit\_Decl}!NegationVisitor@{NegationVisitor}}
+\doxysubsubsection{\texorpdfstring{visit\_Decl()}{visit\_Decl()}}
+{\footnotesize\ttfamily \label{classPostProcessor_1_1Visitor_1_1NegationVisitor_ab8a51ec3b8cdf3c34881859017860d2b} 
+visit\+\_\+\+Decl (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{node}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Visits declaration nodes and appends them to the body nodes list.
+
+@param node: The declaration node to visit.
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{Visitor_8py_source_l00085}{85}} of file \mbox{\hyperlink{Visitor_8py_source}{Visitor.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00085\ \ \ \ \ \textcolor{keyword}{def\ }visit\_Decl(self,node): }
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{} }}
+\DoxyCodeLine{00087\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ Visits\ declaration\ nodes\ and\ appends\ them\ to\ the\ body\ nodes\ list. }}
+\DoxyCodeLine{00088\ \textcolor{stringliteral}{ }}
+\DoxyCodeLine{00089\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @param\ node:\ The\ declaration\ node\ to\ visit. }}
+\DoxyCodeLine{00090\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ "{}"{}"{}} }
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isinstance(node.type,c\_ast.TypeDecl): }
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \ \ \ \ self.bodyNodes.append(node) }
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return} }
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \  }
+
+\end{DoxyCode}
+\Hypertarget{classPostProcessor_1_1Visitor_1_1NegationVisitor_a58ebde8d335250e4b13d0c8d936fb973}\index{NegationVisitor@{NegationVisitor}!visit\_FuncDef@{visit\_FuncDef}}
+\index{visit\_FuncDef@{visit\_FuncDef}!NegationVisitor@{NegationVisitor}}
+\doxysubsubsection{\texorpdfstring{visit\_FuncDef()}{visit\_FuncDef()}}
+{\footnotesize\ttfamily \label{classPostProcessor_1_1Visitor_1_1NegationVisitor_a58ebde8d335250e4b13d0c8d936fb973} 
+visit\+\_\+\+Func\+Def (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{node}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Visits function definition nodes and continues traversal.
+
+@param node: The function definition node to visit.
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{Visitor_8py_source_l00077}{77}} of file \mbox{\hyperlink{Visitor_8py_source}{Visitor.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00077\ \ \ \ \ \textcolor{keyword}{def\ }visit\_FuncDef(self,node): }
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{} }}
+\DoxyCodeLine{00079\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ Visits\ function\ definition\ nodes\ and\ continues\ traversal. }}
+\DoxyCodeLine{00080\ \textcolor{stringliteral}{ }}
+\DoxyCodeLine{00081\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @param\ node:\ The\ function\ definition\ node\ to\ visit. }}
+\DoxyCodeLine{00082\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ "{}"{}"{}} }
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ self.generic\_visit(node) }
+\DoxyCodeLine{00084\  }
+
+\end{DoxyCode}
+\Hypertarget{classPostProcessor_1_1Visitor_1_1NegationVisitor_aa0f44df06867f6e92ce7392dcde6f36f}\index{NegationVisitor@{NegationVisitor}!visit\_UnaryOp@{visit\_UnaryOp}}
+\index{visit\_UnaryOp@{visit\_UnaryOp}!NegationVisitor@{NegationVisitor}}
+\doxysubsubsection{\texorpdfstring{visit\_UnaryOp()}{visit\_UnaryOp()}}
+{\footnotesize\ttfamily \label{classPostProcessor_1_1Visitor_1_1NegationVisitor_aa0f44df06867f6e92ce7392dcde6f36f} 
+visit\+\_\+\+Unary\+Op (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{node}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Visits unary operation nodes and replaces them with equivalent assignments.
+
+@param node: The unary operation node to visit.
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{Visitor_8py_source_l00108}{108}} of file \mbox{\hyperlink{Visitor_8py_source}{Visitor.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00108\ \ \ \ \ \textcolor{keyword}{def\ }visit\_UnaryOp(self,node): }
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{} }}
+\DoxyCodeLine{00110\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ Visits\ unary\ operation\ nodes\ and\ replaces\ them\ with\ equivalent\ assignments. }}
+\DoxyCodeLine{00111\ \textcolor{stringliteral}{ }}
+\DoxyCodeLine{00112\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @param\ node:\ The\ unary\ operation\ node\ to\ visit. }}
+\DoxyCodeLine{00113\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ "{}"{}"{}} }
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ node.expr.name\ \textcolor{keywordflow}{in}\ self.unaryVarToNameMap: }
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return} }
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ node.op\ ==\ \textcolor{stringliteral}{'!'}\ \textcolor{keywordflow}{or}\ node.op\ ==\ \textcolor{stringliteral}{'\string~'}: }
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \ \ \ \ varName\ =\ getNewVarName(self.assgnNo) }
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \ \ \ \ declNode\ =\ getDeclarationNode(varName) }
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \ \ \ \ self.bodyNodes.append(declNode) }
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ \ \ \ \ assgnNode\ =\ getSimpleAssignmentNode(varName,node) }
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \ \ \ \ self.bodyNodes.append(assgnNode) }
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ \ \ \ \ self.unaryVarToNameMap[node.expr.name]\ =\ varName }
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \ \ \ \ self.assgnNo\ +=\ 1 }
+\DoxyCodeLine{00124\  }
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classPostProcessor_1_1Visitor_1_1NegationVisitor_a358730c079de9fb1326346a1deaba97d}\index{NegationVisitor@{NegationVisitor}!assgnNo@{assgnNo}}
+\index{assgnNo@{assgnNo}!NegationVisitor@{NegationVisitor}}
+\doxysubsubsection{\texorpdfstring{assgnNo}{assgnNo}}
+{\footnotesize\ttfamily \label{classPostProcessor_1_1Visitor_1_1NegationVisitor_a358730c079de9fb1326346a1deaba97d} 
+int assgn\+No = 1}
+
+
+
+Definition at line \mbox{\hyperlink{Visitor_8py_source_l00074}{74}} of file \mbox{\hyperlink{Visitor_8py_source}{Visitor.\+py}}.
+
+\Hypertarget{classPostProcessor_1_1Visitor_1_1NegationVisitor_afde190707204b09a99ff642a6afa5695}\index{NegationVisitor@{NegationVisitor}!bodyNodes@{bodyNodes}}
+\index{bodyNodes@{bodyNodes}!NegationVisitor@{NegationVisitor}}
+\doxysubsubsection{\texorpdfstring{bodyNodes}{bodyNodes}}
+{\footnotesize\ttfamily \label{classPostProcessor_1_1Visitor_1_1NegationVisitor_afde190707204b09a99ff642a6afa5695} 
+body\+Nodes = body\+Nodes}
+
+
+
+Definition at line \mbox{\hyperlink{Visitor_8py_source_l00073}{73}} of file \mbox{\hyperlink{Visitor_8py_source}{Visitor.\+py}}.
+
+\Hypertarget{classPostProcessor_1_1Visitor_1_1NegationVisitor_ac075da589eeb6e43758583ed82dc2eda}\index{NegationVisitor@{NegationVisitor}!unaryVarToNameMap@{unaryVarToNameMap}}
+\index{unaryVarToNameMap@{unaryVarToNameMap}!NegationVisitor@{NegationVisitor}}
+\doxysubsubsection{\texorpdfstring{unaryVarToNameMap}{unaryVarToNameMap}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classPostProcessor_1_1Visitor_1_1NegationVisitor_ac075da589eeb6e43758583ed82dc2eda} 
+dict unary\+Var\+To\+Name\+Map = \{\}}
+
+
+
+Definition at line \mbox{\hyperlink{Visitor_8py_source_l00075}{75}} of file \mbox{\hyperlink{Visitor_8py_source}{Visitor.\+py}}.
+
+\Hypertarget{classPostProcessor_1_1Visitor_1_1NegationVisitor_a9802b432ba5e426181c5b0f0cd17a375}\index{NegationVisitor@{NegationVisitor}!unaryVarToNameMap@{unaryVarToNameMap}}
+\index{unaryVarToNameMap@{unaryVarToNameMap}!NegationVisitor@{NegationVisitor}}
+\doxysubsubsection{\texorpdfstring{unaryVarToNameMap}{unaryVarToNameMap}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classPostProcessor_1_1Visitor_1_1NegationVisitor_a9802b432ba5e426181c5b0f0cd17a375} 
+str unary\+Var\+To\+Name\+Map = \textquotesingle{}\texorpdfstring{$\sim$}{\string~}\textquotesingle{}\+:}
+
+
+
+Definition at line \mbox{\hyperlink{Visitor_8py_source_l00114}{114}} of file \mbox{\hyperlink{Visitor_8py_source}{Visitor.\+py}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Post\+Processor/\mbox{\hyperlink{Visitor_8py}{Visitor.\+py}}\end{DoxyCompactItemize}

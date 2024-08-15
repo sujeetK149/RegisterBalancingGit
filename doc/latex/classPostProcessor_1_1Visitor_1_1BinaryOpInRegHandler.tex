@@ -1,0 +1,195 @@
+\doxysection{Binary\+Op\+In\+Reg\+Handler Class Reference}
+\hypertarget{classPostProcessor_1_1Visitor_1_1BinaryOpInRegHandler}{}\label{classPostProcessor_1_1Visitor_1_1BinaryOpInRegHandler}\index{BinaryOpInRegHandler@{BinaryOpInRegHandler}}
+Inheritance diagram for Binary\+Op\+In\+Reg\+Handler\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classPostProcessor_1_1Visitor_1_1BinaryOpInRegHandler}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classPostProcessor_1_1Visitor_1_1BinaryOpInRegHandler_a2d2bf15f217ec4e4fb40d292bf536363}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, \mbox{\hyperlink{classPostProcessor_1_1Visitor_1_1BinaryOpInRegHandler_afde190707204b09a99ff642a6afa5695}{body\+Nodes}}, \mbox{\hyperlink{classPostProcessor_1_1Visitor_1_1BinaryOpInRegHandler_a58eaabd0374c4bb1e31a844d27cc020e}{assign\+No}})
+\item 
+\mbox{\hyperlink{classPostProcessor_1_1Visitor_1_1BinaryOpInRegHandler_ac6393736fa9ce70a0640e0c792f0a2d4}{visit\+\_\+\+Assignment}} (self, node)
+\item 
+\mbox{\hyperlink{classPostProcessor_1_1Visitor_1_1BinaryOpInRegHandler_ab8a51ec3b8cdf3c34881859017860d2b}{visit\+\_\+\+Decl}} (self, node)
+\item 
+\mbox{\hyperlink{classPostProcessor_1_1Visitor_1_1BinaryOpInRegHandler_a905ff50baff07f42b5c0a8d46148c755}{visit\+\_\+\+Func\+Call}} (self, node)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classPostProcessor_1_1Visitor_1_1BinaryOpInRegHandler_a58eaabd0374c4bb1e31a844d27cc020e}{assign\+No}} = assign\+No
+\item 
+\mbox{\hyperlink{classPostProcessor_1_1Visitor_1_1BinaryOpInRegHandler_afde190707204b09a99ff642a6afa5695}{body\+Nodes}} = body\+Nodes
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb}Visitor for handling binary operations inside register function calls.
+
+@param bodyNodes: A list to store transformed nodes.
+@param assignNo: The current assignment number used for generating new variable names.
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{Visitor_8py_source_l00125}{125}} of file \mbox{\hyperlink{Visitor_8py_source}{Visitor.\+py}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classPostProcessor_1_1Visitor_1_1BinaryOpInRegHandler_a2d2bf15f217ec4e4fb40d292bf536363}\index{BinaryOpInRegHandler@{BinaryOpInRegHandler}!\_\_init\_\_@{\_\_init\_\_}}
+\index{\_\_init\_\_@{\_\_init\_\_}!BinaryOpInRegHandler@{BinaryOpInRegHandler}}
+\doxysubsubsection{\texorpdfstring{\_\_init\_\_()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily \label{classPostProcessor_1_1Visitor_1_1BinaryOpInRegHandler_a2d2bf15f217ec4e4fb40d292bf536363} 
+\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{body\+Nodes}{, }\item[{}]{assign\+No}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Initializes the BinaryOpInRegHandler.
+
+@param bodyNodes: A list to store transformed nodes.
+@param assignNo: The current assignment number used for generating new variable names.
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{Visitor_8py_source_l00132}{132}} of file \mbox{\hyperlink{Visitor_8py_source}{Visitor.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00132\ \ \ \ \ \textcolor{keyword}{def\ }\_\_init\_\_(self,bodyNodes,assignNo): }
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{} }}
+\DoxyCodeLine{00134\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ Initializes\ the\ BinaryOpInRegHandler. }}
+\DoxyCodeLine{00135\ \textcolor{stringliteral}{ }}
+\DoxyCodeLine{00136\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @param\ bodyNodes:\ A\ list\ to\ store\ transformed\ nodes. }}
+\DoxyCodeLine{00137\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @param\ assignNo:\ The\ current\ assignment\ number\ used\ for\ generating\ new\ variable\ names. }}
+\DoxyCodeLine{00138\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ "{}"{}"{}} }
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ self.bodyNodes\ =\ bodyNodes }
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ self.assignNo\ =\ assignNo }
+\DoxyCodeLine{00141\  }
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classPostProcessor_1_1Visitor_1_1BinaryOpInRegHandler_ac6393736fa9ce70a0640e0c792f0a2d4}\index{BinaryOpInRegHandler@{BinaryOpInRegHandler}!visit\_Assignment@{visit\_Assignment}}
+\index{visit\_Assignment@{visit\_Assignment}!BinaryOpInRegHandler@{BinaryOpInRegHandler}}
+\doxysubsubsection{\texorpdfstring{visit\_Assignment()}{visit\_Assignment()}}
+{\footnotesize\ttfamily \label{classPostProcessor_1_1Visitor_1_1BinaryOpInRegHandler_ac6393736fa9ce70a0640e0c792f0a2d4} 
+visit\+\_\+\+Assignment (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{node}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Visits assignment nodes and processes them based on their right-hand side type.
+
+@param node: The assignment node to visit.
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{Visitor_8py_source_l00152}{152}} of file \mbox{\hyperlink{Visitor_8py_source}{Visitor.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00152\ \ \ \ \ \textcolor{keyword}{def\ }visit\_Assignment(self,node): }
+\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{} }}
+\DoxyCodeLine{00154\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ Visits\ assignment\ nodes\ and\ processes\ them\ based\ on\ their\ right-\/hand\ side\ type. }}
+\DoxyCodeLine{00155\ \textcolor{stringliteral}{ }}
+\DoxyCodeLine{00156\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @param\ node:\ The\ assignment\ node\ to\ visit. }}
+\DoxyCodeLine{00157\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ "{}"{}"{}} }
+\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keywordflow}{not}\ isinstance(node.rvalue,c\_ast.FuncCall): }
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ \ \ \ \ self.bodyNodes.append(node) }
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return} }
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ self.generic\_visit(node) }
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ self.bodyNodes.append(node) }
+\DoxyCodeLine{00163\ \ \ \ \  }
+
+\end{DoxyCode}
+\Hypertarget{classPostProcessor_1_1Visitor_1_1BinaryOpInRegHandler_ab8a51ec3b8cdf3c34881859017860d2b}\index{BinaryOpInRegHandler@{BinaryOpInRegHandler}!visit\_Decl@{visit\_Decl}}
+\index{visit\_Decl@{visit\_Decl}!BinaryOpInRegHandler@{BinaryOpInRegHandler}}
+\doxysubsubsection{\texorpdfstring{visit\_Decl()}{visit\_Decl()}}
+{\footnotesize\ttfamily \label{classPostProcessor_1_1Visitor_1_1BinaryOpInRegHandler_ab8a51ec3b8cdf3c34881859017860d2b} 
+visit\+\_\+\+Decl (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{node}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Visits declaration nodes and appends them to the body nodes list.
+
+@param node: The declaration node to visit.
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{Visitor_8py_source_l00142}{142}} of file \mbox{\hyperlink{Visitor_8py_source}{Visitor.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00142\ \ \ \ \ \textcolor{keyword}{def\ }visit\_Decl(self,node): }
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{} }}
+\DoxyCodeLine{00144\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ Visits\ declaration\ nodes\ and\ appends\ them\ to\ the\ body\ nodes\ list. }}
+\DoxyCodeLine{00145\ \textcolor{stringliteral}{ }}
+\DoxyCodeLine{00146\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @param\ node:\ The\ declaration\ node\ to\ visit. }}
+\DoxyCodeLine{00147\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ "{}"{}"{}} }
+\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isinstance(node.type,c\_ast.TypeDecl): }
+\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ \ \ \ \ self.bodyNodes.append(node) }
+\DoxyCodeLine{00150\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return} }
+\DoxyCodeLine{00151\  }
+
+\end{DoxyCode}
+\Hypertarget{classPostProcessor_1_1Visitor_1_1BinaryOpInRegHandler_a905ff50baff07f42b5c0a8d46148c755}\index{BinaryOpInRegHandler@{BinaryOpInRegHandler}!visit\_FuncCall@{visit\_FuncCall}}
+\index{visit\_FuncCall@{visit\_FuncCall}!BinaryOpInRegHandler@{BinaryOpInRegHandler}}
+\doxysubsubsection{\texorpdfstring{visit\_FuncCall()}{visit\_FuncCall()}}
+{\footnotesize\ttfamily \label{classPostProcessor_1_1Visitor_1_1BinaryOpInRegHandler_a905ff50baff07f42b5c0a8d46148c755} 
+visit\+\_\+\+Func\+Call (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{node}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Visits function call nodes and processes binary operations within register function calls.
+
+@param node: The function call node to visit.
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{Visitor_8py_source_l00164}{164}} of file \mbox{\hyperlink{Visitor_8py_source}{Visitor.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00164\ \ \ \ \ \textcolor{keyword}{def\ }visit\_FuncCall(self,node): }
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{} }}
+\DoxyCodeLine{00166\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ Visits\ function\ call\ nodes\ and\ processes\ binary\ operations\ within\ register\ function\ calls. }}
+\DoxyCodeLine{00167\ \textcolor{stringliteral}{ }}
+\DoxyCodeLine{00168\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @param\ node:\ The\ function\ call\ node\ to\ visit. }}
+\DoxyCodeLine{00169\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ "{}"{}"{}} }
+\DoxyCodeLine{00170\ \ \ \ \ \ \ \ \ currNode\ =\ node }
+\DoxyCodeLine{00171\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ isRegCall(currNode.args.exprs[0]): }
+\DoxyCodeLine{00172\ \ \ \ \ \ \ \ \ \ \ \ \ currNode\ =\ currNode.args.exprs[0] }
+\DoxyCodeLine{00173\ \ \ \ \ \ \ \ \ insideNode\ =\ currNode.args.exprs[0] }
+\DoxyCodeLine{00174\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isinstance(insideNode,c\_ast.BinaryOp): }
+\DoxyCodeLine{00175\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isRegCall(insideNode.right)\ \textcolor{keywordflow}{or}\ isRegCall(insideNode.left): }
+\DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ varName\ =\ getNewVarName(self.assignNo) }
+\DoxyCodeLine{00177\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.assignNo\ +=\ 2 }
+\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ currNode.args.exprs[0]\ =\ c\_ast.ID(name=varName) }
+\DoxyCodeLine{00179\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.bodyNodes.append(getDeclarationNode(varName)) }
+\DoxyCodeLine{00180\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.bodyNodes.append(getSimpleAssignmentNode(lvalue=varName,rvalue=insideNode)) }
+\DoxyCodeLine{00181\  }
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classPostProcessor_1_1Visitor_1_1BinaryOpInRegHandler_a58eaabd0374c4bb1e31a844d27cc020e}\index{BinaryOpInRegHandler@{BinaryOpInRegHandler}!assignNo@{assignNo}}
+\index{assignNo@{assignNo}!BinaryOpInRegHandler@{BinaryOpInRegHandler}}
+\doxysubsubsection{\texorpdfstring{assignNo}{assignNo}}
+{\footnotesize\ttfamily \label{classPostProcessor_1_1Visitor_1_1BinaryOpInRegHandler_a58eaabd0374c4bb1e31a844d27cc020e} 
+assign\+No = assign\+No}
+
+
+
+Definition at line \mbox{\hyperlink{Visitor_8py_source_l00140}{140}} of file \mbox{\hyperlink{Visitor_8py_source}{Visitor.\+py}}.
+
+\Hypertarget{classPostProcessor_1_1Visitor_1_1BinaryOpInRegHandler_afde190707204b09a99ff642a6afa5695}\index{BinaryOpInRegHandler@{BinaryOpInRegHandler}!bodyNodes@{bodyNodes}}
+\index{bodyNodes@{bodyNodes}!BinaryOpInRegHandler@{BinaryOpInRegHandler}}
+\doxysubsubsection{\texorpdfstring{bodyNodes}{bodyNodes}}
+{\footnotesize\ttfamily \label{classPostProcessor_1_1Visitor_1_1BinaryOpInRegHandler_afde190707204b09a99ff642a6afa5695} 
+body\+Nodes = body\+Nodes}
+
+
+
+Definition at line \mbox{\hyperlink{Visitor_8py_source_l00139}{139}} of file \mbox{\hyperlink{Visitor_8py_source}{Visitor.\+py}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Post\+Processor/\mbox{\hyperlink{Visitor_8py}{Visitor.\+py}}\end{DoxyCompactItemize}

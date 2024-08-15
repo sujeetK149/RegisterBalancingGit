@@ -1,0 +1,199 @@
+\doxysection{Reg\+Balancer/src/domand.c File Reference}
+\hypertarget{domand_8c}{}\label{domand_8c}\index{RegBalancer/src/domand.c@{RegBalancer/src/domand.c}}
+{\ttfamily \#include $<$stdbool.\+h$>$}\newline
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{domand_8c_a711cc021ef860c4fffc532afd53b3758}{sbox}} (bool x0\+\_\+0, bool x1\+\_\+0, bool x2\+\_\+0, bool x3\+\_\+0, bool x0\+\_\+1, bool x1\+\_\+1, bool x2\+\_\+1, bool x3\+\_\+1, bool r, bool \texorpdfstring{$\ast$}{*}Y0\+\_\+0, bool \texorpdfstring{$\ast$}{*}Y1\+\_\+0, bool \texorpdfstring{$\ast$}{*}Y2\+\_\+0, bool \texorpdfstring{$\ast$}{*}Y3\+\_\+0, bool \texorpdfstring{$\ast$}{*}Y0\+\_\+1, bool \texorpdfstring{$\ast$}{*}Y1\+\_\+1, bool \texorpdfstring{$\ast$}{*}Y2\+\_\+1, bool \texorpdfstring{$\ast$}{*}Y3\+\_\+1)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{domand_8c_a711cc021ef860c4fffc532afd53b3758}\index{domand.c@{domand.c}!sbox@{sbox}}
+\index{sbox@{sbox}!domand.c@{domand.c}}
+\doxysubsubsection{\texorpdfstring{sbox()}{sbox()}}
+{\footnotesize\ttfamily \label{domand_8c_a711cc021ef860c4fffc532afd53b3758} 
+void sbox (\begin{DoxyParamCaption}\item[{bool}]{x0\+\_\+0}{, }\item[{bool}]{x1\+\_\+0}{, }\item[{bool}]{x2\+\_\+0}{, }\item[{bool}]{x3\+\_\+0}{, }\item[{bool}]{x0\+\_\+1}{, }\item[{bool}]{x1\+\_\+1}{, }\item[{bool}]{x2\+\_\+1}{, }\item[{bool}]{x3\+\_\+1}{, }\item[{bool}]{r}{, }\item[{bool \texorpdfstring{$\ast$}{*}}]{Y0\+\_\+0}{, }\item[{bool \texorpdfstring{$\ast$}{*}}]{Y1\+\_\+0}{, }\item[{bool \texorpdfstring{$\ast$}{*}}]{Y2\+\_\+0}{, }\item[{bool \texorpdfstring{$\ast$}{*}}]{Y3\+\_\+0}{, }\item[{bool \texorpdfstring{$\ast$}{*}}]{Y0\+\_\+1}{, }\item[{bool \texorpdfstring{$\ast$}{*}}]{Y1\+\_\+1}{, }\item[{bool \texorpdfstring{$\ast$}{*}}]{Y2\+\_\+1}{, }\item[{bool \texorpdfstring{$\ast$}{*}}]{Y3\+\_\+1}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{domand_8c_source_l00002}{2}} of file \mbox{\hyperlink{domand_8c_source}{domand.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00003\ \{}
+\DoxyCodeLine{00004\ \ \ \textcolor{keywordtype}{bool}\ x0\_0\_inp;}
+\DoxyCodeLine{00005\ \ \ \textcolor{keywordtype}{bool}\ x1\_0\_inp;}
+\DoxyCodeLine{00006\ \ \ \textcolor{keywordtype}{bool}\ x2\_0\_inp;}
+\DoxyCodeLine{00007\ \ \ \textcolor{keywordtype}{bool}\ x3\_0\_inp;}
+\DoxyCodeLine{00008\ \ \ \textcolor{keywordtype}{bool}\ x0\_1\_inp;}
+\DoxyCodeLine{00009\ \ \ \textcolor{keywordtype}{bool}\ x1\_1\_inp;}
+\DoxyCodeLine{00010\ \ \ \textcolor{keywordtype}{bool}\ x2\_1\_inp;}
+\DoxyCodeLine{00011\ \ \ \textcolor{keywordtype}{bool}\ x3\_1\_inp;}
+\DoxyCodeLine{00012\ \ \ \textcolor{keywordtype}{bool}\ r\_inp;}
+\DoxyCodeLine{00013\ \ \ x0\_0\_inp\ =\ x0\_0;}
+\DoxyCodeLine{00014\ \ \ x1\_0\_inp\ =\ x1\_0;}
+\DoxyCodeLine{00015\ \ \ x2\_0\_inp\ =\ x2\_0;}
+\DoxyCodeLine{00016\ \ \ x3\_0\_inp\ =\ x3\_0;}
+\DoxyCodeLine{00017\ \ \ x0\_1\_inp\ =\ x0\_1;}
+\DoxyCodeLine{00018\ \ \ x1\_1\_inp\ =\ x1\_1;}
+\DoxyCodeLine{00019\ \ \ x2\_1\_inp\ =\ x2\_1;}
+\DoxyCodeLine{00020\ \ \ x3\_1\_inp\ =\ x3\_1;}
+\DoxyCodeLine{00021\ \ \ r\_inp\ =\ r;}
+\DoxyCodeLine{00022\ \ \ \textcolor{keywordtype}{bool}\ L0\_0;}
+\DoxyCodeLine{00023\ \ \ \textcolor{keywordtype}{bool}\ L1\_0;}
+\DoxyCodeLine{00024\ \ \ \textcolor{keywordtype}{bool}\ L2\_0;}
+\DoxyCodeLine{00025\ \ \ \textcolor{keywordtype}{bool}\ L3\_0;}
+\DoxyCodeLine{00026\ \ \ \textcolor{keywordtype}{bool}\ L4\_0;}
+\DoxyCodeLine{00027\ \ \ \textcolor{keywordtype}{bool}\ L5\_0;}
+\DoxyCodeLine{00028\ \ \ \textcolor{keywordtype}{bool}\ L6\_0;}
+\DoxyCodeLine{00029\ \ \ \textcolor{keywordtype}{bool}\ L7\_0;}
+\DoxyCodeLine{00030\ \ \ \textcolor{keywordtype}{bool}\ L8\_0;}
+\DoxyCodeLine{00031\ \ \ \textcolor{keywordtype}{bool}\ L9\_0;}
+\DoxyCodeLine{00032\ \ \ \textcolor{keywordtype}{bool}\ L10\_0;}
+\DoxyCodeLine{00033\ \ \ \textcolor{keywordtype}{bool}\ L11\_0;}
+\DoxyCodeLine{00034\ \ \ \textcolor{keywordtype}{bool}\ Q0\_0;}
+\DoxyCodeLine{00035\ \ \ \textcolor{keywordtype}{bool}\ Q1\_0;}
+\DoxyCodeLine{00036\ \ \ \textcolor{keywordtype}{bool}\ Q2\_0;}
+\DoxyCodeLine{00037\ \ \ \textcolor{keywordtype}{bool}\ Q3\_0;}
+\DoxyCodeLine{00038\ \ \ \textcolor{keywordtype}{bool}\ Q4\_0;}
+\DoxyCodeLine{00039\ \ \ \textcolor{keywordtype}{bool}\ Q5\_0;}
+\DoxyCodeLine{00040\ \ \ \textcolor{keywordtype}{bool}\ Q6\_0;}
+\DoxyCodeLine{00041\ \ \ \textcolor{keywordtype}{bool}\ Q7\_0;}
+\DoxyCodeLine{00042\ \ \ \textcolor{keywordtype}{bool}\ T0\_0;}
+\DoxyCodeLine{00043\ \ \ \textcolor{keywordtype}{bool}\ T1\_0;}
+\DoxyCodeLine{00044\ \ \ \textcolor{keywordtype}{bool}\ T2\_0;}
+\DoxyCodeLine{00045\ \ \ \textcolor{keywordtype}{bool}\ T3\_0;}
+\DoxyCodeLine{00046\ \ \ \textcolor{keywordtype}{bool}\ L0\_1;}
+\DoxyCodeLine{00047\ \ \ \textcolor{keywordtype}{bool}\ L1\_1;}
+\DoxyCodeLine{00048\ \ \ \textcolor{keywordtype}{bool}\ L2\_1;}
+\DoxyCodeLine{00049\ \ \ \textcolor{keywordtype}{bool}\ L3\_1;}
+\DoxyCodeLine{00050\ \ \ \textcolor{keywordtype}{bool}\ L4\_1;}
+\DoxyCodeLine{00051\ \ \ \textcolor{keywordtype}{bool}\ L5\_1;}
+\DoxyCodeLine{00052\ \ \ \textcolor{keywordtype}{bool}\ L6\_1;}
+\DoxyCodeLine{00053\ \ \ \textcolor{keywordtype}{bool}\ L7\_1;}
+\DoxyCodeLine{00054\ \ \ \textcolor{keywordtype}{bool}\ L8\_1;}
+\DoxyCodeLine{00055\ \ \ \textcolor{keywordtype}{bool}\ L9\_1;}
+\DoxyCodeLine{00056\ \ \ \textcolor{keywordtype}{bool}\ L10\_1;}
+\DoxyCodeLine{00057\ \ \ \textcolor{keywordtype}{bool}\ L11\_1;}
+\DoxyCodeLine{00058\ \ \ \textcolor{keywordtype}{bool}\ Q0\_1;}
+\DoxyCodeLine{00059\ \ \ \textcolor{keywordtype}{bool}\ Q1\_1;}
+\DoxyCodeLine{00060\ \ \ \textcolor{keywordtype}{bool}\ Q2\_1;}
+\DoxyCodeLine{00061\ \ \ \textcolor{keywordtype}{bool}\ Q3\_1;}
+\DoxyCodeLine{00062\ \ \ \textcolor{keywordtype}{bool}\ Q4\_1;}
+\DoxyCodeLine{00063\ \ \ \textcolor{keywordtype}{bool}\ Q5\_1;}
+\DoxyCodeLine{00064\ \ \ \textcolor{keywordtype}{bool}\ Q6\_1;}
+\DoxyCodeLine{00065\ \ \ \textcolor{keywordtype}{bool}\ Q7\_1;}
+\DoxyCodeLine{00066\ \ \ \textcolor{keywordtype}{bool}\ T0\_1;}
+\DoxyCodeLine{00067\ \ \ \textcolor{keywordtype}{bool}\ T1\_1;}
+\DoxyCodeLine{00068\ \ \ \textcolor{keywordtype}{bool}\ T2\_1;}
+\DoxyCodeLine{00069\ \ \ \textcolor{keywordtype}{bool}\ T3\_1;}
+\DoxyCodeLine{00070\ \ \ \textcolor{keywordtype}{bool}\ Y0\_01;}
+\DoxyCodeLine{00071\ \ \ \textcolor{keywordtype}{bool}\ Y1\_01;}
+\DoxyCodeLine{00072\ \ \ \textcolor{keywordtype}{bool}\ Y0\_11;}
+\DoxyCodeLine{00073\ \ \ \textcolor{keywordtype}{bool}\ Y1\_11;}
+\DoxyCodeLine{00074\ \ \ L0\_0\ =\ x1\_0\_inp\ \string^\ x2\_0\_inp;}
+\DoxyCodeLine{00075\ \ \ L1\_0\ =\ x0\_0\_inp\ \string^\ x1\_0\_inp;}
+\DoxyCodeLine{00076\ \ \ L8\_0\ =\ x2\_0\_inp\ \string^\ x0\_0\_inp;}
+\DoxyCodeLine{00077\ \ \ L5\_0\ =\ x0\_0\_inp\ \string^\ x3\_0\_inp;}
+\DoxyCodeLine{00078\ \ \ L0\_1\ =\ x1\_1\_inp\ \string^\ x2\_1\_inp;}
+\DoxyCodeLine{00079\ \ \ L1\_1\ =\ x0\_1\_inp\ \string^\ x1\_1\_inp;}
+\DoxyCodeLine{00080\ \ \ L8\_1\ =\ x2\_1\_inp\ \string^\ x0\_1\_inp;}
+\DoxyCodeLine{00081\ \ \ L5\_1\ =\ x0\_1\_inp\ \string^\ x3\_1\_inp;}
+\DoxyCodeLine{00082\ \ \ Q0\_0\ =\ !L0\_0;}
+\DoxyCodeLine{00083\ \ \ Q1\_0\ =\ !L1\_0;}
+\DoxyCodeLine{00084\ \ \ Q3\_0\ =\ !x3\_0\_inp;}
+\DoxyCodeLine{00085\ \ \ Q4\_0\ =\ !x2\_0\_inp;}
+\DoxyCodeLine{00086\ \ \ Q0\_1\ =\ !L0\_1;}
+\DoxyCodeLine{00087\ \ \ Q1\_1\ =\ !L1\_1;}
+\DoxyCodeLine{00088\ \ \ Q3\_1\ =\ !x3\_1\_inp;}
+\DoxyCodeLine{00089\ \ \ Q4\_1\ =\ !x2\_1\_inp;}
+\DoxyCodeLine{00090\ \ \ L2\_0\ =\ Q1\_0\ \string^\ x2\_0\_inp;}
+\DoxyCodeLine{00091\ \ \ L3\_0\ =\ Q0\_0\ \string^\ x3\_0\_inp;}
+\DoxyCodeLine{00092\ \ \ L2\_1\ =\ Q1\_1\ \string^\ x2\_1\_inp;}
+\DoxyCodeLine{00093\ \ \ L3\_1\ =\ Q0\_1\ \string^\ x3\_1\_inp;}
+\DoxyCodeLine{00094\ \ \ \textcolor{keywordtype}{bool}\ i1\_domand0;}
+\DoxyCodeLine{00095\ \ \ \textcolor{keywordtype}{bool}\ i2\_domand0;}
+\DoxyCodeLine{00096\ \ \ \textcolor{keywordtype}{bool}\ p2\_domand0;}
+\DoxyCodeLine{00097\ \ \ \textcolor{keywordtype}{bool}\ p3\_domand0;}
+\DoxyCodeLine{00098\ \ \ \textcolor{keywordtype}{bool}\ p1\_domand0;}
+\DoxyCodeLine{00099\ \ \ \textcolor{keywordtype}{bool}\ p4\_domand0;}
+\DoxyCodeLine{00100\ \ \ p2\_domand0\ =\ Q0\_0\ \&\ Q1\_1;}
+\DoxyCodeLine{00101\ \ \ i1\_domand0\ =\ p2\_domand0\ \string^\ r\_inp;}
+\DoxyCodeLine{00102\ \ \ p3\_domand0\ =\ Q0\_1\ \&\ Q1\_0;}
+\DoxyCodeLine{00103\ \ \ i2\_domand0\ =\ p3\_domand0\ \string^\ r\_inp;}
+\DoxyCodeLine{00104\ \ \ p1\_domand0\ =\ Q0\_0\ \&\ Q1\_0;}
+\DoxyCodeLine{00105\ \ \ p4\_domand0\ =\ Q0\_1\ \&\ Q1\_1;}
+\DoxyCodeLine{00106\ \ \ T0\_0\ =\ reg(i1\_domand0)\ \string^\ p1\_domand0;}
+\DoxyCodeLine{00107\ \ \ T0\_1\ =\ reg(i2\_domand0)\ \string^\ p4\_domand0;}
+\DoxyCodeLine{00108\ \ \ L10\_0\ =\ !L2\_0;}
+\DoxyCodeLine{00109\ \ \ L10\_1\ =\ !L2\_1;}
+\DoxyCodeLine{00110\ \ \ \textcolor{keywordtype}{bool}\ i1\_domand1;}
+\DoxyCodeLine{00111\ \ \ \textcolor{keywordtype}{bool}\ i2\_domand1;}
+\DoxyCodeLine{00112\ \ \ \textcolor{keywordtype}{bool}\ p2\_domand1;}
+\DoxyCodeLine{00113\ \ \ \textcolor{keywordtype}{bool}\ p3\_domand1;}
+\DoxyCodeLine{00114\ \ \ \textcolor{keywordtype}{bool}\ p1\_domand1;}
+\DoxyCodeLine{00115\ \ \ \textcolor{keywordtype}{bool}\ p4\_domand1;}
+\DoxyCodeLine{00116\ \ \ p2\_domand1\ =\ x1\_0\_inp\ \&\ Q4\_1;}
+\DoxyCodeLine{00117\ \ \ i1\_domand1\ =\ p2\_domand1\ \string^\ r\_inp;}
+\DoxyCodeLine{00118\ \ \ p3\_domand1\ =\ x1\_1\_inp\ \&\ Q4\_0;}
+\DoxyCodeLine{00119\ \ \ i2\_domand1\ =\ p3\_domand1\ \string^\ r\_inp;}
+\DoxyCodeLine{00120\ \ \ p1\_domand1\ =\ x1\_0\_inp\ \&\ Q4\_0;}
+\DoxyCodeLine{00121\ \ \ p4\_domand1\ =\ x1\_1\_inp\ \&\ Q4\_1;}
+\DoxyCodeLine{00122\ \ \ T2\_0\ =\ reg(i1\_domand1)\ \string^\ p1\_domand1;}
+\DoxyCodeLine{00123\ \ \ T2\_1\ =\ reg(i2\_domand1)\ \string^\ p4\_domand1;}
+\DoxyCodeLine{00124\ \ \ Q2\_0\ =\ T0\_0\ \string^\ L2\_0;}
+\DoxyCodeLine{00125\ \ \ L4\_0\ =\ T0\_0\ \string^\ T2\_0;}
+\DoxyCodeLine{00126\ \ \ Q7\_0\ =\ T0\_0\ \string^\ L5\_0;}
+\DoxyCodeLine{00127\ \ \ Q6\_0\ =\ L4\_0\ \string^\ L3\_0;}
+\DoxyCodeLine{00128\ \ \ Q2\_1\ =\ T0\_1\ \string^\ L2\_1;}
+\DoxyCodeLine{00129\ \ \ L4\_1\ =\ T0\_1\ \string^\ T2\_1;}
+\DoxyCodeLine{00130\ \ \ Q7\_1\ =\ T0\_1\ \string^\ L5\_1;}
+\DoxyCodeLine{00131\ \ \ Q6\_1\ =\ L4\_1\ \string^\ L3\_1;}
+\DoxyCodeLine{00132\ \ \ \textcolor{keywordtype}{bool}\ i1\_domand2;}
+\DoxyCodeLine{00133\ \ \ \textcolor{keywordtype}{bool}\ i2\_domand2;}
+\DoxyCodeLine{00134\ \ \ \textcolor{keywordtype}{bool}\ p2\_domand2;}
+\DoxyCodeLine{00135\ \ \ \textcolor{keywordtype}{bool}\ p3\_domand2;}
+\DoxyCodeLine{00136\ \ \ \textcolor{keywordtype}{bool}\ p1\_domand2;}
+\DoxyCodeLine{00137\ \ \ \textcolor{keywordtype}{bool}\ p4\_domand2;}
+\DoxyCodeLine{00138\ \ \ p2\_domand2\ =\ Q2\_0\ \&\ Q3\_1;}
+\DoxyCodeLine{00139\ \ \ i1\_domand2\ =\ p2\_domand2\ \string^\ r\_inp;}
+\DoxyCodeLine{00140\ \ \ p3\_domand2\ =\ Q2\_1\ \&\ Q3\_0;}
+\DoxyCodeLine{00141\ \ \ i2\_domand2\ =\ p3\_domand2\ \string^\ r\_inp;}
+\DoxyCodeLine{00142\ \ \ p1\_domand2\ =\ Q2\_0\ \&\ Q3\_0;}
+\DoxyCodeLine{00143\ \ \ p4\_domand2\ =\ Q2\_1\ \&\ Q3\_1;}
+\DoxyCodeLine{00144\ \ \ T1\_0\ =\ reg(i1\_domand2)\ \string^\ p1\_domand2;}
+\DoxyCodeLine{00145\ \ \ T1\_1\ =\ reg(i2\_domand2)\ \string^\ p4\_domand2;}
+\DoxyCodeLine{00146\ \ \ \textcolor{keywordtype}{bool}\ i1\_domand3;}
+\DoxyCodeLine{00147\ \ \ \textcolor{keywordtype}{bool}\ i2\_domand3;}
+\DoxyCodeLine{00148\ \ \ \textcolor{keywordtype}{bool}\ p2\_domand3;}
+\DoxyCodeLine{00149\ \ \ \textcolor{keywordtype}{bool}\ p3\_domand3;}
+\DoxyCodeLine{00150\ \ \ \textcolor{keywordtype}{bool}\ p1\_domand3;}
+\DoxyCodeLine{00151\ \ \ \textcolor{keywordtype}{bool}\ p4\_domand3;}
+\DoxyCodeLine{00152\ \ \ p2\_domand3\ =\ Q6\_0\ \&\ Q7\_1;}
+\DoxyCodeLine{00153\ \ \ i1\_domand3\ =\ p2\_domand3\ \string^\ r\_inp;}
+\DoxyCodeLine{00154\ \ \ p3\_domand3\ =\ Q6\_1\ \&\ Q7\_0;}
+\DoxyCodeLine{00155\ \ \ i2\_domand3\ =\ p3\_domand3\ \string^\ r\_inp;}
+\DoxyCodeLine{00156\ \ \ p1\_domand3\ =\ Q6\_0\ \&\ Q7\_0;}
+\DoxyCodeLine{00157\ \ \ p4\_domand3\ =\ Q6\_1\ \&\ Q7\_1;}
+\DoxyCodeLine{00158\ \ \ T3\_0\ =\ reg(i1\_domand3)\ \string^\ p1\_domand3;}
+\DoxyCodeLine{00159\ \ \ T3\_1\ =\ reg(i2\_domand3)\ \string^\ p4\_domand3;}
+\DoxyCodeLine{00160\ \ \ L7\_0\ =\ T0\_0\ \string^\ T1\_0;}
+\DoxyCodeLine{00161\ \ \ L11\_0\ =\ T1\_0\ \string^\ L10\_0;}
+\DoxyCodeLine{00162\ \ \ L7\_1\ =\ T0\_1\ \string^\ T1\_1;}
+\DoxyCodeLine{00163\ \ \ L11\_1\ =\ T1\_1\ \string^\ L10\_1;}
+\DoxyCodeLine{00164\ \ \ Y0\_01\ =\ L7\_0\ \string^\ T2\_0;}
+\DoxyCodeLine{00165\ \ \ Y1\_01\ =\ L8\_0\ \string^\ T3\_0;}
+\DoxyCodeLine{00166\ \ \ Y0\_11\ =\ L7\_1\ \string^\ T2\_1;}
+\DoxyCodeLine{00167\ \ \ Y1\_11\ =\ L8\_1\ \string^\ T3\_1;}
+\DoxyCodeLine{00168\ \ \ *Y0\_0\ =\ reg(x3\_0\_inp\ \string^\ Y0\_01);}
+\DoxyCodeLine{00169\ \ \ *Y1\_0\ =\ reg(L7\_0\ \string^\ Y1\_01);}
+\DoxyCodeLine{00170\ \ \ *Y2\_0\ =\ reg(L11\_0\ \string^\ T2\_0);}
+\DoxyCodeLine{00171\ \ \ *Y3\_0\ =\ reg(T2\_0\ \string^\ L5\_0);}
+\DoxyCodeLine{00172\ \ \ *Y0\_1\ =\ reg(x3\_1\_inp\ \string^\ Y0\_11);}
+\DoxyCodeLine{00173\ \ \ *Y1\_1\ =\ reg(L7\_1\ \string^\ Y1\_11);}
+\DoxyCodeLine{00174\ \ \ *Y2\_1\ =\ reg(L11\_1\ \string^\ T2\_1);}
+\DoxyCodeLine{00175\ \ \ *Y3\_1\ =\ reg(T2\_1\ \string^\ L5\_1);}
+\DoxyCodeLine{00176\ \}}
+
+\end{DoxyCode}

@@ -1,0 +1,128 @@
+\doxysection{Reg\+Balancer.\+src.\+main Namespace Reference}
+\hypertarget{namespaceRegBalancer_1_1src_1_1main}{}\label{namespaceRegBalancer_1_1src_1_1main}\index{RegBalancer.src.main@{RegBalancer.src.main}}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{namespaceRegBalancer_1_1src_1_1main_a8187411843a6284ffb964ef3fb9fcab3}{args}} = json.\+load(file)
+\item 
+\mbox{\hyperlink{namespaceRegBalancer_1_1src_1_1main_a83d838e3813fb5999c0492e0d9474bd9}{ast}} = parse\+\_\+file(\mbox{\hyperlink{namespaceRegBalancer_1_1src_1_1main_a7b981d9b48acf5de0d1fefa71978ce4a}{file\+To\+Parse}}, use\+\_\+cpp=True)
+\item 
+\mbox{\hyperlink{namespaceRegBalancer_1_1src_1_1main_aa5d70a518fbbc3f1e03d57deb06db2e4}{dfg\+\_\+gen}} = Generate\+DFG()
+\item 
+\mbox{\hyperlink{namespaceRegBalancer_1_1src_1_1main_afb358f48b1646c750fb9da6c6585be2b}{end}}
+\item 
+\mbox{\hyperlink{namespaceRegBalancer_1_1src_1_1main_a7b981d9b48acf5de0d1fefa71978ce4a}{file\+To\+Parse}} = \mbox{\hyperlink{namespaceRegBalancer_1_1src_1_1main_a8187411843a6284ffb964ef3fb9fcab3}{args}}\mbox{[}"{}post\+Processor\+Output"{}\mbox{]} if(\mbox{\hyperlink{namespaceRegBalancer_1_1src_1_1main_a8187411843a6284ffb964ef3fb9fcab3}{args}}\mbox{[}"{}check\+Balancing"{}\mbox{]}) else \mbox{\hyperlink{namespaceRegBalancer_1_1src_1_1main_a8187411843a6284ffb964ef3fb9fcab3}{args}}\mbox{[}"{}inliner\+Output"{}\mbox{]}
+\item 
+\mbox{\hyperlink{namespaceRegBalancer_1_1src_1_1main_a6f1918359d19ff0f2ae80e155c83c951}{func\+\_\+body}} = extract\+\_\+func\+\_\+body(\mbox{\hyperlink{namespaceRegBalancer_1_1src_1_1main_a83d838e3813fb5999c0492e0d9474bd9}{ast}})
+\item 
+\mbox{\hyperlink{namespaceRegBalancer_1_1src_1_1main_aa9c65458d6900b176c9ff9b1ef34bed0}{manual\+Registers}} = no\+Of\+Registers\+Manually(dfg\+\_\+gen.\+dfg)
+\item 
+\mbox{\hyperlink{namespaceRegBalancer_1_1src_1_1main_a1209559bbc0dbee87e2e3044b791a287}{retimer}} = Retime\+DFG(dfg\+\_\+gen.\+dfg)
+\item 
+\mbox{\hyperlink{namespaceRegBalancer_1_1src_1_1main_a2530c3908f0179486a4c2255f792e27a}{start\+\_\+time}} = time.\+time()
+\item 
+str \mbox{\hyperlink{namespaceRegBalancer_1_1src_1_1main_af95bc90c71b62baff9856b60d6a69406}{use\+Linear\+Algo}} = "{}true"{}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{namespaceRegBalancer_1_1src_1_1main_a8187411843a6284ffb964ef3fb9fcab3}\index{RegBalancer.src.main@{RegBalancer.src.main}!args@{args}}
+\index{args@{args}!RegBalancer.src.main@{RegBalancer.src.main}}
+\doxysubsubsection{\texorpdfstring{args}{args}}
+{\footnotesize\ttfamily \label{namespaceRegBalancer_1_1src_1_1main_a8187411843a6284ffb964ef3fb9fcab3} 
+args = json.\+load(file)}
+
+
+
+Definition at line \mbox{\hyperlink{main_8py_source_l00045}{45}} of file \mbox{\hyperlink{main_8py_source}{main.\+py}}.
+
+\Hypertarget{namespaceRegBalancer_1_1src_1_1main_a83d838e3813fb5999c0492e0d9474bd9}\index{RegBalancer.src.main@{RegBalancer.src.main}!ast@{ast}}
+\index{ast@{ast}!RegBalancer.src.main@{RegBalancer.src.main}}
+\doxysubsubsection{\texorpdfstring{ast}{ast}}
+{\footnotesize\ttfamily \label{namespaceRegBalancer_1_1src_1_1main_a83d838e3813fb5999c0492e0d9474bd9} 
+ast = parse\+\_\+file(\mbox{\hyperlink{namespaceRegBalancer_1_1src_1_1main_a7b981d9b48acf5de0d1fefa71978ce4a}{file\+To\+Parse}}, use\+\_\+cpp=True)}
+
+
+
+Definition at line \mbox{\hyperlink{main_8py_source_l00049}{49}} of file \mbox{\hyperlink{main_8py_source}{main.\+py}}.
+
+\Hypertarget{namespaceRegBalancer_1_1src_1_1main_aa5d70a518fbbc3f1e03d57deb06db2e4}\index{RegBalancer.src.main@{RegBalancer.src.main}!dfg\_gen@{dfg\_gen}}
+\index{dfg\_gen@{dfg\_gen}!RegBalancer.src.main@{RegBalancer.src.main}}
+\doxysubsubsection{\texorpdfstring{dfg\_gen}{dfg\_gen}}
+{\footnotesize\ttfamily \label{namespaceRegBalancer_1_1src_1_1main_aa5d70a518fbbc3f1e03d57deb06db2e4} 
+dfg\+\_\+gen = Generate\+DFG()}
+
+
+
+Definition at line \mbox{\hyperlink{main_8py_source_l00052}{52}} of file \mbox{\hyperlink{main_8py_source}{main.\+py}}.
+
+\Hypertarget{namespaceRegBalancer_1_1src_1_1main_afb358f48b1646c750fb9da6c6585be2b}\index{RegBalancer.src.main@{RegBalancer.src.main}!end@{end}}
+\index{end@{end}!RegBalancer.src.main@{RegBalancer.src.main}}
+\doxysubsubsection{\texorpdfstring{end}{end}}
+{\footnotesize\ttfamily \label{namespaceRegBalancer_1_1src_1_1main_afb358f48b1646c750fb9da6c6585be2b} 
+end}
+
+
+
+Definition at line \mbox{\hyperlink{main_8py_source_l00077}{77}} of file \mbox{\hyperlink{main_8py_source}{main.\+py}}.
+
+\Hypertarget{namespaceRegBalancer_1_1src_1_1main_a7b981d9b48acf5de0d1fefa71978ce4a}\index{RegBalancer.src.main@{RegBalancer.src.main}!fileToParse@{fileToParse}}
+\index{fileToParse@{fileToParse}!RegBalancer.src.main@{RegBalancer.src.main}}
+\doxysubsubsection{\texorpdfstring{fileToParse}{fileToParse}}
+{\footnotesize\ttfamily \label{namespaceRegBalancer_1_1src_1_1main_a7b981d9b48acf5de0d1fefa71978ce4a} 
+file\+To\+Parse = \mbox{\hyperlink{namespaceRegBalancer_1_1src_1_1main_a8187411843a6284ffb964ef3fb9fcab3}{args}}\mbox{[}"{}post\+Processor\+Output"{}\mbox{]} if(\mbox{\hyperlink{namespaceRegBalancer_1_1src_1_1main_a8187411843a6284ffb964ef3fb9fcab3}{args}}\mbox{[}"{}check\+Balancing"{}\mbox{]}) else \mbox{\hyperlink{namespaceRegBalancer_1_1src_1_1main_a8187411843a6284ffb964ef3fb9fcab3}{args}}\mbox{[}"{}inliner\+Output"{}\mbox{]}}
+
+
+
+Definition at line \mbox{\hyperlink{main_8py_source_l00048}{48}} of file \mbox{\hyperlink{main_8py_source}{main.\+py}}.
+
+\Hypertarget{namespaceRegBalancer_1_1src_1_1main_a6f1918359d19ff0f2ae80e155c83c951}\index{RegBalancer.src.main@{RegBalancer.src.main}!func\_body@{func\_body}}
+\index{func\_body@{func\_body}!RegBalancer.src.main@{RegBalancer.src.main}}
+\doxysubsubsection{\texorpdfstring{func\_body}{func\_body}}
+{\footnotesize\ttfamily \label{namespaceRegBalancer_1_1src_1_1main_a6f1918359d19ff0f2ae80e155c83c951} 
+func\+\_\+body = extract\+\_\+func\+\_\+body(\mbox{\hyperlink{namespaceRegBalancer_1_1src_1_1main_a83d838e3813fb5999c0492e0d9474bd9}{ast}})}
+
+
+
+Definition at line \mbox{\hyperlink{main_8py_source_l00050}{50}} of file \mbox{\hyperlink{main_8py_source}{main.\+py}}.
+
+\Hypertarget{namespaceRegBalancer_1_1src_1_1main_aa9c65458d6900b176c9ff9b1ef34bed0}\index{RegBalancer.src.main@{RegBalancer.src.main}!manualRegisters@{manualRegisters}}
+\index{manualRegisters@{manualRegisters}!RegBalancer.src.main@{RegBalancer.src.main}}
+\doxysubsubsection{\texorpdfstring{manualRegisters}{manualRegisters}}
+{\footnotesize\ttfamily \label{namespaceRegBalancer_1_1src_1_1main_aa9c65458d6900b176c9ff9b1ef34bed0} 
+manual\+Registers = no\+Of\+Registers\+Manually(dfg\+\_\+gen.\+dfg)}
+
+
+
+Definition at line \mbox{\hyperlink{main_8py_source_l00063}{63}} of file \mbox{\hyperlink{main_8py_source}{main.\+py}}.
+
+\Hypertarget{namespaceRegBalancer_1_1src_1_1main_a1209559bbc0dbee87e2e3044b791a287}\index{RegBalancer.src.main@{RegBalancer.src.main}!retimer@{retimer}}
+\index{retimer@{retimer}!RegBalancer.src.main@{RegBalancer.src.main}}
+\doxysubsubsection{\texorpdfstring{retimer}{retimer}}
+{\footnotesize\ttfamily \label{namespaceRegBalancer_1_1src_1_1main_a1209559bbc0dbee87e2e3044b791a287} 
+retimer = Retime\+DFG(dfg\+\_\+gen.\+dfg)}
+
+
+
+Definition at line \mbox{\hyperlink{main_8py_source_l00069}{69}} of file \mbox{\hyperlink{main_8py_source}{main.\+py}}.
+
+\Hypertarget{namespaceRegBalancer_1_1src_1_1main_a2530c3908f0179486a4c2255f792e27a}\index{RegBalancer.src.main@{RegBalancer.src.main}!start\_time@{start\_time}}
+\index{start\_time@{start\_time}!RegBalancer.src.main@{RegBalancer.src.main}}
+\doxysubsubsection{\texorpdfstring{start\_time}{start\_time}}
+{\footnotesize\ttfamily \label{namespaceRegBalancer_1_1src_1_1main_a2530c3908f0179486a4c2255f792e27a} 
+start\+\_\+time = time.\+time()}
+
+
+
+Definition at line \mbox{\hyperlink{main_8py_source_l00047}{47}} of file \mbox{\hyperlink{main_8py_source}{main.\+py}}.
+
+\Hypertarget{namespaceRegBalancer_1_1src_1_1main_af95bc90c71b62baff9856b60d6a69406}\index{RegBalancer.src.main@{RegBalancer.src.main}!useLinearAlgo@{useLinearAlgo}}
+\index{useLinearAlgo@{useLinearAlgo}!RegBalancer.src.main@{RegBalancer.src.main}}
+\doxysubsubsection{\texorpdfstring{useLinearAlgo}{useLinearAlgo}}
+{\footnotesize\ttfamily \label{namespaceRegBalancer_1_1src_1_1main_af95bc90c71b62baff9856b60d6a69406} 
+str use\+Linear\+Algo = "{}true"{}}
+
+
+
+Definition at line \mbox{\hyperlink{main_8py_source_l00068}{68}} of file \mbox{\hyperlink{main_8py_source}{main.\+py}}.
+

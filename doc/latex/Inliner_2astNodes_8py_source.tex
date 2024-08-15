@@ -1,0 +1,59 @@
+\doxysection{ast\+Nodes.\+py}
+\hypertarget{Inliner_2astNodes_8py_source}{}\label{Inliner_2astNodes_8py_source}\index{Inliner/astNodes.py@{Inliner/astNodes.py}}
+\mbox{\hyperlink{Inliner_2astNodes_8py}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{Inliner_2astNodes_8py_source_l00001}\mbox{\hyperlink{namespaceastNodes}{00001}}\ \textcolor{keyword}{from}\ pycparser\ \textcolor{keyword}{import}\ c\_ast}
+\DoxyCodeLine{\Hypertarget{Inliner_2astNodes_8py_source_l00002}00002\ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{Inliner_2astNodes_8py_source_l00003}00003\ \textcolor{stringliteral}{@brief\ Provides\ utility\ functions\ for\ creating\ AST\ nodes\ related\ to\ assignments\ and\ declarations.}}
+\DoxyCodeLine{\Hypertarget{Inliner_2astNodes_8py_source_l00004}00004\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{Inliner_2astNodes_8py_source_l00005}00005\ \textcolor{stringliteral}{This\ module\ defines\ utility\ functions\ for\ generating\ AST\ nodes\ for\ simple\ and\ constant\ assignments,\ as\ well\ as\ variable\ declarations\ in\ C\ code.}}
+\DoxyCodeLine{\Hypertarget{Inliner_2astNodes_8py_source_l00006}00006\ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{Inliner_2astNodes_8py_source_l00007}\mbox{\hyperlink{namespaceastNodes_a7cf6fff12c1730216ea4d4f05b68fe2c}{00007}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespaceastNodes_a7cf6fff12c1730216ea4d4f05b68fe2c}{getSimpleAssignmentNode}}(lvalue,rvalue):}
+\DoxyCodeLine{\Hypertarget{Inliner_2astNodes_8py_source_l00008}00008\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{Inliner_2astNodes_8py_source_l00009}00009\ \textcolor{stringliteral}{\ \ \ \ Creates\ a\ simple\ assignment\ node\ with\ the\ specified\ left-\/hand\ side\ and\ right-\/hand\ side.}}
+\DoxyCodeLine{\Hypertarget{Inliner_2astNodes_8py_source_l00010}00010\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{Inliner_2astNodes_8py_source_l00011}00011\ \textcolor{stringliteral}{\ \ \ \ @param\ lvalue:\ The\ left-\/hand\ side\ of\ the\ assignment,\ typically\ a\ variable\ name.}}
+\DoxyCodeLine{\Hypertarget{Inliner_2astNodes_8py_source_l00012}00012\ \textcolor{stringliteral}{\ \ \ \ @type\ lvalue:\ str}}
+\DoxyCodeLine{\Hypertarget{Inliner_2astNodes_8py_source_l00013}00013\ \textcolor{stringliteral}{\ \ \ \ @param\ rvalue:\ The\ right-\/hand\ side\ of\ the\ assignment,\ typically\ a\ variable\ name\ or\ expression.}}
+\DoxyCodeLine{\Hypertarget{Inliner_2astNodes_8py_source_l00014}00014\ \textcolor{stringliteral}{\ \ \ \ @type\ rvalue:\ str}}
+\DoxyCodeLine{\Hypertarget{Inliner_2astNodes_8py_source_l00015}00015\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{Inliner_2astNodes_8py_source_l00016}00016\ \textcolor{stringliteral}{\ \ \ \ @return:\ A\ \`{}c\_ast.Assignment\`{}\ node\ representing\ the\ assignment\ operation.}}
+\DoxyCodeLine{\Hypertarget{Inliner_2astNodes_8py_source_l00017}00017\ \textcolor{stringliteral}{\ \ \ \ @rtype:\ c\_ast.Assignment}}
+\DoxyCodeLine{\Hypertarget{Inliner_2astNodes_8py_source_l00018}00018\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{Inliner_2astNodes_8py_source_l00019}00019\ \ \ \ \ \textcolor{keywordflow}{return}\ c\_ast.Assignment(lvalue=c\_ast.ID(name=lvalue),rvalue=c\_ast.ID(name=rvalue),op=\textcolor{stringliteral}{'='})}
+\DoxyCodeLine{\Hypertarget{Inliner_2astNodes_8py_source_l00020}00020\ }
+\DoxyCodeLine{\Hypertarget{Inliner_2astNodes_8py_source_l00021}\mbox{\hyperlink{namespaceastNodes_a6ced6199d6aaaa78844aa78db139f4ec}{00021}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespaceastNodes_a6ced6199d6aaaa78844aa78db139f4ec}{getConstAssignmentNode}}(lvalue,rvalue):}
+\DoxyCodeLine{\Hypertarget{Inliner_2astNodes_8py_source_l00022}00022\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{Inliner_2astNodes_8py_source_l00023}00023\ \textcolor{stringliteral}{\ \ \ \ Creates\ an\ assignment\ node\ where\ the\ right-\/hand\ side\ is\ a\ constant\ integer.}}
+\DoxyCodeLine{\Hypertarget{Inliner_2astNodes_8py_source_l00024}00024\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{Inliner_2astNodes_8py_source_l00025}00025\ \textcolor{stringliteral}{\ \ \ \ @param\ lvalue:\ The\ left-\/hand\ side\ of\ the\ assignment,\ typically\ a\ variable\ name.}}
+\DoxyCodeLine{\Hypertarget{Inliner_2astNodes_8py_source_l00026}00026\ \textcolor{stringliteral}{\ \ \ \ @type\ lvalue:\ str}}
+\DoxyCodeLine{\Hypertarget{Inliner_2astNodes_8py_source_l00027}00027\ \textcolor{stringliteral}{\ \ \ \ @param\ rvalue:\ The\ constant\ integer\ value\ for\ the\ right-\/hand\ side\ of\ the\ assignment.}}
+\DoxyCodeLine{\Hypertarget{Inliner_2astNodes_8py_source_l00028}00028\ \textcolor{stringliteral}{\ \ \ \ @type\ rvalue:\ int}}
+\DoxyCodeLine{\Hypertarget{Inliner_2astNodes_8py_source_l00029}00029\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{Inliner_2astNodes_8py_source_l00030}00030\ \textcolor{stringliteral}{\ \ \ \ @return:\ A\ \`{}c\_ast.Assignment\`{}\ node\ representing\ the\ assignment\ of\ a\ constant\ integer\ value.}}
+\DoxyCodeLine{\Hypertarget{Inliner_2astNodes_8py_source_l00031}00031\ \textcolor{stringliteral}{\ \ \ \ @rtype:\ c\_ast.Assignment}}
+\DoxyCodeLine{\Hypertarget{Inliner_2astNodes_8py_source_l00032}00032\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{Inliner_2astNodes_8py_source_l00033}00033\ \ \ \ \ \textcolor{keywordflow}{return}\ c\_ast.Assignment(lvalue=c\_ast.ID(name=lvalue),rvalue=c\_ast.Constant(type=\textcolor{stringliteral}{"{}int"{}},value=rvalue),op=\textcolor{stringliteral}{'='})}
+\DoxyCodeLine{\Hypertarget{Inliner_2astNodes_8py_source_l00034}00034\ }
+\DoxyCodeLine{\Hypertarget{Inliner_2astNodes_8py_source_l00035}\mbox{\hyperlink{namespaceastNodes_a534bfba8974cc96ff24d6d6d0e8c4b37}{00035}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespaceastNodes_a534bfba8974cc96ff24d6d6d0e8c4b37}{getDeclarationNode}}(idName,type):}
+\DoxyCodeLine{\Hypertarget{Inliner_2astNodes_8py_source_l00036}00036\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{Inliner_2astNodes_8py_source_l00037}00037\ \textcolor{stringliteral}{\ \ \ \ Creates\ a\ declaration\ node\ for\ a\ variable\ with\ the\ specified\ name\ and\ type.}}
+\DoxyCodeLine{\Hypertarget{Inliner_2astNodes_8py_source_l00038}00038\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{Inliner_2astNodes_8py_source_l00039}00039\ \textcolor{stringliteral}{\ \ \ \ @param\ idName:\ The\ name\ of\ the\ variable\ to\ declare.}}
+\DoxyCodeLine{\Hypertarget{Inliner_2astNodes_8py_source_l00040}00040\ \textcolor{stringliteral}{\ \ \ \ @type\ idName:\ str}}
+\DoxyCodeLine{\Hypertarget{Inliner_2astNodes_8py_source_l00041}00041\ \textcolor{stringliteral}{\ \ \ \ @param\ type:\ The\ type\ of\ the\ variable,\ e.g.,\ 'int'\ or\ 'float'.}}
+\DoxyCodeLine{\Hypertarget{Inliner_2astNodes_8py_source_l00042}00042\ \textcolor{stringliteral}{\ \ \ \ @type\ type:\ str}}
+\DoxyCodeLine{\Hypertarget{Inliner_2astNodes_8py_source_l00043}00043\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{Inliner_2astNodes_8py_source_l00044}00044\ \textcolor{stringliteral}{\ \ \ \ @return:\ A\ \`{}c\_ast.Decl\`{}\ node\ representing\ the\ variable\ declaration.}}
+\DoxyCodeLine{\Hypertarget{Inliner_2astNodes_8py_source_l00045}00045\ \textcolor{stringliteral}{\ \ \ \ @rtype:\ c\_ast.Decl}}
+\DoxyCodeLine{\Hypertarget{Inliner_2astNodes_8py_source_l00046}00046\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{Inliner_2astNodes_8py_source_l00047}00047\ }
+\DoxyCodeLine{\Hypertarget{Inliner_2astNodes_8py_source_l00048}00048\ \ \ \ \ typeDeclNode\ =\ c\_ast.TypeDecl(declname\ =\ idName,quals\ =\ [],align\ =\ \textcolor{keywordtype}{None},}
+\DoxyCodeLine{\Hypertarget{Inliner_2astNodes_8py_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ type=c\_ast.IdentifierType(names=[type]))}
+\DoxyCodeLine{\Hypertarget{Inliner_2astNodes_8py_source_l00050}00050\ \ \ \ \ declNode\ =\ c\_ast.Decl(name=idName,\ quals=[],\ storage=[],\ funcspec=[],}
+\DoxyCodeLine{\Hypertarget{Inliner_2astNodes_8py_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ type=typeDeclNode,\ init=\textcolor{keywordtype}{None},}
+\DoxyCodeLine{\Hypertarget{Inliner_2astNodes_8py_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ bitsize=\textcolor{keywordtype}{None},\ align=[])}
+\DoxyCodeLine{\Hypertarget{Inliner_2astNodes_8py_source_l00053}00053\ \ \ \ \ \textcolor{keywordflow}{return}\ declNode}
+
+\end{DoxyCode}

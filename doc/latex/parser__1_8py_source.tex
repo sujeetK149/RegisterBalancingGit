@@ -1,0 +1,44 @@
+\doxysection{parser\+\_\+1.\+py}
+\hypertarget{parser__1_8py_source}{}\label{parser__1_8py_source}\index{Compiler/parser\_1.py@{Compiler/parser\_1.py}}
+\mbox{\hyperlink{parser__1_8py}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{parser__1_8py_source_l00001}\mbox{\hyperlink{namespaceparser__1}{00001}}\ \textcolor{comment}{\#assumptions:}}
+\DoxyCodeLine{\Hypertarget{parser__1_8py_source_l00002}00002\ }
+\DoxyCodeLine{\Hypertarget{parser__1_8py_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{parser__1_8py_source_l00008}00008\ \textcolor{keyword}{import}\ argparse}
+\DoxyCodeLine{\Hypertarget{parser__1_8py_source_l00009}00009\ \textcolor{keyword}{from}\ pycparser\ \textcolor{keyword}{import}\ parse\_file}
+\DoxyCodeLine{\Hypertarget{parser__1_8py_source_l00010}00010\ \textcolor{keyword}{from}\ pycparser\ \textcolor{keyword}{import}\ c\_ast}
+\DoxyCodeLine{\Hypertarget{parser__1_8py_source_l00011}00011\ \textcolor{keyword}{from}\ utils\ \textcolor{keyword}{import}\ processFunctions,writeVerilogToFile}
+\DoxyCodeLine{\Hypertarget{parser__1_8py_source_l00012}00012\ \textcolor{keyword}{import}\ json}
+\DoxyCodeLine{\Hypertarget{parser__1_8py_source_l00013}00013\ }
+\DoxyCodeLine{\Hypertarget{parser__1_8py_source_l00014}00014\ \textcolor{keywordflow}{if}\ \_\_name\_\_\ ==\ \textcolor{stringliteral}{"{}\_\_main\_\_"{}}:}
+\DoxyCodeLine{\Hypertarget{parser__1_8py_source_l00015}00015\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{parser__1_8py_source_l00016}00016\ \textcolor{stringliteral}{\ \ \ \ @brief\ The\ main\ entry\ point\ of\ the\ script\ that\ parses\ C\ code\ to\ generate\ Verilog\ code.}}
+\DoxyCodeLine{\Hypertarget{parser__1_8py_source_l00017}00017\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{parser__1_8py_source_l00018}00018\ \textcolor{stringliteral}{\ \ \ \ This\ script\ reads\ a\ JSON\ configuration\ file\ for\ input\ arguments,\ parses\ C\ code\ using\ \`{}pycparser\`{},}}
+\DoxyCodeLine{\Hypertarget{parser__1_8py_source_l00019}00019\ \textcolor{stringliteral}{\ \ \ \ processes\ functions\ to\ extract\ information,\ and\ writes\ the\ resulting\ Verilog\ code\ to\ a\ file.}}
+\DoxyCodeLine{\Hypertarget{parser__1_8py_source_l00020}00020\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{parser__1_8py_source_l00021}00021\ \textcolor{stringliteral}{\ \ \ \ The\ script\ assumes\ certain\ conditions\ for\ sequentiality\ and\ boolean\ handling,\ which\ need\ to\ be\ manually\ addressed.}}
+\DoxyCodeLine{\Hypertarget{parser__1_8py_source_l00022}00022\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{parser__1_8py_source_l00023}00023\ \textcolor{stringliteral}{\ \ \ \ @raises\ FileNotFoundError:\ If\ the\ JSON\ configuration\ file\ or\ input\ C\ code\ file\ cannot\ be\ found.}}
+\DoxyCodeLine{\Hypertarget{parser__1_8py_source_l00024}00024\ \textcolor{stringliteral}{\ \ \ \ @raises\ KeyError:\ If\ required\ keys\ are\ missing\ in\ the\ JSON\ configuration\ file.}}
+\DoxyCodeLine{\Hypertarget{parser__1_8py_source_l00025}00025\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{parser__1_8py_source_l00026}00026\ \ \ \ \ \textcolor{keyword}{with}\ open(\textcolor{stringliteral}{'./systemArgs.json'},\ \textcolor{stringliteral}{'r'})\ \textcolor{keyword}{as}\ file:}
+\DoxyCodeLine{\Hypertarget{parser__1_8py_source_l00027}\mbox{\hyperlink{namespaceparser__1_a8187411843a6284ffb964ef3fb9fcab3}{00027}}\ \ \ \ \ \ \ \ \ args\ =\ json.load(file)}
+\DoxyCodeLine{\Hypertarget{parser__1_8py_source_l00028}00028\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{parser__1_8py_source_l00029}\mbox{\hyperlink{namespaceparser__1_a5558ace5433f9aabbf0a0ec059900d94}{00029}}\ \ \ \ \ width\ =\ str(args[\textcolor{stringliteral}{"{}bitWidth"{}}]\ -\/\ 1)}
+\DoxyCodeLine{\Hypertarget{parser__1_8py_source_l00030}\mbox{\hyperlink{namespaceparser__1_a9828497b7b0cd63476659c38a78450c9}{00030}}\ \ \ \ \ functions\ =\ \{\}}
+\DoxyCodeLine{\Hypertarget{parser__1_8py_source_l00031}\mbox{\hyperlink{namespaceparser__1_a8f6b932a0080d490d8ffb1e49e6c60b0}{00031}}\ \ \ \ \ functionCalls\ =\ \{\}}
+\DoxyCodeLine{\Hypertarget{parser__1_8py_source_l00032}\mbox{\hyperlink{namespaceparser__1_a83d838e3813fb5999c0492e0d9474bd9}{00032}}\ \ \ \ \ ast\ =\ parse\_file(args[\textcolor{stringliteral}{"{}postProcessorOutput"{}}],\ use\_cpp=\textcolor{keyword}{True})}
+\DoxyCodeLine{\Hypertarget{parser__1_8py_source_l00033}00033\ \ \ \ \ \textcolor{comment}{\#\ print(ast)}}
+\DoxyCodeLine{\Hypertarget{parser__1_8py_source_l00034}\mbox{\hyperlink{namespaceparser__1_a32e815a279013079b754c222458fb164}{00034}}\ \ \ \ \ intermediateAssignments\ =\ \{\}}
+\DoxyCodeLine{\Hypertarget{parser__1_8py_source_l00035}00035\ }
+\DoxyCodeLine{\Hypertarget{parser__1_8py_source_l00036}00036\ \ \ \ \ \textcolor{keywordflow}{for}\ fDef\ \textcolor{keywordflow}{in}\ ast.ext:}
+\DoxyCodeLine{\Hypertarget{parser__1_8py_source_l00037}00037\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isinstance(fDef,c\_ast.FuncDef):}
+\DoxyCodeLine{\Hypertarget{parser__1_8py_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ processFunctions(functions,fDef,functionCalls,intermediateAssignments)}
+\DoxyCodeLine{\Hypertarget{parser__1_8py_source_l00039}00039\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{parser__1_8py_source_l00040}00040\ \ \ \ \ \textcolor{keywordflow}{for}\ fName\ \textcolor{keywordflow}{in}\ functions:}
+\DoxyCodeLine{\Hypertarget{parser__1_8py_source_l00041}00041\ \ \ \ \ \ \ \ \ writeVerilogToFile(fName,functions,intermediateAssignments[fName],functionCalls,args[\textcolor{stringliteral}{"{}generatedRtl"{}}],width)}
+\DoxyCodeLine{\Hypertarget{parser__1_8py_source_l00042}00042\ \ \ \ \ \ \ \ \ }
+
+\end{DoxyCode}

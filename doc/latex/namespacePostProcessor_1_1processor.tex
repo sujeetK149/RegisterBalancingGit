@@ -1,0 +1,127 @@
+\doxysection{Post\+Processor.\+processor Namespace Reference}
+\hypertarget{namespacePostProcessor_1_1processor}{}\label{namespacePostProcessor_1_1processor}\index{PostProcessor.processor@{PostProcessor.processor}}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{namespacePostProcessor_1_1processor_a3d5377767863b0df6b0eeae31ae33bc5}{post\+Process}} (input\+File, output\+File)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{namespacePostProcessor_1_1processor_a8187411843a6284ffb964ef3fb9fcab3}{args}} = json.\+load(file)
+\item 
+\mbox{\hyperlink{namespacePostProcessor_1_1processor_a7e91ec681fdd5ff588de2f2d2c3dc3f6}{global\+Type}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{namespacePostProcessor_1_1processor_a3d5377767863b0df6b0eeae31ae33bc5}\index{PostProcessor.processor@{PostProcessor.processor}!postProcess@{postProcess}}
+\index{postProcess@{postProcess}!PostProcessor.processor@{PostProcessor.processor}}
+\doxysubsubsection{\texorpdfstring{postProcess()}{postProcess()}}
+{\footnotesize\ttfamily \label{namespacePostProcessor_1_1processor_a3d5377767863b0df6b0eeae31ae33bc5} 
+post\+Process (\begin{DoxyParamCaption}\item[{}]{input\+File}{, }\item[{}]{output\+File}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Processes the input C file, applies transformations, and generates the output C file.
+
+@param inputFile: Path to the input C file to be processed.
+@param outputFile: Path to the output C file where the processed code will be saved.
+
+@raises FileNotFoundError: If the input file does not exist.
+@raises IOError: If there is an issue with file reading or writing.
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{processor_8py_source_l00032}{32}} of file \mbox{\hyperlink{processor_8py_source}{processor.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00032\ \textcolor{keyword}{def\ }postProcess(inputFile,outputFile): }
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{} }}
+\DoxyCodeLine{00034\ \textcolor{stringliteral}{\ \ \ \ Processes\ the\ input\ C\ file,\ applies\ transformations,\ and\ generates\ the\ output\ C\ file. }}
+\DoxyCodeLine{00035\ \textcolor{stringliteral}{ }}
+\DoxyCodeLine{00036\ \textcolor{stringliteral}{\ \ \ \ @param\ inputFile:\ Path\ to\ the\ input\ C\ file\ to\ be\ processed. }}
+\DoxyCodeLine{00037\ \textcolor{stringliteral}{\ \ \ \ @param\ outputFile:\ Path\ to\ the\ output\ C\ file\ where\ the\ processed\ code\ will\ be\ saved. }}
+\DoxyCodeLine{00038\ \textcolor{stringliteral}{ }}
+\DoxyCodeLine{00039\ \textcolor{stringliteral}{\ \ \ \ @raises\ FileNotFoundError:\ If\ the\ input\ file\ does\ not\ exist. }}
+\DoxyCodeLine{00040\ \textcolor{stringliteral}{\ \ \ \ @raises\ IOError:\ If\ there\ is\ an\ issue\ with\ file\ reading\ or\ writing. }}
+\DoxyCodeLine{00041\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}} }
+\DoxyCodeLine{00042\  }
+\DoxyCodeLine{00043\ \ \ \ \ assgnNo\ =\ 1 }
+\DoxyCodeLine{00044\ \ \ \ \ ast\ =\ parse\_file(inputFile,\ use\_cpp=\textcolor{keyword}{True}) }
+\DoxyCodeLine{00045\ \ \ \ \ bodyNodes\ =\ [] }
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keyword}{with}\ open(\textcolor{stringliteral}{'systemArgs.json'},\ \textcolor{stringliteral}{'r'})\ \textcolor{keyword}{as}\ file: }
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ json\_data\ =\ file.read() }
+\DoxyCodeLine{00048\ \ \ \ \ operatorNameMap\ =\ json.loads(json\_data) }
+\DoxyCodeLine{00049\  }
+\DoxyCodeLine{00050\ \textcolor{comment}{\#handling\ unary\ ops }}
+\DoxyCodeLine{00051\ \ \ \ \ negationVisitor\ =\ NegationVisitor(bodyNodes) }
+\DoxyCodeLine{00052\ \ \ \ \ negationVisitor.visit(ast) }
+\DoxyCodeLine{00053\ \ \ \ \ assgnNo\ =\ negationVisitor.assgnNo }
+\DoxyCodeLine{00054\ \ \ \ \ ast.ext[0].body.block\_items\ =\ bodyNodes }
+\DoxyCodeLine{00055\ \ \ \ \ bodyNodes\ =\ [] }
+\DoxyCodeLine{00056\  }
+\DoxyCodeLine{00057\ \ \ \ \ unaryOpNodeChanger\ =\ UnaryOpNodeChanger(negationVisitor.unaryVarToNameMap) }
+\DoxyCodeLine{00058\ \ \ \ \ unaryOpNodeChanger.visit(ast) }
+\DoxyCodeLine{00059\  }
+\DoxyCodeLine{00060\ \textcolor{comment}{\#handling\ source\ regs }}
+\DoxyCodeLine{00061\ \ \ \ \ sourceRegHandler\ =\ SourceRegHandler(bodyNodes,assgnNo) }
+\DoxyCodeLine{00062\ \ \ \ \ sourceRegHandler.visit(ast) }
+\DoxyCodeLine{00063\ \ \ \ \ assgnNo\ =\ sourceRegHandler.assignNo }
+\DoxyCodeLine{00064\ \ \ \ \ ast.ext[0].body.block\_items\ =\ bodyNodes }
+\DoxyCodeLine{00065\ \ \ \ \ bodyNodes\ =\ [] }
+\DoxyCodeLine{00066\  }
+\DoxyCodeLine{00067\ \textcolor{comment}{\#handling\ nested\ reg\ binary\ op\ inside\ a\ reg\ call }}
+\DoxyCodeLine{00068\ \ \ \ \ binaryOpInRegHandler\ =\ BinaryOpInRegHandler(bodyNodes,assgnNo) }
+\DoxyCodeLine{00069\ \ \ \ \ binaryOpInRegHandler.visit(ast) }
+\DoxyCodeLine{00070\ \ \ \ \ assgnNo\ =\ binaryOpInRegHandler.assignNo }
+\DoxyCodeLine{00071\ \ \ \ \ ast.ext[0].body.block\_items\ =\ bodyNodes }
+\DoxyCodeLine{00072\ \ \ \ \ bodyNodes\ =\ [] }
+\DoxyCodeLine{00073\  }
+\DoxyCodeLine{00074\ \textcolor{comment}{\#handling\ nested\ reg\ binary\ op }}
+\DoxyCodeLine{00075\ \ \ \ \ \textcolor{keywordflow}{for}\ node\ \textcolor{keywordflow}{in}\ ast.ext[0].body.block\_items: }
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keywordflow}{not}\ isinstance(node,c\_ast.Assignment): }
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \ \ \ \ bodyNodes.append(node) }
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}: }
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \ \ \ \ changeBinaryOps(node,bodyNodes,assgnNo) }
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \ \ \ \ assgnNo\ +=\ 2 }
+\DoxyCodeLine{00081\ \ \ \ \ ast.ext[0].body.block\_items\ =\ bodyNodes }
+\DoxyCodeLine{00082\ \ \ \ \ \textcolor{comment}{\#\ \#\ print(ast) }}
+\DoxyCodeLine{00083\  }
+\DoxyCodeLine{00084\ \ \ \ \ bodyNodes\ =\ [] }
+\DoxyCodeLine{00085\ \ \ \ \ \textcolor{keywordflow}{for}\ node\ \textcolor{keywordflow}{in}\ ast.ext[0].body.block\_items: }
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keywordflow}{not}\ isinstance(node,c\_ast.Assignment): }
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \ \ \ \ bodyNodes.append(node) }
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}: }
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \ \ \ \ handleAssignmentNodes(node,bodyNodes,operatorNameMap,assgnNo) }
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \ \ \ \ assgnNo\ +=\ 2 }
+\DoxyCodeLine{00091\ \ \ \ \ \textcolor{comment}{\#\ print(bodyNodes) }}
+\DoxyCodeLine{00092\ \ \ \ \ ast.ext[0].body.block\_items\ =\ bodyNodes }
+\DoxyCodeLine{00093\ \ \ \ \ \textcolor{comment}{\#\ print(ast) }}
+\DoxyCodeLine{00094\ \ \ \ \ generate\_c\_file(ast,outputFile) }
+\DoxyCodeLine{00095\  }
+\DoxyCodeLine{00096\  }
+
+\end{DoxyCode}
+
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{namespacePostProcessor_1_1processor_a8187411843a6284ffb964ef3fb9fcab3}\index{PostProcessor.processor@{PostProcessor.processor}!args@{args}}
+\index{args@{args}!PostProcessor.processor@{PostProcessor.processor}}
+\doxysubsubsection{\texorpdfstring{args}{args}}
+{\footnotesize\ttfamily \label{namespacePostProcessor_1_1processor_a8187411843a6284ffb964ef3fb9fcab3} 
+args = json.\+load(file)}
+
+
+
+Definition at line \mbox{\hyperlink{processor_8py_source_l00105}{105}} of file \mbox{\hyperlink{processor_8py_source}{processor.\+py}}.
+
+\Hypertarget{namespacePostProcessor_1_1processor_a7e91ec681fdd5ff588de2f2d2c3dc3f6}\index{PostProcessor.processor@{PostProcessor.processor}!globalType@{globalType}}
+\index{globalType@{globalType}!PostProcessor.processor@{PostProcessor.processor}}
+\doxysubsubsection{\texorpdfstring{globalType}{globalType}}
+{\footnotesize\ttfamily \label{namespacePostProcessor_1_1processor_a7e91ec681fdd5ff588de2f2d2c3dc3f6} 
+global\+Type}
+
+
+
+Definition at line \mbox{\hyperlink{processor_8py_source_l00108}{108}} of file \mbox{\hyperlink{processor_8py_source}{processor.\+py}}.
+

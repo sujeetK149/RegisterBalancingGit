@@ -1,0 +1,110 @@
+\doxysection{Local\+Variables\+Modifier Class Reference}
+\hypertarget{classVisitors_1_1LocalVariablesModifier}{}\label{classVisitors_1_1LocalVariablesModifier}\index{LocalVariablesModifier@{LocalVariablesModifier}}
+Inheritance diagram for Local\+Variables\+Modifier\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classVisitors_1_1LocalVariablesModifier}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classVisitors_1_1LocalVariablesModifier_a2739396f41c449e08246b5df9e54fb4a}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, \mbox{\hyperlink{classVisitors_1_1LocalVariablesModifier_af117185a96147e67251924514b93a25e}{local\+Variables}}, f\+Name)
+\item 
+\mbox{\hyperlink{classVisitors_1_1LocalVariablesModifier_a96d9baa4a0602d7577cbc4a3c0820de7}{visit\+\_\+\+ID}} (self, node)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classVisitors_1_1LocalVariablesModifier_af117185a96147e67251924514b93a25e}{local\+Variables}} = local\+Variables
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb}@brief Modifies local variable names by appending the function name.
+
+This visitor updates the names of local variables by appending the function name to ensure uniqueness.
+
+@param localVariables: List of local variable names to be modified.
+@type localVariables: list of str
+@param fName: The name of the function to append to local variable names.
+@type fName: str
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{Visitors_8py_source_l00031}{31}} of file \mbox{\hyperlink{Visitors_8py_source}{Visitors.\+py}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classVisitors_1_1LocalVariablesModifier_a2739396f41c449e08246b5df9e54fb4a}\index{LocalVariablesModifier@{LocalVariablesModifier}!\_\_init\_\_@{\_\_init\_\_}}
+\index{\_\_init\_\_@{\_\_init\_\_}!LocalVariablesModifier@{LocalVariablesModifier}}
+\doxysubsubsection{\texorpdfstring{\_\_init\_\_()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily \label{classVisitors_1_1LocalVariablesModifier_a2739396f41c449e08246b5df9e54fb4a} 
+\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{local\+Variables}{, }\item[{}]{f\+Name}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{Visitors_8py_source_l00042}{42}} of file \mbox{\hyperlink{Visitors_8py_source}{Visitors.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keyword}{def\ }\_\_init\_\_(self,localVariables,fName): }
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ self.localVariables\ =\ localVariables }
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ self.fName\ =\ fName }
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classVisitors_1_1LocalVariablesModifier_a96d9baa4a0602d7577cbc4a3c0820de7}\index{LocalVariablesModifier@{LocalVariablesModifier}!visit\_ID@{visit\_ID}}
+\index{visit\_ID@{visit\_ID}!LocalVariablesModifier@{LocalVariablesModifier}}
+\doxysubsubsection{\texorpdfstring{visit\_ID()}{visit\_ID()}}
+{\footnotesize\ttfamily \label{classVisitors_1_1LocalVariablesModifier_a96d9baa4a0602d7577cbc4a3c0820de7} 
+visit\+\_\+\+ID (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{node}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Updates local variable names with function name suffix.
+
+Appends the function name to the local variable name if it is found in the list of local variables.
+
+@param node: The identifier node representing a local variable.
+@type node: pycparser.c_ast.ID
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{Visitors_8py_source_l00045}{45}} of file \mbox{\hyperlink{Visitors_8py_source}{Visitors.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keyword}{def\ }visit\_ID(self,node): }
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{} }}
+\DoxyCodeLine{00047\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @brief\ Updates\ local\ variable\ names\ with\ function\ name\ suffix. }}
+\DoxyCodeLine{00048\ \textcolor{stringliteral}{ }}
+\DoxyCodeLine{00049\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ Appends\ the\ function\ name\ to\ the\ local\ variable\ name\ if\ it\ is\ found\ in\ the\ list\ of\ local\ variables. }}
+\DoxyCodeLine{00050\ \textcolor{stringliteral}{ }}
+\DoxyCodeLine{00051\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @param\ node:\ The\ identifier\ node\ representing\ a\ local\ variable. }}
+\DoxyCodeLine{00052\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @type\ node:\ pycparser.c\_ast.ID }}
+\DoxyCodeLine{00053\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ "{}"{}"{}} }
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ if(node.name\ \textcolor{keywordflow}{in}\ self.localVariables): }
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \ \ \ \ node.name\ =\ node.name\ +\ \textcolor{stringliteral}{'\_'}\ +\ self.fName }
+\DoxyCodeLine{00056\  }
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classVisitors_1_1LocalVariablesModifier_af117185a96147e67251924514b93a25e}\index{LocalVariablesModifier@{LocalVariablesModifier}!localVariables@{localVariables}}
+\index{localVariables@{localVariables}!LocalVariablesModifier@{LocalVariablesModifier}}
+\doxysubsubsection{\texorpdfstring{localVariables}{localVariables}}
+{\footnotesize\ttfamily \label{classVisitors_1_1LocalVariablesModifier_af117185a96147e67251924514b93a25e} 
+local\+Variables = local\+Variables}
+
+
+
+Definition at line \mbox{\hyperlink{Visitors_8py_source_l00043}{43}} of file \mbox{\hyperlink{Visitors_8py_source}{Visitors.\+py}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Inliner/\mbox{\hyperlink{Visitors_8py}{Visitors.\+py}}\end{DoxyCompactItemize}

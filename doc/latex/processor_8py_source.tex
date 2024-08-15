@@ -1,0 +1,117 @@
+\doxysection{processor.\+py}
+\hypertarget{processor_8py_source}{}\label{processor_8py_source}\index{PostProcessor/processor.py@{PostProcessor/processor.py}}
+\mbox{\hyperlink{processor_8py}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00001}\mbox{\hyperlink{namespacePostProcessor_1_1processor}{00001}}\ \textcolor{comment}{\#\ use:\ python3\ processor.py\ -\/-\/type=int\ >\ output.c\ for\ AES\ design}}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00002}00002\ \textcolor{keyword}{import}\ sys}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00003}00003\ \textcolor{keyword}{import}\ json}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00004}00004\ \textcolor{keyword}{import}\ argparse}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00005}00005\ sys.path.extend([\textcolor{stringliteral}{'.'},\ \textcolor{stringliteral}{'..'}])}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00006}00006\ }
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00008}00008\ \textcolor{keyword}{from}\ pycparser\ \textcolor{keyword}{import}\ parse\_file,\ c\_ast}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00009}00009\ \textcolor{keyword}{from}\ utils\ \textcolor{keyword}{import}\ handleAssignmentNodes,changeBinaryOps,getNewVarName,isRegCall,generate\_c\_file}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00010}00010\ \textcolor{keyword}{from}\ astNodes\ \textcolor{keyword}{import}\ getDeclarationNode,getSimpleAssignmentNode}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00011}00011\ \textcolor{keyword}{from}\ Visitor\ \textcolor{keyword}{import}\ NegationVisitor,UnaryOpNodeChanger,BinaryOpInRegHandler,SourceRegHandler}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00012}00012\ \textcolor{keyword}{import}\ globalVariables}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00013}00013\ }
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00014}00014\ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00015}00015\ \textcolor{stringliteral}{@brief\ Processes\ C\ code\ to\ handle\ specific\ operations\ and\ generate\ modified\ output.}}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00016}00016\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00017}00017\ \textcolor{stringliteral}{This\ script:}}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00018}00018\ \textcolor{stringliteral}{-\/\ Parses\ a\ C\ file\ into\ an\ abstract\ syntax\ tree\ (AST).}}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00019}00019\ \textcolor{stringliteral}{-\/\ Applies\ transformations\ to\ handle\ unary\ operations,\ source\ registers,\ and\ nested\ operations.}}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00020}00020\ \textcolor{stringliteral}{-\/\ Generates\ a\ new\ C\ file\ with\ the\ transformations\ applied.}}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00021}00021\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00022}00022\ \textcolor{stringliteral}{@details}}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00023}00023\ \textcolor{stringliteral}{1.\ Handles\ unary\ operations\ by\ replacing\ variables\ and\ updating\ the\ AST.}}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00024}00024\ \textcolor{stringliteral}{2.\ Processes\ source\ registers\ to\ manage\ variable\ assignments\ and\ their\ usage.}}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00025}00025\ \textcolor{stringliteral}{3.\ Changes\ binary\ operations\ to\ handle\ nested\ register\ calls.}}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00026}00026\ \textcolor{stringliteral}{4.\ Updates\ assignments\ and\ generates\ a\ new\ C\ file\ with\ the\ processed\ AST.}}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00027}00027\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00028}00028\ \textcolor{stringliteral}{@file}}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00029}00029\ \textcolor{stringliteral}{Ensure\ that\ \`{}pycparser\`{}\ and\ custom\ modules\ are\ properly\ installed\ and\ configured.}}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00030}00030\ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00031}00031\ }
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00032}\mbox{\hyperlink{namespacePostProcessor_1_1processor_a3d5377767863b0df6b0eeae31ae33bc5}{00032}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespacePostProcessor_1_1processor_a3d5377767863b0df6b0eeae31ae33bc5}{postProcess}}(inputFile,outputFile):}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00033}00033\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00034}00034\ \textcolor{stringliteral}{\ \ \ \ Processes\ the\ input\ C\ file,\ applies\ transformations,\ and\ generates\ the\ output\ C\ file.}}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00035}00035\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00036}00036\ \textcolor{stringliteral}{\ \ \ \ @param\ inputFile:\ Path\ to\ the\ input\ C\ file\ to\ be\ processed.}}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00037}00037\ \textcolor{stringliteral}{\ \ \ \ @param\ outputFile:\ Path\ to\ the\ output\ C\ file\ where\ the\ processed\ code\ will\ be\ saved.}}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00038}00038\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00039}00039\ \textcolor{stringliteral}{\ \ \ \ @raises\ FileNotFoundError:\ If\ the\ input\ file\ does\ not\ exist.}}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00040}00040\ \textcolor{stringliteral}{\ \ \ \ @raises\ IOError:\ If\ there\ is\ an\ issue\ with\ file\ reading\ or\ writing.}}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00041}00041\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00042}00042\ }
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00043}00043\ \ \ \ \ assgnNo\ =\ 1}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00044}00044\ \ \ \ \ ast\ =\ parse\_file(inputFile,\ use\_cpp=\textcolor{keyword}{True})}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00045}00045\ \ \ \ \ bodyNodes\ =\ []}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00046}00046\ \ \ \ \ \textcolor{keyword}{with}\ open(\textcolor{stringliteral}{'systemArgs.json'},\ \textcolor{stringliteral}{'r'})\ \textcolor{keyword}{as}\ file:}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00047}00047\ \ \ \ \ \ \ \ \ json\_data\ =\ file.read()}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00048}00048\ \ \ \ \ operatorNameMap\ =\ json.loads(json\_data)}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00049}00049\ }
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00050}00050\ \textcolor{comment}{\#handling\ unary\ ops}}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00051}00051\ \ \ \ \ negationVisitor\ =\ \mbox{\hyperlink{classPostProcessor_1_1Visitor_1_1NegationVisitor}{NegationVisitor}}(bodyNodes)}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00052}00052\ \ \ \ \ negationVisitor.visit(ast)}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00053}00053\ \ \ \ \ assgnNo\ =\ negationVisitor.assgnNo}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00054}00054\ \ \ \ \ ast.ext[0].body.block\_items\ =\ bodyNodes}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00055}00055\ \ \ \ \ bodyNodes\ =\ []}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00056}00056\ }
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00057}00057\ \ \ \ \ unaryOpNodeChanger\ =\ \mbox{\hyperlink{classPostProcessor_1_1Visitor_1_1UnaryOpNodeChanger}{UnaryOpNodeChanger}}(negationVisitor.unaryVarToNameMap)}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00058}00058\ \ \ \ \ unaryOpNodeChanger.visit(ast)}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00059}00059\ }
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00060}00060\ \textcolor{comment}{\#handling\ source\ regs}}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00061}00061\ \ \ \ \ sourceRegHandler\ =\ \mbox{\hyperlink{classPostProcessor_1_1Visitor_1_1SourceRegHandler}{SourceRegHandler}}(bodyNodes,assgnNo)}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00062}00062\ \ \ \ \ sourceRegHandler.visit(ast)}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00063}00063\ \ \ \ \ assgnNo\ =\ sourceRegHandler.assignNo}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00064}00064\ \ \ \ \ ast.ext[0].body.block\_items\ =\ bodyNodes}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00065}00065\ \ \ \ \ bodyNodes\ =\ []}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00066}00066\ }
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00067}00067\ \textcolor{comment}{\#handling\ nested\ reg\ binary\ op\ inside\ a\ reg\ call}}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00068}00068\ \ \ \ \ binaryOpInRegHandler\ =\ \mbox{\hyperlink{classPostProcessor_1_1Visitor_1_1BinaryOpInRegHandler}{BinaryOpInRegHandler}}(bodyNodes,assgnNo)}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00069}00069\ \ \ \ \ binaryOpInRegHandler.visit(ast)}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00070}00070\ \ \ \ \ assgnNo\ =\ binaryOpInRegHandler.assignNo}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00071}00071\ \ \ \ \ ast.ext[0].body.block\_items\ =\ bodyNodes}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00072}00072\ \ \ \ \ bodyNodes\ =\ []}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00073}00073\ }
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00074}00074\ \textcolor{comment}{\#handling\ nested\ reg\ binary\ op}}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00075}00075\ \ \ \ \ \textcolor{keywordflow}{for}\ node\ \textcolor{keywordflow}{in}\ ast.ext[0].body.block\_items:}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00076}00076\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keywordflow}{not}\ isinstance(node,c\_ast.Assignment):}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ bodyNodes.append(node)}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00078}00078\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ changeBinaryOps(node,bodyNodes,assgnNo)}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ assgnNo\ +=\ 2}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00081}00081\ \ \ \ \ ast.ext[0].body.block\_items\ =\ bodyNodes}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00082}00082\ \ \ \ \ \textcolor{comment}{\#\ \#\ print(ast)}}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00083}00083\ }
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00084}00084\ \ \ \ \ bodyNodes\ =\ []}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00085}00085\ \ \ \ \ \textcolor{keywordflow}{for}\ node\ \textcolor{keywordflow}{in}\ ast.ext[0].body.block\_items:}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00086}00086\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keywordflow}{not}\ isinstance(node,c\_ast.Assignment):}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ bodyNodes.append(node)}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00088}00088\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ handleAssignmentNodes(node,bodyNodes,operatorNameMap,assgnNo)}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ assgnNo\ +=\ 2}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00091}00091\ \ \ \ \ \textcolor{comment}{\#\ print(bodyNodes)}}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00092}00092\ \ \ \ \ ast.ext[0].body.block\_items\ =\ bodyNodes}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00093}00093\ \ \ \ \ \textcolor{comment}{\#\ print(ast)}}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00094}00094\ \ \ \ \ generate\_c\_file(ast,outputFile)}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00095}00095\ }
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00096}00096\ }
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00097}00097\ \textcolor{keywordflow}{if}\ \_\_name\_\_\ ==\ \textcolor{stringliteral}{"{}\_\_main\_\_"{}}:}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00098}00098\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00099}00099\ \textcolor{stringliteral}{\ \ \ \ Main\ execution\ block\ for\ processing\ command-\/line\ arguments\ and\ invoking\ the\ post-\/process\ function.}}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00100}00100\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00101}00101\ \textcolor{stringliteral}{\ \ \ \ @raises\ FileNotFoundError:\ If\ the\ system\ arguments\ file\ is\ missing.}}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00102}00102\ \textcolor{stringliteral}{\ \ \ \ @raises\ KeyError:\ If\ required\ keys\ are\ missing\ from\ the\ system\ arguments\ file.}}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00103}00103\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00104}00104\ \ \ \ \ \textcolor{keyword}{with}\ open(\textcolor{stringliteral}{'./systemArgs.json'},\ \textcolor{stringliteral}{'r'})\ \textcolor{keyword}{as}\ file:}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00105}\mbox{\hyperlink{namespacePostProcessor_1_1processor_a8187411843a6284ffb964ef3fb9fcab3}{00105}}\ \ \ \ \ \ \ \ \ args\ =\ json.load(file)}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00106}00106\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00107}00107\ \ \ \ \ \textcolor{keyword}{global}\ globalType}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00108}\mbox{\hyperlink{namespacePostProcessor_1_1processor_a7e91ec681fdd5ff588de2f2d2c3dc3f6}{00108}}\ \ \ \ \ globalVariables.globalType\ =\ \textcolor{stringliteral}{'\_Bool'}\ \textcolor{keywordflow}{if}\ args[\textcolor{stringliteral}{"{}bitWidth"{}}]\ ==\ 1\ \textcolor{keywordflow}{else}\ \textcolor{stringliteral}{'int'}}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00109}00109\ \ \ \ \ \textcolor{comment}{\#\ print(globalVariables.globalType)}}
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00110}00110\ }
+\DoxyCodeLine{\Hypertarget{processor_8py_source_l00111}00111\ \ \ \ \ \mbox{\hyperlink{namespacePostProcessor_1_1processor_a3d5377767863b0df6b0eeae31ae33bc5}{postProcess}}(args[\textcolor{stringliteral}{"{}retimedOutput"{}}],args[\textcolor{stringliteral}{"{}postProcessorOutput"{}}])}
+
+\end{DoxyCode}

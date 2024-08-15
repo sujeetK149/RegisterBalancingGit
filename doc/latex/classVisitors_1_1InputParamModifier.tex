@@ -1,0 +1,107 @@
+\doxysection{Input\+Param\+Modifier Class Reference}
+\hypertarget{classVisitors_1_1InputParamModifier}{}\label{classVisitors_1_1InputParamModifier}\index{InputParamModifier@{InputParamModifier}}
+Inheritance diagram for Input\+Param\+Modifier\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classVisitors_1_1InputParamModifier}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classVisitors_1_1InputParamModifier_aa5b8df14e5ebf83d262610d4e0c77287}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, \mbox{\hyperlink{classVisitors_1_1InputParamModifier_a4ca1ea41a954d2675cd3c1915c9568e9}{changed\+Input\+Map}})
+\item 
+\mbox{\hyperlink{classVisitors_1_1InputParamModifier_a96d9baa4a0602d7577cbc4a3c0820de7}{visit\+\_\+\+ID}} (self, node)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classVisitors_1_1InputParamModifier_a4ca1ea41a954d2675cd3c1915c9568e9}{changed\+Input\+Map}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb}@brief Modifies input parameter names based on a mapping.
+
+This visitor updates the names of input parameters according to a provided mapping.
+
+@param changedInputMap: Mapping of original input parameter names to new names.
+@type changedInputMap: dict
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{Visitors_8py_source_l00103}{103}} of file \mbox{\hyperlink{Visitors_8py_source}{Visitors.\+py}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classVisitors_1_1InputParamModifier_aa5b8df14e5ebf83d262610d4e0c77287}\index{InputParamModifier@{InputParamModifier}!\_\_init\_\_@{\_\_init\_\_}}
+\index{\_\_init\_\_@{\_\_init\_\_}!InputParamModifier@{InputParamModifier}}
+\doxysubsubsection{\texorpdfstring{\_\_init\_\_()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily \label{classVisitors_1_1InputParamModifier_aa5b8df14e5ebf83d262610d4e0c77287} 
+\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{changed\+Input\+Map}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{Visitors_8py_source_l00112}{112}} of file \mbox{\hyperlink{Visitors_8py_source}{Visitors.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00112\ \ \ \ \ \textcolor{keyword}{def\ }\_\_init\_\_(self,changedInputMap): }
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ self.changedInputMap\ =\ changedInputMap }
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classVisitors_1_1InputParamModifier_a96d9baa4a0602d7577cbc4a3c0820de7}\index{InputParamModifier@{InputParamModifier}!visit\_ID@{visit\_ID}}
+\index{visit\_ID@{visit\_ID}!InputParamModifier@{InputParamModifier}}
+\doxysubsubsection{\texorpdfstring{visit\_ID()}{visit\_ID()}}
+{\footnotesize\ttfamily \label{classVisitors_1_1InputParamModifier_a96d9baa4a0602d7577cbc4a3c0820de7} 
+visit\+\_\+\+ID (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{node}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Updates input parameter names based on the mapping.
+
+Replaces the parameter name with the new name from the mapping if it exists.
+
+@param node: The identifier node representing an input parameter.
+@type node: pycparser.c_ast.ID
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{Visitors_8py_source_l00114}{114}} of file \mbox{\hyperlink{Visitors_8py_source}{Visitors.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00114\ \ \ \ \ \textcolor{keyword}{def\ }visit\_ID(self,node): }
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{} }}
+\DoxyCodeLine{00116\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @brief\ Updates\ input\ parameter\ names\ based\ on\ the\ mapping. }}
+\DoxyCodeLine{00117\ \textcolor{stringliteral}{ }}
+\DoxyCodeLine{00118\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ Replaces\ the\ parameter\ name\ with\ the\ new\ name\ from\ the\ mapping\ if\ it\ exists. }}
+\DoxyCodeLine{00119\ \textcolor{stringliteral}{ }}
+\DoxyCodeLine{00120\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @param\ node:\ The\ identifier\ node\ representing\ an\ input\ parameter. }}
+\DoxyCodeLine{00121\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @type\ node:\ pycparser.c\_ast.ID }}
+\DoxyCodeLine{00122\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ "{}"{}"{}} }
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ node.name\ \textcolor{keywordflow}{in}\ self.changedInputMap: }
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \ \ \ \ node.name\ =\ self.changedInputMap[node.name] }
+\DoxyCodeLine{00125\  }
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classVisitors_1_1InputParamModifier_a4ca1ea41a954d2675cd3c1915c9568e9}\index{InputParamModifier@{InputParamModifier}!changedInputMap@{changedInputMap}}
+\index{changedInputMap@{changedInputMap}!InputParamModifier@{InputParamModifier}}
+\doxysubsubsection{\texorpdfstring{changedInputMap}{changedInputMap}}
+{\footnotesize\ttfamily \label{classVisitors_1_1InputParamModifier_a4ca1ea41a954d2675cd3c1915c9568e9} 
+changed\+Input\+Map}
+
+
+
+Definition at line \mbox{\hyperlink{Visitors_8py_source_l00123}{123}} of file \mbox{\hyperlink{Visitors_8py_source}{Visitors.\+py}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Inliner/\mbox{\hyperlink{Visitors_8py}{Visitors.\+py}}\end{DoxyCompactItemize}

@@ -1,0 +1,210 @@
+\doxysection{Source\+Reg\+Handler Class Reference}
+\hypertarget{classPostProcessor_1_1Visitor_1_1SourceRegHandler}{}\label{classPostProcessor_1_1Visitor_1_1SourceRegHandler}\index{SourceRegHandler@{SourceRegHandler}}
+Inheritance diagram for Source\+Reg\+Handler\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classPostProcessor_1_1Visitor_1_1SourceRegHandler}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classPostProcessor_1_1Visitor_1_1SourceRegHandler_a2d2bf15f217ec4e4fb40d292bf536363}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, \mbox{\hyperlink{classPostProcessor_1_1Visitor_1_1SourceRegHandler_afde190707204b09a99ff642a6afa5695}{body\+Nodes}}, \mbox{\hyperlink{classPostProcessor_1_1Visitor_1_1SourceRegHandler_a58eaabd0374c4bb1e31a844d27cc020e}{assign\+No}})
+\item 
+\mbox{\hyperlink{classPostProcessor_1_1Visitor_1_1SourceRegHandler_ac6393736fa9ce70a0640e0c792f0a2d4}{visit\+\_\+\+Assignment}} (self, node)
+\item 
+\mbox{\hyperlink{classPostProcessor_1_1Visitor_1_1SourceRegHandler_ab8a51ec3b8cdf3c34881859017860d2b}{visit\+\_\+\+Decl}} (self, node)
+\item 
+\mbox{\hyperlink{classPostProcessor_1_1Visitor_1_1SourceRegHandler_a96d9baa4a0602d7577cbc4a3c0820de7}{visit\+\_\+\+ID}} (self, node)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classPostProcessor_1_1Visitor_1_1SourceRegHandler_a58eaabd0374c4bb1e31a844d27cc020e}{assign\+No}} = assign\+No
+\item 
+\mbox{\hyperlink{classPostProcessor_1_1Visitor_1_1SourceRegHandler_afde190707204b09a99ff642a6afa5695}{body\+Nodes}} = body\+Nodes
+\item 
+dict \mbox{\hyperlink{classPostProcessor_1_1Visitor_1_1SourceRegHandler_a75766c897f4ae9a8a6e05eee3525f9fb}{source\+Reg\+Map}} = \{\}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb}Visitor for handling source register operations, including adjustments for input registers.
+
+@param bodyNodes: A list to store transformed nodes.
+@param assignNo: The current assignment number used for generating new variable names.
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{Visitor_8py_source_l00182}{182}} of file \mbox{\hyperlink{Visitor_8py_source}{Visitor.\+py}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classPostProcessor_1_1Visitor_1_1SourceRegHandler_a2d2bf15f217ec4e4fb40d292bf536363}\index{SourceRegHandler@{SourceRegHandler}!\_\_init\_\_@{\_\_init\_\_}}
+\index{\_\_init\_\_@{\_\_init\_\_}!SourceRegHandler@{SourceRegHandler}}
+\doxysubsubsection{\texorpdfstring{\_\_init\_\_()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily \label{classPostProcessor_1_1Visitor_1_1SourceRegHandler_a2d2bf15f217ec4e4fb40d292bf536363} 
+\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{body\+Nodes}{, }\item[{}]{assign\+No}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Initializes the SourceRegHandler.
+
+@param bodyNodes: A list to store transformed nodes.
+@param assignNo: The current assignment number used for generating new variable names.
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{Visitor_8py_source_l00189}{189}} of file \mbox{\hyperlink{Visitor_8py_source}{Visitor.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00189\ \ \ \ \ \textcolor{keyword}{def\ }\_\_init\_\_(self,bodyNodes,assignNo): }
+\DoxyCodeLine{00190\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{} }}
+\DoxyCodeLine{00191\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ Initializes\ the\ SourceRegHandler. }}
+\DoxyCodeLine{00192\ \textcolor{stringliteral}{ }}
+\DoxyCodeLine{00193\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @param\ bodyNodes:\ A\ list\ to\ store\ transformed\ nodes. }}
+\DoxyCodeLine{00194\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @param\ assignNo:\ The\ current\ assignment\ number\ used\ for\ generating\ new\ variable\ names. }}
+\DoxyCodeLine{00195\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ "{}"{}"{}} }
+\DoxyCodeLine{00196\ \ \ \ \ \ \ \ \ self.bodyNodes\ =\ bodyNodes }
+\DoxyCodeLine{00197\ \ \ \ \ \ \ \ \ self.assignNo\ =\ assignNo }
+\DoxyCodeLine{00198\ \ \ \ \ \ \ \ \ self.sourceRegMap\ =\ \{\} }
+\DoxyCodeLine{00199\ \ \ \ \  }
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classPostProcessor_1_1Visitor_1_1SourceRegHandler_ac6393736fa9ce70a0640e0c792f0a2d4}\index{SourceRegHandler@{SourceRegHandler}!visit\_Assignment@{visit\_Assignment}}
+\index{visit\_Assignment@{visit\_Assignment}!SourceRegHandler@{SourceRegHandler}}
+\doxysubsubsection{\texorpdfstring{visit\_Assignment()}{visit\_Assignment()}}
+{\footnotesize\ttfamily \label{classPostProcessor_1_1Visitor_1_1SourceRegHandler_ac6393736fa9ce70a0640e0c792f0a2d4} 
+visit\+\_\+\+Assignment (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{node}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Visits assignment nodes and processes source register operations.
+
+@param node: The assignment node to visit.
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{Visitor_8py_source_l00219}{219}} of file \mbox{\hyperlink{Visitor_8py_source}{Visitor.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00219\ \ \ \ \ \textcolor{keyword}{def\ }visit\_Assignment(self,node): }
+\DoxyCodeLine{00220\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{} }}
+\DoxyCodeLine{00221\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ Visits\ assignment\ nodes\ and\ processes\ source\ register\ operations. }}
+\DoxyCodeLine{00222\ \textcolor{stringliteral}{ }}
+\DoxyCodeLine{00223\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @param\ node:\ The\ assignment\ node\ to\ visit. }}
+\DoxyCodeLine{00224\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ "{}"{}"{}} }
+\DoxyCodeLine{00225\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isinstance(node.lvalue,c\_ast.ID)\ \textcolor{keywordflow}{and}\ node.lvalue.name.endswith(\textcolor{stringliteral}{"{}inp"{}}): }
+\DoxyCodeLine{00226\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isinstance(node.rvalue,c\_ast.FuncCall)\ \textcolor{keywordflow}{and}\ \textcolor{keywordflow}{not}\ isinstance(node.rvalue.args.exprs[0],c\_ast.FuncCall): }
+\DoxyCodeLine{00227\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ nodeCopy\ =\ copy.deepcopy(node.rvalue) }
+\DoxyCodeLine{00228\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ nodeCopy.args.exprs[0].name\ +=\ \textcolor{stringliteral}{"{}\_inp"{}} }
+\DoxyCodeLine{00229\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ node.rvalue\ =\ c\_ast.ID(name=node.lvalue.name[:-\/4]) }
+\DoxyCodeLine{00230\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.bodyNodes.append(node) }
+\DoxyCodeLine{00231\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ varName\ =\ getNewVarName(self.assignNo) }
+\DoxyCodeLine{00232\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.bodyNodes.append(getDeclarationNode(varName)) }
+\DoxyCodeLine{00233\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.bodyNodes.append(getSimpleAssignmentNode(varName,nodeCopy)) }
+\DoxyCodeLine{00234\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.assignNo\ +=\ 2 }
+\DoxyCodeLine{00235\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.sourceRegMap[node.lvalue.name]\ =\ varName }
+\DoxyCodeLine{00236\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}: }
+\DoxyCodeLine{00237\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.bodyNodes.append(node) }
+\DoxyCodeLine{00238\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return} }
+\DoxyCodeLine{00239\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}: }
+\DoxyCodeLine{00240\ \ \ \ \ \ \ \ \ \ \ \ \ self.generic\_visit(node) }
+\DoxyCodeLine{00241\ \ \ \ \ \ \ \ \ \ \ \ \ self.bodyNodes.append(node) }
+
+\end{DoxyCode}
+\Hypertarget{classPostProcessor_1_1Visitor_1_1SourceRegHandler_ab8a51ec3b8cdf3c34881859017860d2b}\index{SourceRegHandler@{SourceRegHandler}!visit\_Decl@{visit\_Decl}}
+\index{visit\_Decl@{visit\_Decl}!SourceRegHandler@{SourceRegHandler}}
+\doxysubsubsection{\texorpdfstring{visit\_Decl()}{visit\_Decl()}}
+{\footnotesize\ttfamily \label{classPostProcessor_1_1Visitor_1_1SourceRegHandler_ab8a51ec3b8cdf3c34881859017860d2b} 
+visit\+\_\+\+Decl (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{node}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Visits declaration nodes and appends them to the body nodes list.
+
+@param node: The declaration node to visit.
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{Visitor_8py_source_l00200}{200}} of file \mbox{\hyperlink{Visitor_8py_source}{Visitor.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00200\ \ \ \ \ \textcolor{keyword}{def\ }visit\_Decl(self,node): }
+\DoxyCodeLine{00201\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{} }}
+\DoxyCodeLine{00202\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ Visits\ declaration\ nodes\ and\ appends\ them\ to\ the\ body\ nodes\ list. }}
+\DoxyCodeLine{00203\ \textcolor{stringliteral}{ }}
+\DoxyCodeLine{00204\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @param\ node:\ The\ declaration\ node\ to\ visit. }}
+\DoxyCodeLine{00205\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ "{}"{}"{}} }
+\DoxyCodeLine{00206\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isinstance(node.type,c\_ast.TypeDecl): }
+\DoxyCodeLine{00207\ \ \ \ \ \ \ \ \ \ \ \ \ self.bodyNodes.append(node) }
+\DoxyCodeLine{00208\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return} }
+\DoxyCodeLine{00209\ \ \ \ \  }
+
+\end{DoxyCode}
+\Hypertarget{classPostProcessor_1_1Visitor_1_1SourceRegHandler_a96d9baa4a0602d7577cbc4a3c0820de7}\index{SourceRegHandler@{SourceRegHandler}!visit\_ID@{visit\_ID}}
+\index{visit\_ID@{visit\_ID}!SourceRegHandler@{SourceRegHandler}}
+\doxysubsubsection{\texorpdfstring{visit\_ID()}{visit\_ID()}}
+{\footnotesize\ttfamily \label{classPostProcessor_1_1Visitor_1_1SourceRegHandler_a96d9baa4a0602d7577cbc4a3c0820de7} 
+visit\+\_\+\+ID (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{node}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Visits ID nodes and updates their names based on the source register map.
+
+@param node: The ID node to visit.
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{Visitor_8py_source_l00210}{210}} of file \mbox{\hyperlink{Visitor_8py_source}{Visitor.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00210\ \ \ \ \ \textcolor{keyword}{def\ }visit\_ID(self,node): }
+\DoxyCodeLine{00211\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{} }}
+\DoxyCodeLine{00212\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ Visits\ ID\ nodes\ and\ updates\ their\ names\ based\ on\ the\ source\ register\ map. }}
+\DoxyCodeLine{00213\ \textcolor{stringliteral}{ }}
+\DoxyCodeLine{00214\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @param\ node:\ The\ ID\ node\ to\ visit. }}
+\DoxyCodeLine{00215\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ "{}"{}"{}} }
+\DoxyCodeLine{00216\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ node.name\ \textcolor{keywordflow}{in}\ self.sourceRegMap: }
+\DoxyCodeLine{00217\ \ \ \ \ \ \ \ \ \ \ \ \ node.name\ =\ self.sourceRegMap[node.name] }
+\DoxyCodeLine{00218\ \ \ \ \  }
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classPostProcessor_1_1Visitor_1_1SourceRegHandler_a58eaabd0374c4bb1e31a844d27cc020e}\index{SourceRegHandler@{SourceRegHandler}!assignNo@{assignNo}}
+\index{assignNo@{assignNo}!SourceRegHandler@{SourceRegHandler}}
+\doxysubsubsection{\texorpdfstring{assignNo}{assignNo}}
+{\footnotesize\ttfamily \label{classPostProcessor_1_1Visitor_1_1SourceRegHandler_a58eaabd0374c4bb1e31a844d27cc020e} 
+assign\+No = assign\+No}
+
+
+
+Definition at line \mbox{\hyperlink{Visitor_8py_source_l00197}{197}} of file \mbox{\hyperlink{Visitor_8py_source}{Visitor.\+py}}.
+
+\Hypertarget{classPostProcessor_1_1Visitor_1_1SourceRegHandler_afde190707204b09a99ff642a6afa5695}\index{SourceRegHandler@{SourceRegHandler}!bodyNodes@{bodyNodes}}
+\index{bodyNodes@{bodyNodes}!SourceRegHandler@{SourceRegHandler}}
+\doxysubsubsection{\texorpdfstring{bodyNodes}{bodyNodes}}
+{\footnotesize\ttfamily \label{classPostProcessor_1_1Visitor_1_1SourceRegHandler_afde190707204b09a99ff642a6afa5695} 
+body\+Nodes = body\+Nodes}
+
+
+
+Definition at line \mbox{\hyperlink{Visitor_8py_source_l00196}{196}} of file \mbox{\hyperlink{Visitor_8py_source}{Visitor.\+py}}.
+
+\Hypertarget{classPostProcessor_1_1Visitor_1_1SourceRegHandler_a75766c897f4ae9a8a6e05eee3525f9fb}\index{SourceRegHandler@{SourceRegHandler}!sourceRegMap@{sourceRegMap}}
+\index{sourceRegMap@{sourceRegMap}!SourceRegHandler@{SourceRegHandler}}
+\doxysubsubsection{\texorpdfstring{sourceRegMap}{sourceRegMap}}
+{\footnotesize\ttfamily \label{classPostProcessor_1_1Visitor_1_1SourceRegHandler_a75766c897f4ae9a8a6e05eee3525f9fb} 
+dict source\+Reg\+Map = \{\}}
+
+
+
+Definition at line \mbox{\hyperlink{Visitor_8py_source_l00198}{198}} of file \mbox{\hyperlink{Visitor_8py_source}{Visitor.\+py}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Post\+Processor/\mbox{\hyperlink{Visitor_8py}{Visitor.\+py}}\end{DoxyCompactItemize}

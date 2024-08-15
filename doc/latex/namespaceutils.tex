@@ -1,0 +1,645 @@
+\doxysection{utils Namespace Reference}
+\hypertarget{namespaceutils}{}\label{namespaceutils}\index{utils@{utils}}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{namespaceutils_a64760885dba6d92351caf3fe931e4f87}{define\+Inputs\+And\+Outputs}} (f\+Name, functions, function\+\_\+decl)
+\item 
+\mbox{\hyperlink{namespaceutils_a55edef8aa55113152dc0ba5c37518a99}{extract\+Function\+Info}} (node, function\+Info)
+\item 
+\mbox{\hyperlink{namespaceutils_a78d4c1eea6eb65a4bdd659bb059bedbf}{generate\+\_\+c\+\_\+file}} (ast, filename)
+\item 
+\mbox{\hyperlink{namespaceutils_a5a59b688089dff450de907724aacb7c9}{get\+Function\+Assignments}} (function\+Info, argument\+Map, local\+Variables\+Map, assignment\+Nodes)
+\item 
+\mbox{\hyperlink{namespaceutils_abee3c46ce009c4e3722f4f378831572c}{get\+Type}} (node)
+\item 
+\mbox{\hyperlink{namespaceutils_a5cfaa93fe4012b806d808ada74f3594a}{insert\+Assignments\+And\+Decl\+For\+Constants}} (ast, const\+Arr)
+\item 
+\mbox{\hyperlink{namespaceutils_a2850c02b1717c8d6c2dd5d035800d353}{merge\+Constants}} (ast)
+\item 
+\mbox{\hyperlink{namespaceutils_a044818bd87d9d443b283f98462af3565}{process\+Dependant\+Functions}} (node, function\+Info, is\+Top\+Module)
+\item 
+\mbox{\hyperlink{namespaceutils_a1ffd1dd47727022933be90797aac97de}{process\+Functions}} (functions, f\+Def, function\+Calls, intermediate\+Assignments)
+\item 
+\mbox{\hyperlink{namespaceutils_ad6fbd134eb0eb58bb912381e7c87db50}{write\+Verilog\+To\+File}} (func\+Name, functions, internal\+Variables, function\+Calls, filename, width)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{namespaceutils_a64760885dba6d92351caf3fe931e4f87}\index{utils@{utils}!defineInputsAndOutputs@{defineInputsAndOutputs}}
+\index{defineInputsAndOutputs@{defineInputsAndOutputs}!utils@{utils}}
+\doxysubsubsection{\texorpdfstring{defineInputsAndOutputs()}{defineInputsAndOutputs()}}
+{\footnotesize\ttfamily \label{namespaceutils_a64760885dba6d92351caf3fe931e4f87} 
+define\+Inputs\+And\+Outputs (\begin{DoxyParamCaption}\item[{}]{f\+Name}{, }\item[{}]{functions}{, }\item[{}]{function\+\_\+decl}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Defines the inputs and outputs for a function based on its declaration.
+
+This function updates the `functions` dictionary with the input and output ports of the function,
+and also stores the order of parameters.
+
+@param fName: The name of the function being processed.
+@param functions: A dictionary to store information about functions.
+@param function_decl: The function declaration node from the C Abstract Syntax Tree (AST).
+
+@raises ValueError: If the return type of the function is other than `void`.
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{Compiler_2utils_8py_source_l00137}{137}} of file \mbox{\hyperlink{Compiler_2utils_8py_source}{utils.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00137\ \textcolor{keyword}{def\ }defineInputsAndOutputs(fName,functions,function\_decl): }
+\DoxyCodeLine{00138\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{} }}
+\DoxyCodeLine{00139\ \textcolor{stringliteral}{\ \ \ \ @brief\ Defines\ the\ inputs\ and\ outputs\ for\ a\ function\ based\ on\ its\ declaration. }}
+\DoxyCodeLine{00140\ \textcolor{stringliteral}{ }}
+\DoxyCodeLine{00141\ \textcolor{stringliteral}{\ \ \ \ This\ function\ updates\ the\ \`{}functions\`{}\ dictionary\ with\ the\ input\ and\ output\ ports\ of\ the\ function, }}
+\DoxyCodeLine{00142\ \textcolor{stringliteral}{\ \ \ \ and\ also\ stores\ the\ order\ of\ parameters. }}
+\DoxyCodeLine{00143\ \textcolor{stringliteral}{ }}
+\DoxyCodeLine{00144\ \textcolor{stringliteral}{\ \ \ \ @param\ fName:\ The\ name\ of\ the\ function\ being\ processed. }}
+\DoxyCodeLine{00145\ \textcolor{stringliteral}{\ \ \ \ @param\ functions:\ A\ dictionary\ to\ store\ information\ about\ functions. }}
+\DoxyCodeLine{00146\ \textcolor{stringliteral}{\ \ \ \ @param\ function\_decl:\ The\ function\ declaration\ node\ from\ the\ C\ Abstract\ Syntax\ Tree\ (AST). }}
+\DoxyCodeLine{00147\ \textcolor{stringliteral}{ }}
+\DoxyCodeLine{00148\ \textcolor{stringliteral}{\ \ \ \ @raises\ ValueError:\ If\ the\ return\ type\ of\ the\ function\ is\ other\ than\ \`{}void\`{}. }}
+\DoxyCodeLine{00149\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}} }
+\DoxyCodeLine{00150\ \ \ \ \ functions[fName][\textcolor{stringliteral}{"{}inputs"{}}].append(\textcolor{stringliteral}{"{}clk"{}}) }
+\DoxyCodeLine{00151\ \ \ \ \ functions[fName][\textcolor{stringliteral}{"{}paramOrder"{}}].append(\textcolor{stringliteral}{"{}clk"{}}) }
+\DoxyCodeLine{00152\ \ \ \ \ params\ =\ function\_decl.type.args.params }
+\DoxyCodeLine{00153\ \ \ \ \ \textcolor{keywordflow}{for}\ param\_decl\ \textcolor{keywordflow}{in}\ params: }
+\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ node\ =\ param\_decl.type; }
+\DoxyCodeLine{00155\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isinstance(node,c\_ast.TypeDecl): }
+\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ \ \ \ \ functions[fName][\textcolor{stringliteral}{"{}inputs"{}}].append(node.declname) }
+\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ \ \ \ \ functions[fName][\textcolor{stringliteral}{"{}paramOrder"{}}].append(node.declname) }
+\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}: }
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ \ \ \ \ functions[fName][\textcolor{stringliteral}{"{}outputs"{}}].append(node.type.declname) }
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ \ \ \ \ functions[fName][\textcolor{stringliteral}{"{}paramOrder"{}}].append(node.type.declname) }
+\DoxyCodeLine{00161\ \ \ \ \ if(function\_decl.type.type.type.names[0]\ !=\ \textcolor{stringliteral}{"{}void"{}}): }
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}Return\ type\ other\ than\ void\ not\ supported."{}}) }
+\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ sys.exit(1)}
+
+\end{DoxyCode}
+\Hypertarget{namespaceutils_a55edef8aa55113152dc0ba5c37518a99}\index{utils@{utils}!extractFunctionInfo@{extractFunctionInfo}}
+\index{extractFunctionInfo@{extractFunctionInfo}!utils@{utils}}
+\doxysubsubsection{\texorpdfstring{extractFunctionInfo()}{extractFunctionInfo()}}
+{\footnotesize\ttfamily \label{namespaceutils_a55edef8aa55113152dc0ba5c37518a99} 
+extract\+Function\+Info (\begin{DoxyParamCaption}\item[{}]{node}{, }\item[{}]{function\+Info}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Extracts information about a function, including parameters, local variables, and assignment nodes.
+
+This function collects parameters, local variables, and assignment nodes from a function definition node and
+stores the information in the functionInfo dictionary.
+
+@param node: The function definition node to extract information from.
+@type node: pycparser.c_ast.FuncDef
+@param functionInfo: Dictionary to store extracted function information.
+@type functionInfo: dict
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{Inliner_2utils_8py_source_l00044}{44}} of file \mbox{\hyperlink{Inliner_2utils_8py_source}{utils.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00044\ \textcolor{keyword}{def\ }extractFunctionInfo(node,functionInfo): }
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{} }}
+\DoxyCodeLine{00046\ \textcolor{stringliteral}{\ \ \ \ @brief\ Extracts\ information\ about\ a\ function,\ including\ parameters,\ local\ variables,\ and\ assignment\ nodes. }}
+\DoxyCodeLine{00047\ \textcolor{stringliteral}{ }}
+\DoxyCodeLine{00048\ \textcolor{stringliteral}{\ \ \ \ This\ function\ collects\ parameters,\ local\ variables,\ and\ assignment\ nodes\ from\ a\ function\ definition\ node\ and }}
+\DoxyCodeLine{00049\ \textcolor{stringliteral}{\ \ \ \ stores\ the\ information\ in\ the\ functionInfo\ dictionary. }}
+\DoxyCodeLine{00050\ \textcolor{stringliteral}{ }}
+\DoxyCodeLine{00051\ \textcolor{stringliteral}{\ \ \ \ @param\ node:\ The\ function\ definition\ node\ to\ extract\ information\ from. }}
+\DoxyCodeLine{00052\ \textcolor{stringliteral}{\ \ \ \ @type\ node:\ pycparser.c\_ast.FuncDef }}
+\DoxyCodeLine{00053\ \textcolor{stringliteral}{\ \ \ \ @param\ functionInfo:\ Dictionary\ to\ store\ extracted\ function\ information. }}
+\DoxyCodeLine{00054\ \textcolor{stringliteral}{\ \ \ \ @type\ functionInfo:\ dict }}
+\DoxyCodeLine{00055\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}} }
+\DoxyCodeLine{00056\ \ \ \ \ function\_name\ =\ node.decl.name }
+\DoxyCodeLine{00057\ \ \ \ \ parameters\ =\ [] }
+\DoxyCodeLine{00058\ \ \ \ \ localVariables\ =\ [] }
+\DoxyCodeLine{00059\ \ \ \ \ localVariablesType\ =\ [] }
+\DoxyCodeLine{00060\ \ \ \ \ assignmentNodes\ =\ [] }
+\DoxyCodeLine{00061\  }
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keywordflow}{if}\ node.decl.type.args: }
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ param\_decl\ \textcolor{keywordflow}{in}\ node.decl.type.args.params: }
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \ \ \ \ parameters.append(param\_decl.name) }
+\DoxyCodeLine{00065\ \ \ \ \  }
+\DoxyCodeLine{00066\ \ \ \ \ functionBody\ =\ node.body }
+\DoxyCodeLine{00067\ \ \ \ \ \textcolor{keywordflow}{for}\ blockItem\ \textcolor{keywordflow}{in}\ functionBody.block\_items: }
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isinstance(blockItem,c\_ast.Decl): }
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \ \ \ \ typeOfId\ =\ getType(blockItem.type.type) }
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \ \ \ \ localVariablesType.append(typeOfId) }
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \ \ \ \ localVariables.append(blockItem.name) }
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isinstance(blockItem,c\_ast.Assignment): }
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isinstance(blockItem.lvalue,c\_ast.UnaryOp): }
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ blockItem.lvalue\ =\ c\_ast.ID(blockItem.lvalue.expr.name) }
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \ \ \ \ visitor\ =\ LocalVariablesModifier(localVariables,function\_name) }
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \ \ \ \ visitor.visit(blockItem) }
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \ \ \ \ assignmentNodes.append(blockItem) }
+\DoxyCodeLine{00078\ \ \ \ \  }
+\DoxyCodeLine{00079\ \ \ \ \ \textcolor{keywordflow}{for}\ index\ \textcolor{keywordflow}{in}\ range(len(localVariables)): }
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ localVariables[index]\ +=\ (\textcolor{stringliteral}{'\_'}\ +\ function\_name) }
+\DoxyCodeLine{00081\  }
+\DoxyCodeLine{00082\ \ \ \ \ functionInfo[function\_name]\ =\ \{ }
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'parameters'}\ :\ parameters, }
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'localVariables'}\ :\ localVariables, }
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'localVariablesType'}\ :\ localVariablesType, }
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'assignmentNodes'}\ :\ assignmentNodes, }
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'firstTimeProcessing'}\ :\ \textcolor{keyword}{True}, }
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'timesCalled'}\ :\ 0 }
+\DoxyCodeLine{00089\ \ \ \ \ \} }
+\DoxyCodeLine{00090\  }
+
+\end{DoxyCode}
+\Hypertarget{namespaceutils_a78d4c1eea6eb65a4bdd659bb059bedbf}\index{utils@{utils}!generate\_c\_file@{generate\_c\_file}}
+\index{generate\_c\_file@{generate\_c\_file}!utils@{utils}}
+\doxysubsubsection{\texorpdfstring{generate\_c\_file()}{generate\_c\_file()}}
+{\footnotesize\ttfamily \label{namespaceutils_a78d4c1eea6eb65a4bdd659bb059bedbf} 
+generate\+\_\+c\+\_\+file (\begin{DoxyParamCaption}\item[{}]{ast}{, }\item[{}]{filename}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Generates C code from the provided Abstract Syntax Tree (AST) and writes it to a file.
+
+This function uses the C generator to convert the AST into C code and saves the generated code to the specified file.
+
+@param ast: The Abstract Syntax Tree to be converted into C code.
+@type ast: pycparser.c_ast.FileAST
+@param filename: The name of the file where the generated C code will be saved.
+@type filename: str
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{Inliner_2utils_8py_source_l00200}{200}} of file \mbox{\hyperlink{Inliner_2utils_8py_source}{utils.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00200\ \textcolor{keyword}{def\ }generate\_c\_file(ast,filename): }
+\DoxyCodeLine{00201\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{} }}
+\DoxyCodeLine{00202\ \textcolor{stringliteral}{\ \ \ \ @brief\ Generates\ C\ code\ from\ the\ provided\ Abstract\ Syntax\ Tree\ (AST)\ and\ writes\ it\ to\ a\ file. }}
+\DoxyCodeLine{00203\ \textcolor{stringliteral}{ }}
+\DoxyCodeLine{00204\ \textcolor{stringliteral}{\ \ \ \ This\ function\ uses\ the\ C\ generator\ to\ convert\ the\ AST\ into\ C\ code\ and\ saves\ the\ generated\ code\ to\ the\ specified\ file. }}
+\DoxyCodeLine{00205\ \textcolor{stringliteral}{ }}
+\DoxyCodeLine{00206\ \textcolor{stringliteral}{\ \ \ \ @param\ ast:\ The\ Abstract\ Syntax\ Tree\ to\ be\ converted\ into\ C\ code. }}
+\DoxyCodeLine{00207\ \textcolor{stringliteral}{\ \ \ \ @type\ ast:\ pycparser.c\_ast.FileAST }}
+\DoxyCodeLine{00208\ \textcolor{stringliteral}{\ \ \ \ @param\ filename:\ The\ name\ of\ the\ file\ where\ the\ generated\ C\ code\ will\ be\ saved. }}
+\DoxyCodeLine{00209\ \textcolor{stringliteral}{\ \ \ \ @type\ filename:\ str }}
+\DoxyCodeLine{00210\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}} }
+\DoxyCodeLine{00211\ \ \ \ \ generator\ =\ c\_generator.CGenerator() }
+\DoxyCodeLine{00212\ \ \ \ \ \textcolor{keyword}{with}\ open(filename,\ \textcolor{stringliteral}{'w'})\ \textcolor{keyword}{as}\ output\_file: }
+\DoxyCodeLine{00213\ \ \ \ \ \ \ \ \ print(generator.visit(ast),\ file=output\_file)}
+
+\end{DoxyCode}
+\Hypertarget{namespaceutils_a5a59b688089dff450de907724aacb7c9}\index{utils@{utils}!getFunctionAssignments@{getFunctionAssignments}}
+\index{getFunctionAssignments@{getFunctionAssignments}!utils@{utils}}
+\doxysubsubsection{\texorpdfstring{getFunctionAssignments()}{getFunctionAssignments()}}
+{\footnotesize\ttfamily \label{namespaceutils_a5a59b688089dff450de907724aacb7c9} 
+get\+Function\+Assignments (\begin{DoxyParamCaption}\item[{}]{function\+Info}{, }\item[{}]{argument\+Map}{, }\item[{}]{local\+Variables\+Map}{, }\item[{}]{assignment\+Nodes}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Extracts and modifies function assignment nodes based on argument and local variable mappings.
+
+This function processes the assignment nodes of a given function, updating identifiers according to the provided 
+argument and local variable mappings, and appends the modified nodes to the assignmentNodes list.
+
+@param functionInfo: Dictionary containing function information, including assignment nodes.
+@type functionInfo: dict
+@param argumentMap: Mapping from function parameters to argument names.
+@type argumentMap: dict
+@param localVariablesMap: Mapping from local variables to new variable names.
+@type localVariablesMap: dict
+@param assignmentNodes: List to which modified assignment nodes will be appended.
+@type assignmentNodes: list
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{Inliner_2utils_8py_source_l00006}{6}} of file \mbox{\hyperlink{Inliner_2utils_8py_source}{utils.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00006\ \textcolor{keyword}{def\ }getFunctionAssignments(functionInfo,argumentMap,localVariablesMap,assignmentNodes): }
+\DoxyCodeLine{00007\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{} }}
+\DoxyCodeLine{00008\ \textcolor{stringliteral}{\ \ \ \ @brief\ Extracts\ and\ modifies\ function\ assignment\ nodes\ based\ on\ argument\ and\ local\ variable\ mappings. }}
+\DoxyCodeLine{00009\ \textcolor{stringliteral}{ }}
+\DoxyCodeLine{00010\ \textcolor{stringliteral}{\ \ \ \ This\ function\ processes\ the\ assignment\ nodes\ of\ a\ given\ function,\ updating\ identifiers\ according\ to\ the\ provided\  }}
+\DoxyCodeLine{00011\ \textcolor{stringliteral}{\ \ \ \ argument\ and\ local\ variable\ mappings,\ and\ appends\ the\ modified\ nodes\ to\ the\ assignmentNodes\ list. }}
+\DoxyCodeLine{00012\ \textcolor{stringliteral}{ }}
+\DoxyCodeLine{00013\ \textcolor{stringliteral}{\ \ \ \ @param\ functionInfo:\ Dictionary\ containing\ function\ information,\ including\ assignment\ nodes. }}
+\DoxyCodeLine{00014\ \textcolor{stringliteral}{\ \ \ \ @type\ functionInfo:\ dict }}
+\DoxyCodeLine{00015\ \textcolor{stringliteral}{\ \ \ \ @param\ argumentMap:\ Mapping\ from\ function\ parameters\ to\ argument\ names. }}
+\DoxyCodeLine{00016\ \textcolor{stringliteral}{\ \ \ \ @type\ argumentMap:\ dict }}
+\DoxyCodeLine{00017\ \textcolor{stringliteral}{\ \ \ \ @param\ localVariablesMap:\ Mapping\ from\ local\ variables\ to\ new\ variable\ names. }}
+\DoxyCodeLine{00018\ \textcolor{stringliteral}{\ \ \ \ @type\ localVariablesMap:\ dict }}
+\DoxyCodeLine{00019\ \textcolor{stringliteral}{\ \ \ \ @param\ assignmentNodes:\ List\ to\ which\ modified\ assignment\ nodes\ will\ be\ appended. }}
+\DoxyCodeLine{00020\ \textcolor{stringliteral}{\ \ \ \ @type\ assignmentNodes:\ list }}
+\DoxyCodeLine{00021\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}} }
+\DoxyCodeLine{00022\ \ \ \ \ copyAssignmentNodes\ =\ copy.deepcopy(functionInfo[\textcolor{stringliteral}{'assignmentNodes'}]) }
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keywordflow}{for}\ node\ \textcolor{keywordflow}{in}\ copyAssignmentNodes: }
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ visitor\ =\ IdVisitor(argumentMap,localVariablesMap) }
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ visitor.visit(node) }
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ assignmentNodes.append(node); }
+\DoxyCodeLine{00027\  }
+
+\end{DoxyCode}
+\Hypertarget{namespaceutils_abee3c46ce009c4e3722f4f378831572c}\index{utils@{utils}!getType@{getType}}
+\index{getType@{getType}!utils@{utils}}
+\doxysubsubsection{\texorpdfstring{getType()}{getType()}}
+{\footnotesize\ttfamily \label{namespaceutils_abee3c46ce009c4e3722f4f378831572c} 
+get\+Type (\begin{DoxyParamCaption}\item[{}]{node}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Retrieves the type name from a type node.
+
+This function extracts the type name from a given node. It supports both IdentifierType and other type nodes.
+
+@param node: The type node from which to extract the type name.
+@type node: pycparser.c_ast.Type
+@return: The type name as a string.
+@rtype: str
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{Inliner_2utils_8py_source_l00028}{28}} of file \mbox{\hyperlink{Inliner_2utils_8py_source}{utils.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00028\ \textcolor{keyword}{def\ }getType(node): }
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{} }}
+\DoxyCodeLine{00030\ \textcolor{stringliteral}{\ \ \ \ @brief\ Retrieves\ the\ type\ name\ from\ a\ type\ node. }}
+\DoxyCodeLine{00031\ \textcolor{stringliteral}{ }}
+\DoxyCodeLine{00032\ \textcolor{stringliteral}{\ \ \ \ This\ function\ extracts\ the\ type\ name\ from\ a\ given\ node.\ It\ supports\ both\ IdentifierType\ and\ other\ type\ nodes. }}
+\DoxyCodeLine{00033\ \textcolor{stringliteral}{ }}
+\DoxyCodeLine{00034\ \textcolor{stringliteral}{\ \ \ \ @param\ node:\ The\ type\ node\ from\ which\ to\ extract\ the\ type\ name. }}
+\DoxyCodeLine{00035\ \textcolor{stringliteral}{\ \ \ \ @type\ node:\ pycparser.c\_ast.Type }}
+\DoxyCodeLine{00036\ \textcolor{stringliteral}{\ \ \ \ @return:\ The\ type\ name\ as\ a\ string. }}
+\DoxyCodeLine{00037\ \textcolor{stringliteral}{\ \ \ \ @rtype:\ str }}
+\DoxyCodeLine{00038\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}} }
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordflow}{if}\ isinstance(node,c\_ast.IdentifierType): }
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ node.names[0] }
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keywordflow}{else}: }
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ node.type.names[0] }
+\DoxyCodeLine{00043\  }
+
+\end{DoxyCode}
+\Hypertarget{namespaceutils_a5cfaa93fe4012b806d808ada74f3594a}\index{utils@{utils}!insertAssignmentsAndDeclForConstants@{insertAssignmentsAndDeclForConstants}}
+\index{insertAssignmentsAndDeclForConstants@{insertAssignmentsAndDeclForConstants}!utils@{utils}}
+\doxysubsubsection{\texorpdfstring{insertAssignmentsAndDeclForConstants()}{insertAssignmentsAndDeclForConstants()}}
+{\footnotesize\ttfamily \label{namespaceutils_a5cfaa93fe4012b806d808ada74f3594a} 
+insert\+Assignments\+And\+Decl\+For\+Constants (\begin{DoxyParamCaption}\item[{}]{ast}{, }\item[{}]{const\+Arr}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Inserts assignments and declarations for constants into the AST.
+
+This function adds declarations and assignments for constants into the function's parameter list and body nodes.
+
+@param ast: The Abstract Syntax Tree to be updated.
+@type ast: pycparser.c_ast.FileAST
+@param constArr: List of constant names to be added to the AST.
+@type constArr: list of str
+@return: The updated Abstract Syntax Tree.
+@rtype: pycparser.c_ast.FileAST
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{Inliner_2utils_8py_source_l00176}{176}} of file \mbox{\hyperlink{Inliner_2utils_8py_source}{utils.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00176\ \textcolor{keyword}{def\ }insertAssignmentsAndDeclForConstants(ast,constArr): }
+\DoxyCodeLine{00177\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{} }}
+\DoxyCodeLine{00178\ \textcolor{stringliteral}{\ \ \ \ @brief\ Inserts\ assignments\ and\ declarations\ for\ constants\ into\ the\ AST. }}
+\DoxyCodeLine{00179\ \textcolor{stringliteral}{ }}
+\DoxyCodeLine{00180\ \textcolor{stringliteral}{\ \ \ \ This\ function\ adds\ declarations\ and\ assignments\ for\ constants\ into\ the\ function's\ parameter\ list\ and\ body\ nodes. }}
+\DoxyCodeLine{00181\ \textcolor{stringliteral}{ }}
+\DoxyCodeLine{00182\ \textcolor{stringliteral}{\ \ \ \ @param\ ast:\ The\ Abstract\ Syntax\ Tree\ to\ be\ updated. }}
+\DoxyCodeLine{00183\ \textcolor{stringliteral}{\ \ \ \ @type\ ast:\ pycparser.c\_ast.FileAST }}
+\DoxyCodeLine{00184\ \textcolor{stringliteral}{\ \ \ \ @param\ constArr:\ List\ of\ constant\ names\ to\ be\ added\ to\ the\ AST. }}
+\DoxyCodeLine{00185\ \textcolor{stringliteral}{\ \ \ \ @type\ constArr:\ list\ of\ str }}
+\DoxyCodeLine{00186\ \textcolor{stringliteral}{\ \ \ \ @return:\ The\ updated\ Abstract\ Syntax\ Tree. }}
+\DoxyCodeLine{00187\ \textcolor{stringliteral}{\ \ \ \ @rtype:\ pycparser.c\_ast.FileAST }}
+\DoxyCodeLine{00188\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}} }
+\DoxyCodeLine{00189\ \ \ \ \ paramList\ =\ ast.ext[0].decl.type.args.params }
+\DoxyCodeLine{00190\ \ \ \ \ bodyNodes\ =\ ast.ext[0].body.block\_items }
+\DoxyCodeLine{00191\ \ \ \ \ \textcolor{keywordflow}{for}\ const\ \textcolor{keywordflow}{in}\ constArr: }
+\DoxyCodeLine{00192\ \ \ \ \ \ \ \ \ bodyNodes.insert(0,getSimpleAssignmentNode(const\ +\ \textcolor{stringliteral}{"{}\_inp"{}},const)) }
+\DoxyCodeLine{00193\ \ \ \ \ \textcolor{keywordflow}{for}\ const\ \textcolor{keywordflow}{in}\ constArr: }
+\DoxyCodeLine{00194\ \ \ \ \ \ \ \ \ bodyNodes.insert(0,getDeclarationNode(const\ +\ \textcolor{stringliteral}{"{}\_inp"{}},\textcolor{stringliteral}{"{}int"{}})) }
+\DoxyCodeLine{00195\ \ \ \ \ \textcolor{keywordflow}{for}\ const\ \textcolor{keywordflow}{in}\ constArr: }
+\DoxyCodeLine{00196\ \ \ \ \ \ \ \ \ paramList.append(getDeclarationNode(const,\textcolor{stringliteral}{"{}int"{}})) }
+\DoxyCodeLine{00197\ \ \ \ \ \textcolor{keywordflow}{return}\ ast }
+\DoxyCodeLine{00198\  }
+\DoxyCodeLine{00199\  }
+
+\end{DoxyCode}
+\Hypertarget{namespaceutils_a2850c02b1717c8d6c2dd5d035800d353}\index{utils@{utils}!mergeConstants@{mergeConstants}}
+\index{mergeConstants@{mergeConstants}!utils@{utils}}
+\doxysubsubsection{\texorpdfstring{mergeConstants()}{mergeConstants()}}
+{\footnotesize\ttfamily \label{namespaceutils_a2850c02b1717c8d6c2dd5d035800d353} 
+merge\+Constants (\begin{DoxyParamCaption}\item[{}]{ast}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Placeholder function for merging constants.
+
+This function currently does nothing and is intended to be implemented with logic for merging constants in the AST.
+
+@param ast: The Abstract Syntax Tree to be processed.
+@type ast: pycparser.c_ast.FileAST
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{Inliner_2utils_8py_source_l00165}{165}} of file \mbox{\hyperlink{Inliner_2utils_8py_source}{utils.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00165\ \textcolor{keyword}{def\ }mergeConstants(ast): }
+\DoxyCodeLine{00166\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{} }}
+\DoxyCodeLine{00167\ \textcolor{stringliteral}{\ \ \ \ @brief\ Placeholder\ function\ for\ merging\ constants. }}
+\DoxyCodeLine{00168\ \textcolor{stringliteral}{ }}
+\DoxyCodeLine{00169\ \textcolor{stringliteral}{\ \ \ \ This\ function\ currently\ does\ nothing\ and\ is\ intended\ to\ be\ implemented\ with\ logic\ for\ merging\ constants\ in\ the\ AST. }}
+\DoxyCodeLine{00170\ \textcolor{stringliteral}{ }}
+\DoxyCodeLine{00171\ \textcolor{stringliteral}{\ \ \ \ @param\ ast:\ The\ Abstract\ Syntax\ Tree\ to\ be\ processed. }}
+\DoxyCodeLine{00172\ \textcolor{stringliteral}{\ \ \ \ @type\ ast:\ pycparser.c\_ast.FileAST }}
+\DoxyCodeLine{00173\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}} }
+\DoxyCodeLine{00174\ \ \ \ \ a\ =\ 1 }
+\DoxyCodeLine{00175\  }
+
+\end{DoxyCode}
+\Hypertarget{namespaceutils_a044818bd87d9d443b283f98462af3565}\index{utils@{utils}!processDependantFunctions@{processDependantFunctions}}
+\index{processDependantFunctions@{processDependantFunctions}!utils@{utils}}
+\doxysubsubsection{\texorpdfstring{processDependantFunctions()}{processDependantFunctions()}}
+{\footnotesize\ttfamily \label{namespaceutils_a044818bd87d9d443b283f98462af3565} 
+process\+Dependant\+Functions (\begin{DoxyParamCaption}\item[{}]{node}{, }\item[{}]{function\+Info}{, }\item[{}]{is\+Top\+Module}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Processes function calls within a given function, handling parameter and local variable modifications.
+
+This function modifies function calls within the function body, updates the parameter and local variable mappings,
+and inserts appropriate declarations and assignments into the function body.
+
+@param node: The function definition node to process.
+@type node: pycparser.c_ast.FuncDef
+@param functionInfo: Dictionary containing information about all functions.
+@type functionInfo: dict
+@param isTopModule: Boolean indicating if the function is the top module.
+@type isTopModule: bool
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{Inliner_2utils_8py_source_l00091}{91}} of file \mbox{\hyperlink{Inliner_2utils_8py_source}{utils.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00091\ \textcolor{keyword}{def\ }processDependantFunctions(node,functionInfo,isTopModule): }
+\DoxyCodeLine{00092\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{} }}
+\DoxyCodeLine{00093\ \textcolor{stringliteral}{\ \ \ \ @brief\ Processes\ function\ calls\ within\ a\ given\ function,\ handling\ parameter\ and\ local\ variable\ modifications. }}
+\DoxyCodeLine{00094\ \textcolor{stringliteral}{ }}
+\DoxyCodeLine{00095\ \textcolor{stringliteral}{\ \ \ \ This\ function\ modifies\ function\ calls\ within\ the\ function\ body,\ updates\ the\ parameter\ and\ local\ variable\ mappings, }}
+\DoxyCodeLine{00096\ \textcolor{stringliteral}{\ \ \ \ and\ inserts\ appropriate\ declarations\ and\ assignments\ into\ the\ function\ body. }}
+\DoxyCodeLine{00097\ \textcolor{stringliteral}{ }}
+\DoxyCodeLine{00098\ \textcolor{stringliteral}{\ \ \ \ @param\ node:\ The\ function\ definition\ node\ to\ process. }}
+\DoxyCodeLine{00099\ \textcolor{stringliteral}{\ \ \ \ @type\ node:\ pycparser.c\_ast.FuncDef }}
+\DoxyCodeLine{00100\ \textcolor{stringliteral}{\ \ \ \ @param\ functionInfo:\ Dictionary\ containing\ information\ about\ all\ functions. }}
+\DoxyCodeLine{00101\ \textcolor{stringliteral}{\ \ \ \ @type\ functionInfo:\ dict }}
+\DoxyCodeLine{00102\ \textcolor{stringliteral}{\ \ \ \ @param\ isTopModule:\ Boolean\ indicating\ if\ the\ function\ is\ the\ top\ module. }}
+\DoxyCodeLine{00103\ \textcolor{stringliteral}{\ \ \ \ @type\ isTopModule:\ bool }}
+\DoxyCodeLine{00104\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}} }
+\DoxyCodeLine{00105\ \ \ \ \ functionBody\ =\ node.body }
+\DoxyCodeLine{00106\ \ \ \ \ changedInputMap\ =\ \{\} }
+\DoxyCodeLine{00107\ \ \ \ \ bodyNodes\ =\ [] }
+\DoxyCodeLine{00108\  }
+\DoxyCodeLine{00109\ \ \ \ \ \textcolor{keywordflow}{if}\ isTopModule: }
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ node.decl.type.args: }
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ param\_decl\ \textcolor{keywordflow}{in}\ node.decl.type.args.params: }
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ visitor\ =\ DeclVisitor() }
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ visitor.visit(param\_decl) }
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ declType\ =\ param\_decl.type }
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isinstance(declType,c\_ast.TypeDecl): }
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ typeOfId\ =\ getType(declType.type) }
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ bodyNodes.append(getDeclarationNode(param\_decl.name\ +\ \textcolor{stringliteral}{'\_inp'},typeOfId)) }
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ changedInputMap[param\_decl.name]\ =\ param\_decl.name\ +\ \textcolor{stringliteral}{'\_inp'} }
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ param\_decl\ \textcolor{keywordflow}{in}\ node.decl.type.args.params: }
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ declType\ =\ param\_decl.type }
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isinstance(declType,c\_ast.TypeDecl): }
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ bodyNodes.append(getSimpleAssignmentNode(param\_decl.name\ +\ \textcolor{stringliteral}{'\_inp'},param\_decl.name)) }
+\DoxyCodeLine{00123\ \ \ \ \  }
+\DoxyCodeLine{00124\ \ \ \ \ \textcolor{keywordflow}{for}\ blockItem\ \textcolor{keywordflow}{in}\ functionBody.block\_items: }
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isinstance(blockItem,c\_ast.Decl): }
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \ \ \ \ visitor\ =\ DeclVisitor() }
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ \ \ \ \ visitor.visit(blockItem) }
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \ \ \ \ bodyNodes.append(blockItem) }
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \  }
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isinstance(blockItem,c\_ast.Assignment): }
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ \ \ \ \ visitor\ =\ InputParamModifier(changedInputMap) }
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \ \ \ \ visitor.visit(blockItem) }
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \ \ \ \ bodyNodes.append(blockItem) }
+\DoxyCodeLine{00134\  }
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isinstance(blockItem,c\_ast.FuncCall): }
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ \ \ \ \ argumentMap\ =\ \{\} }
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ \ \ \ \ localVariablesMap\ =\ \{\} }
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \ \ \ \  }
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ \ \ \ \ functionName\ =\ blockItem.name.name }
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ \ \ \ \ parameters\ =\ functionInfo[functionName][\textcolor{stringliteral}{'parameters'}] }
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \ \ \ \ localVariables\ =\ functionInfo[functionName][\textcolor{stringliteral}{'localVariables'}] }
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \ \ \ \ localVariablesType\ =\ functionInfo[functionName][\textcolor{stringliteral}{'localVariablesType'}] }
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ \ \ \ \ timesCalled\ =\ functionInfo[functionName][\textcolor{stringliteral}{'timesCalled'}] }
+\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ \ \ \ \ arguments\ =\ blockItem.args.exprs }
+\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ index\ \textcolor{keywordflow}{in}\ range(len(arguments)): }
+\DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isinstance(arguments[index],c\_ast.UnaryOp): }
+\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ arguments[index]\ =\ c\_ast.ID(arguments[index].expr.name) }
+\DoxyCodeLine{00148\  }
+\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ localVariable,localVariableType\ \textcolor{keywordflow}{in}\ zip(localVariables,localVariablesType): }
+\DoxyCodeLine{00150\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ declNode\ =\ getDeclarationNode(localVariable\ +\ str(timesCalled),localVariableType) }
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ localVariablesMap[localVariable]\ =\ localVariable\ +\ str(timesCalled) }
+\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ bodyNodes.append(declNode) }
+\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ \ \ \ \  }
+\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ index\ \textcolor{keywordflow}{in}\ range(len(parameters)): }
+\DoxyCodeLine{00155\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ arguments[index].name\ \textcolor{keywordflow}{in}\ changedInputMap: }
+\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ argName\ =\ arguments[index].name\ +\ \textcolor{stringliteral}{'\_inp'} }
+\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}: }
+\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ argName\ =\ arguments[index].name }
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ argumentMap[parameters[index]]\ =\ argName }
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ \ \ \ \  }
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ \ \ \ \ getFunctionAssignments(functionInfo[functionName],argumentMap,localVariablesMap,bodyNodes) }
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ \ \ \ \ functionInfo[functionName][\textcolor{stringliteral}{'timesCalled'}]\ +=\ 1 }
+\DoxyCodeLine{00163\ \ \ \ \ node.body\ =\ c\_ast.Compound(block\_items=bodyNodes) }
+\DoxyCodeLine{00164\  }
+
+\end{DoxyCode}
+\Hypertarget{namespaceutils_a1ffd1dd47727022933be90797aac97de}\index{utils@{utils}!processFunctions@{processFunctions}}
+\index{processFunctions@{processFunctions}!utils@{utils}}
+\doxysubsubsection{\texorpdfstring{processFunctions()}{processFunctions()}}
+{\footnotesize\ttfamily \label{namespaceutils_a1ffd1dd47727022933be90797aac97de} 
+process\+Functions (\begin{DoxyParamCaption}\item[{}]{functions}{, }\item[{}]{f\+Def}{, }\item[{}]{function\+Calls}{, }\item[{}]{intermediate\+Assignments}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Processes a function definition to extract its inputs, outputs, intermediate variables, and function calls.
+
+This function analyzes the function definition to build a dictionary of function information, including
+the inputs, outputs, and function calls. It also updates intermediate variable assignments based on the function body.
+
+@param functions: A dictionary to store information about functions, including their inputs, outputs, and parameter order.
+@param fDef: The function definition node from the C Abstract Syntax Tree (AST).
+@param functionCalls: A dictionary to store function calls made within the function.
+@param intermediateAssignments: A dictionary to store intermediate variable assignments for the function.
+
+@raises ValueError: If the return type of the function is other than `void`.
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{Compiler_2utils_8py_source_l00087}{87}} of file \mbox{\hyperlink{Compiler_2utils_8py_source}{utils.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00087\ \textcolor{keyword}{def\ }processFunctions(functions,fDef,functionCalls,intermediateAssignments): }
+\DoxyCodeLine{00088\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{} }}
+\DoxyCodeLine{00089\ \textcolor{stringliteral}{\ \ \ \ @brief\ Processes\ a\ function\ definition\ to\ extract\ its\ inputs,\ outputs,\ intermediate\ variables,\ and\ function\ calls. }}
+\DoxyCodeLine{00090\ \textcolor{stringliteral}{ }}
+\DoxyCodeLine{00091\ \textcolor{stringliteral}{\ \ \ \ This\ function\ analyzes\ the\ function\ definition\ to\ build\ a\ dictionary\ of\ function\ information,\ including }}
+\DoxyCodeLine{00092\ \textcolor{stringliteral}{\ \ \ \ the\ inputs,\ outputs,\ and\ function\ calls.\ It\ also\ updates\ intermediate\ variable\ assignments\ based\ on\ the\ function\ body. }}
+\DoxyCodeLine{00093\ \textcolor{stringliteral}{ }}
+\DoxyCodeLine{00094\ \textcolor{stringliteral}{\ \ \ \ @param\ functions:\ A\ dictionary\ to\ store\ information\ about\ functions,\ including\ their\ inputs,\ outputs,\ and\ parameter\ order. }}
+\DoxyCodeLine{00095\ \textcolor{stringliteral}{\ \ \ \ @param\ fDef:\ The\ function\ definition\ node\ from\ the\ C\ Abstract\ Syntax\ Tree\ (AST). }}
+\DoxyCodeLine{00096\ \textcolor{stringliteral}{\ \ \ \ @param\ functionCalls:\ A\ dictionary\ to\ store\ function\ calls\ made\ within\ the\ function. }}
+\DoxyCodeLine{00097\ \textcolor{stringliteral}{\ \ \ \ @param\ intermediateAssignments:\ A\ dictionary\ to\ store\ intermediate\ variable\ assignments\ for\ the\ function. }}
+\DoxyCodeLine{00098\ \textcolor{stringliteral}{ }}
+\DoxyCodeLine{00099\ \textcolor{stringliteral}{\ \ \ \ @raises\ ValueError:\ If\ the\ return\ type\ of\ the\ function\ is\ other\ than\ \`{}void\`{}. }}
+\DoxyCodeLine{00100\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}} }
+\DoxyCodeLine{00101\ \ \ \ \ regPresent\ =\ \textcolor{keyword}{False} }
+\DoxyCodeLine{00102\ \ \ \ \ function\_decl\ =\ fDef.decl }
+\DoxyCodeLine{00103\ \ \ \ \ fName\ =\ function\_decl.name }
+\DoxyCodeLine{00104\ \ \ \ \ functions[fName]\ =\ \{ }
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}inputs"{}}\ :\ [], }
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}outputs"{}}\ :\ [], }
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}paramOrder"{}}\ :\ [], }
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}called"{}}\ :\ 0, }
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}regPresent"{}}\ :\ \textcolor{keyword}{False} }
+\DoxyCodeLine{00110\ \ \ \ \ \} }
+\DoxyCodeLine{00111\ \ \ \ \ functionCalls[fName]\ =\ [] }
+\DoxyCodeLine{00112\ \ \ \ \ intermediateAssignments[fName]\ =\ \{\} }
+\DoxyCodeLine{00113\  }
+\DoxyCodeLine{00114\ \ \ \ \ defineInputsAndOutputs(fName,functions,function\_decl) }
+\DoxyCodeLine{00115\  }
+\DoxyCodeLine{00116\ \ \ \ \ \textcolor{comment}{\#type,\ value }}
+\DoxyCodeLine{00117\ \ \ \ \ internalVariables\ =\ \{\} }
+\DoxyCodeLine{00118\ \ \ \ \ exp\ =\ \textcolor{stringliteral}{"{}"{}} }
+\DoxyCodeLine{00119\ \ \ \ \ function\_body\ =\ fDef.body }
+\DoxyCodeLine{00120\ \ \ \ \ \textcolor{keywordflow}{for}\ node\ \textcolor{keywordflow}{in}\ function\_body.block\_items: }
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isinstance(node,c\_ast.Decl)\ \textcolor{keywordflow}{and}\ node.init\ \textcolor{keywordflow}{is}\ \textcolor{keywordflow}{not}\ \textcolor{keywordtype}{None}: }
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ \ \ \ \ regPresent\ =\ handleDeclBlock(node,internalVariables) }
+\DoxyCodeLine{00123\  }
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ isinstance(node,c\_ast.Assignment): }
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ \ \ \ \ regPresent\ =\ handleAssignmentBlock(node,internalVariables) }
+\DoxyCodeLine{00126\  }
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ isinstance(node,c\_ast.Return): }
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \ \ \ \ handleReturnBlock(node,internalVariables,functions,fName) }
+\DoxyCodeLine{00129\  }
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ isinstance(node,c\_ast.FuncCall): }
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ \ \ \ \ handleFuncCallBlock(node,functions,fName,functionCalls,internalVariables) }
+\DoxyCodeLine{00132\  }
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ if(regPresent): }
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ \ \ \ \ functions[fName][\textcolor{stringliteral}{"{}regPresent"{}}]\ =\ regPresent }
+\DoxyCodeLine{00135\ \ \ \ \ intermediateAssignments[fName]\ =\ internalVariables }
+\DoxyCodeLine{00136\ \ \ \ \  }
+
+\end{DoxyCode}
+\Hypertarget{namespaceutils_ad6fbd134eb0eb58bb912381e7c87db50}\index{utils@{utils}!writeVerilogToFile@{writeVerilogToFile}}
+\index{writeVerilogToFile@{writeVerilogToFile}!utils@{utils}}
+\doxysubsubsection{\texorpdfstring{writeVerilogToFile()}{writeVerilogToFile()}}
+{\footnotesize\ttfamily \label{namespaceutils_ad6fbd134eb0eb58bb912381e7c87db50} 
+write\+Verilog\+To\+File (\begin{DoxyParamCaption}\item[{}]{func\+Name}{, }\item[{}]{functions}{, }\item[{}]{internal\+Variables}{, }\item[{}]{function\+Calls}{, }\item[{}]{filename}{, }\item[{}]{width}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Writes the Verilog code for a given function to a file.
+
+This function generates a Verilog module for the specified function based on its inputs, outputs,
+intermediate variables, and function calls. It writes the module declaration, input and output ports,
+intermediate value declarations, wire and reg assignments, and instantiations of other modules.
+
+@param funcName: The name of the function for which the Verilog code is generated.
+@param functions: A dictionary containing information about functions, including their inputs, outputs, and parameter order.
+@param internalVariables: A dictionary of internal variables used in the function, including their types and values.
+@param functionCalls: A dictionary of function calls made within the function, including the instance names and parameter lists.
+@param filename: The name of the file to which the Verilog code will be written.
+@param width: The bit width for the variables. If '0', no width is added; otherwise, a range is added to the variable declaration.
+
+@raises IOError: If the file cannot be opened or written to.
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{Compiler_2utils_8py_source_l00005}{5}} of file \mbox{\hyperlink{Compiler_2utils_8py_source}{utils.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00005\ \textcolor{keyword}{def\ }writeVerilogToFile(funcName,\ functions,\ internalVariables,\ functionCalls,\ filename,width): }
+\DoxyCodeLine{00006\ \ \ \ \ \textcolor{comment}{\#width\ =\ "{}\ [7:0]\ "{}\ if\ width=='int'\ else\ "{}\ "{} }}
+\DoxyCodeLine{00007\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{} }}
+\DoxyCodeLine{00008\ \textcolor{stringliteral}{\ \ \ \ @brief\ Writes\ the\ Verilog\ code\ for\ a\ given\ function\ to\ a\ file. }}
+\DoxyCodeLine{00009\ \textcolor{stringliteral}{ }}
+\DoxyCodeLine{00010\ \textcolor{stringliteral}{\ \ \ \ This\ function\ generates\ a\ Verilog\ module\ for\ the\ specified\ function\ based\ on\ its\ inputs,\ outputs, }}
+\DoxyCodeLine{00011\ \textcolor{stringliteral}{\ \ \ \ intermediate\ variables,\ and\ function\ calls.\ It\ writes\ the\ module\ declaration,\ input\ and\ output\ ports, }}
+\DoxyCodeLine{00012\ \textcolor{stringliteral}{\ \ \ \ intermediate\ value\ declarations,\ wire\ and\ reg\ assignments,\ and\ instantiations\ of\ other\ modules. }}
+\DoxyCodeLine{00013\ \textcolor{stringliteral}{ }}
+\DoxyCodeLine{00014\ \textcolor{stringliteral}{\ \ \ \ @param\ funcName:\ The\ name\ of\ the\ function\ for\ which\ the\ Verilog\ code\ is\ generated. }}
+\DoxyCodeLine{00015\ \textcolor{stringliteral}{\ \ \ \ @param\ functions:\ A\ dictionary\ containing\ information\ about\ functions,\ including\ their\ inputs,\ outputs,\ and\ parameter\ order. }}
+\DoxyCodeLine{00016\ \textcolor{stringliteral}{\ \ \ \ @param\ internalVariables:\ A\ dictionary\ of\ internal\ variables\ used\ in\ the\ function,\ including\ their\ types\ and\ values. }}
+\DoxyCodeLine{00017\ \textcolor{stringliteral}{\ \ \ \ @param\ functionCalls:\ A\ dictionary\ of\ function\ calls\ made\ within\ the\ function,\ including\ the\ instance\ names\ and\ parameter\ lists. }}
+\DoxyCodeLine{00018\ \textcolor{stringliteral}{\ \ \ \ @param\ filename:\ The\ name\ of\ the\ file\ to\ which\ the\ Verilog\ code\ will\ be\ written. }}
+\DoxyCodeLine{00019\ \textcolor{stringliteral}{\ \ \ \ @param\ width:\ The\ bit\ width\ for\ the\ variables.\ If\ '0',\ no\ width\ is\ added;\ otherwise,\ a\ range\ is\ added\ to\ the\ variable\ declaration. }}
+\DoxyCodeLine{00020\ \textcolor{stringliteral}{ }}
+\DoxyCodeLine{00021\ \textcolor{stringliteral}{\ \ \ \ @raises\ IOError:\ If\ the\ file\ cannot\ be\ opened\ or\ written\ to. }}
+\DoxyCodeLine{00022\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}} }
+\DoxyCodeLine{00023\ \ \ \ \ width\ =\ \textcolor{stringliteral}{"{}\ "{}}\ \textcolor{keywordflow}{if}\ width==\textcolor{stringliteral}{'0'}\ \textcolor{keywordflow}{else}\ \textcolor{stringliteral}{"{}\ ["{}}\ +\ width\ +\ \textcolor{stringliteral}{"{}:0]\ "{}} }
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keyword}{with}\ open(filename,\ \textcolor{stringliteral}{'w'})\ \textcolor{keyword}{as}\ file: }
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Redirect\ print\ output\ to\ the\ file }}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}module\ "{}}\ +\ funcName\ +\ \textcolor{stringliteral}{"{}("{}},\ file=file) }
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ ip\ \textcolor{keywordflow}{in}\ functions[funcName][\textcolor{stringliteral}{"{}inputs"{}}]: }
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}\ \ \ \ "{}}\ +\ ip\ +\ \textcolor{stringliteral}{"{},"{}},\ file=file) }
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ op\ \textcolor{keywordflow}{in}\ functions[funcName][\textcolor{stringliteral}{"{}outputs"{}}]: }
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}\ \ \ \ "{}}\ +\ op\ +\ \textcolor{stringliteral}{"{},"{}},\ file=file) }
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{});"{}},\ file=file) }
+\DoxyCodeLine{00032\  }
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}//INPUTS"{}},\ file=file) }
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ ip\ \textcolor{keywordflow}{in}\ functions[funcName][\textcolor{stringliteral}{"{}inputs"{}}]: }
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (ip==\textcolor{stringliteral}{"{}clk"{}}): }
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}\ \ \ \ input\ "{}}\ +ip\ +\ \textcolor{stringliteral}{"{};"{}},\ file=file) }
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}: }
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}\ \ \ \ input\ "{}}\ +\ width\ +ip\ +\ \textcolor{stringliteral}{"{};"{}},\ file=file) }
+\DoxyCodeLine{00039\  }
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}//OUTPUTS"{}},\ file=file) }
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ op\ \textcolor{keywordflow}{in}\ functions[funcName][\textcolor{stringliteral}{"{}outputs"{}}]: }
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ internalVariables[op][\textcolor{stringliteral}{"{}type"{}}]\ ==\ \textcolor{stringliteral}{"{}reg"{}}: }
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}\ \ \ \ output\ reg\ "{}}\ +\ width\ +\ op\ +\ \textcolor{stringliteral}{"{};"{}},\ file=file) }
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}: }
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}\ \ \ \ output\ "{}}\ +\ width\ +\ op\ +\ \textcolor{stringliteral}{"{};"{}},\ file=file) }
+\DoxyCodeLine{00046\  }
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ intermediate\ value\ decl }}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}//Intermediate\ values"{}},\ file=file) }
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ key\ \textcolor{keywordflow}{in}\ internalVariables.keys(): }
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ key\ \textcolor{keywordflow}{not}\ \textcolor{keywordflow}{in}\ functions[funcName][\textcolor{stringliteral}{"{}outputs"{}}]: }
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}\ \ \ \ "{}}\ +\ internalVariables[key][\textcolor{stringliteral}{"{}type"{}}]\ +\ width\ +\ key\ +\ \textcolor{stringliteral}{"{};"{}},\ file=file) }
+\DoxyCodeLine{00052\  }
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ wire\ assignments }}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}"{}},\ file=file) }
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ key\ \textcolor{keywordflow}{in}\ internalVariables.keys(): }
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ internalVariables[key][\textcolor{stringliteral}{"{}type"{}}]\ ==\ \textcolor{stringliteral}{"{}wire"{}}: }
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}\ \ \ \ assign\ "{}}\ +\ key\ +\ \textcolor{stringliteral}{"{}\ =\ "{}}\ +\ internalVariables[key][\textcolor{stringliteral}{"{}value"{}}]\ +\ \textcolor{stringliteral}{"{};"{}},\ file=file) }
+\DoxyCodeLine{00058\  }
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ reg\ assignments }}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}"{}},\ file=file) }
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ functions[funcName][\textcolor{stringliteral}{"{}regPresent"{}}]\ \textcolor{keywordflow}{is}\ \textcolor{keyword}{True}: }
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}\ \ \ \ always\ @(posedge\ clk)\ begin"{}},\ file=file) }
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ key\ \textcolor{keywordflow}{in}\ internalVariables.keys(): }
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ internalVariables[key][\textcolor{stringliteral}{"{}type"{}}]\ ==\ \textcolor{stringliteral}{"{}reg"{}}: }
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ "{}}\ +\ key\ +\ \textcolor{stringliteral}{"{}\ <=\ "{}}\ +\ internalVariables[key][\textcolor{stringliteral}{"{}value"{}}]\ +\ \textcolor{stringliteral}{"{};"{}},\ file=file) }
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}\ \ \ \ end"{}},\ file=file) }
+\DoxyCodeLine{00067\  }
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ module\ instantiations }}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}"{}},\ file=file) }
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ func\_calls\ \textcolor{keywordflow}{in}\ functionCalls[funcName]: }
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \ \ \ \ callee\ =\ func\_calls[\textcolor{stringliteral}{"{}callee"{}}] }
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \ \ \ \ inst\ =\ func\_calls[\textcolor{stringliteral}{"{}instanceName"{}}] }
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \ \ \ \ paramList\ =\ func\_calls[\textcolor{stringliteral}{"{}paramList"{}}] }
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}\ \ \ \ "{}}\ +\ callee\ +\ \textcolor{stringliteral}{"{}\ "{}}\ +\ inst\ +\ \textcolor{stringliteral}{"{}("{}},\ end=\textcolor{stringliteral}{"{}"{}},\ file=file) }
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \ \ \ \ paramOrder\ =\ functions[callee][\textcolor{stringliteral}{"{}paramOrder"{}}] }
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ i\ \textcolor{keywordflow}{in}\ range(len(paramOrder)): }
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}."{}}\ +\ paramOrder[i]\ +\ \textcolor{stringliteral}{"{}("{}}\ +\ paramList[i]\ +\ \textcolor{stringliteral}{"{})"{}},\ end=\textcolor{stringliteral}{"{}"{}},\ file=file) }
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ i\ !=\ len(paramOrder)\ -\/\ 1: }
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{},\ "{}},\ end=\textcolor{stringliteral}{"{}"{}},\ file=file) }
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}: }
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{});"{}},\ file=file) }
+\DoxyCodeLine{00082\  }
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}endmodule"{}},\ file=file) }
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}"{}},file=file) }
+\DoxyCodeLine{00085\  }
+\DoxyCodeLine{00086\  }
+
+\end{DoxyCode}

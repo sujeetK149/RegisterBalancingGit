@@ -1,0 +1,99 @@
+\doxysection{Assignment\+Checker Class Reference}
+\hypertarget{classVisitors_1_1AssignmentChecker}{}\label{classVisitors_1_1AssignmentChecker}\index{AssignmentChecker@{AssignmentChecker}}
+Inheritance diagram for Assignment\+Checker\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classVisitors_1_1AssignmentChecker}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classVisitors_1_1AssignmentChecker_ac6393736fa9ce70a0640e0c792f0a2d4}{visit\+\_\+\+Assignment}} (self, node)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{classVisitors_1_1AssignmentChecker_a3433d8ee7cad22736b2654b1598a47a2}{mp}} = True
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+dict \mbox{\hyperlink{classVisitors_1_1AssignmentChecker_a27205a0f90fd58bac32d0fb42b8a5b0e}{mp}} = \{\}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb}@brief Checks for multiple instantiations of the same variable in assignments.
+
+This visitor detects if a variable is assigned multiple times in the code.
+
+@param mp: Dictionary to track variables and their assignment status.
+@type mp: dict
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{Visitors_8py_source_l00278}{278}} of file \mbox{\hyperlink{Visitors_8py_source}{Visitors.\+py}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classVisitors_1_1AssignmentChecker_ac6393736fa9ce70a0640e0c792f0a2d4}\index{AssignmentChecker@{AssignmentChecker}!visit\_Assignment@{visit\_Assignment}}
+\index{visit\_Assignment@{visit\_Assignment}!AssignmentChecker@{AssignmentChecker}}
+\doxysubsubsection{\texorpdfstring{visit\_Assignment()}{visit\_Assignment()}}
+{\footnotesize\ttfamily \label{classVisitors_1_1AssignmentChecker_ac6393736fa9ce70a0640e0c792f0a2d4} 
+visit\+\_\+\+Assignment (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{node}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Detects multiple instantiations of the same variable.
+
+@param node: The assignment node being processed.
+@type node: pycparser.c_ast.Assignment
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{Visitors_8py_source_l00288}{288}} of file \mbox{\hyperlink{Visitors_8py_source}{Visitors.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00288\ \ \ \ \ \textcolor{keyword}{def\ }visit\_Assignment(self,node): }
+\DoxyCodeLine{00289\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{} }}
+\DoxyCodeLine{00290\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @brief\ Detects\ multiple\ instantiations\ of\ the\ same\ variable. }}
+\DoxyCodeLine{00291\ \textcolor{stringliteral}{ }}
+\DoxyCodeLine{00292\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @param\ node:\ The\ assignment\ node\ being\ processed. }}
+\DoxyCodeLine{00293\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @type\ node:\ pycparser.c\_ast.Assignment }}
+\DoxyCodeLine{00294\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ "{}"{}"{}} }
+\DoxyCodeLine{00295\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isinstance(node.lvalue,c\_ast.ID): }
+\DoxyCodeLine{00296\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ node.lvalue.name\ \textcolor{keywordflow}{in}\ self.mp: }
+\DoxyCodeLine{00297\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(f\textcolor{stringliteral}{"{}\{node.lvalue.name\}\ instantiated\ twice"{}}) }
+\DoxyCodeLine{00298\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}: }
+\DoxyCodeLine{00299\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.mp[node.lvalue.name]\ =\ \textcolor{keyword}{True} }
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classVisitors_1_1AssignmentChecker_a27205a0f90fd58bac32d0fb42b8a5b0e}\index{AssignmentChecker@{AssignmentChecker}!mp@{mp}}
+\index{mp@{mp}!AssignmentChecker@{AssignmentChecker}}
+\doxysubsubsection{\texorpdfstring{mp}{mp}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classVisitors_1_1AssignmentChecker_a27205a0f90fd58bac32d0fb42b8a5b0e} 
+dict mp = \{\}\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{Visitors_8py_source_l00287}{287}} of file \mbox{\hyperlink{Visitors_8py_source}{Visitors.\+py}}.
+
+\Hypertarget{classVisitors_1_1AssignmentChecker_a3433d8ee7cad22736b2654b1598a47a2}\index{AssignmentChecker@{AssignmentChecker}!mp@{mp}}
+\index{mp@{mp}!AssignmentChecker@{AssignmentChecker}}
+\doxysubsubsection{\texorpdfstring{mp}{mp}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classVisitors_1_1AssignmentChecker_a3433d8ee7cad22736b2654b1598a47a2} 
+bool mp = True}
+
+
+
+Definition at line \mbox{\hyperlink{Visitors_8py_source_l00296}{296}} of file \mbox{\hyperlink{Visitors_8py_source}{Visitors.\+py}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Inliner/\mbox{\hyperlink{Visitors_8py}{Visitors.\+py}}\end{DoxyCompactItemize}

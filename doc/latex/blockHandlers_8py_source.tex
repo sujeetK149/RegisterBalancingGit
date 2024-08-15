@@ -1,0 +1,165 @@
+\doxysection{block\+Handlers.\+py}
+\hypertarget{blockHandlers_8py_source}{}\label{blockHandlers_8py_source}\index{Compiler/blockHandlers.py@{Compiler/blockHandlers.py}}
+\mbox{\hyperlink{blockHandlers_8py}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00001}\mbox{\hyperlink{namespaceblockHandlers}{00001}}\ \textcolor{keyword}{from}\ pycparser\ \textcolor{keyword}{import}\ c\_ast}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00002}00002\ }
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00003}00003\ \textcolor{comment}{\#\ Define\ a\ function\ to\ recursively\ reconstruct\ expressions\ from\ AST\ nodes}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00004}\mbox{\hyperlink{namespaceblockHandlers_a84efb877474d8cafc4cbe5f7b3de8393}{00004}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespaceblockHandlers_a84efb877474d8cafc4cbe5f7b3de8393}{reconstruct\_expression}}(node,internalVariables):}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00005}00005\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00006}00006\ \textcolor{stringliteral}{\ \ \ \ @brief\ Recursively\ reconstructs\ expressions\ from\ AST\ nodes.}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00007}00007\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00008}00008\ \textcolor{stringliteral}{\ \ \ \ This\ function\ converts\ AST\ nodes\ into\ a\ string\ representation\ of\ the\ expression\ they\ represent.\ It\ supports\ binary\ operations,\ unary\ operations,\ constants,\ identifiers,\ and\ function\ calls.}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00009}00009\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00010}00010\ \textcolor{stringliteral}{\ \ \ \ @param\ node:\ The\ AST\ node\ representing\ an\ expression.}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00011}00011\ \textcolor{stringliteral}{\ \ \ \ @type\ node:\ pycparser.c\_ast.Node}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00012}00012\ \textcolor{stringliteral}{\ \ \ \ @param\ internalVariables:\ A\ dictionary\ to\ store\ and\ manage\ internal\ variables.}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00013}00013\ \textcolor{stringliteral}{\ \ \ \ @type\ internalVariables:\ dict}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00014}00014\ \textcolor{stringliteral}{\ \ \ \ @return:\ A\ string\ representing\ the\ reconstructed\ expression.}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00015}00015\ \textcolor{stringliteral}{\ \ \ \ @rtype:\ str}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00016}00016\ \textcolor{stringliteral}{\ \ \ \ @raises\ ValueError:\ If\ the\ node\ type\ is\ unsupported.}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00017}00017\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00018}00018\ \ \ \ \ \textcolor{keywordflow}{if}\ isinstance(node,\ c\_ast.BinaryOp):}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00019}00019\ \ \ \ \ \ \ \ \ leftExpr\ =\ \mbox{\hyperlink{namespaceblockHandlers_a84efb877474d8cafc4cbe5f7b3de8393}{reconstruct\_expression}}(node.left,internalVariables)}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00020}00020\ \ \ \ \ \ \ \ \ rightExpr\ =\ \mbox{\hyperlink{namespaceblockHandlers_a84efb877474d8cafc4cbe5f7b3de8393}{reconstruct\_expression}}(node.right,internalVariables)}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00021}00021\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ f\textcolor{stringliteral}{"{}(\{leftExpr\}\ \{node.op\}\ \{rightExpr\})"{}}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00022}00022\ \ \ \ \ \textcolor{keywordflow}{elif}\ isinstance(node,\ c\_ast.ID):}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00023}00023\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ node.name}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00024}00024\ \ \ \ \ \textcolor{keywordflow}{elif}\ isinstance(node,c\_ast.Constant):}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00025}00025\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ node.value}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00026}00026\ \ \ \ \ \textcolor{keywordflow}{elif}\ isinstance(node,c\_ast.UnaryOp):}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00027}00027\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}!"{}}\ +\ \mbox{\hyperlink{namespaceblockHandlers_a84efb877474d8cafc4cbe5f7b3de8393}{reconstruct\_expression}}(node.expr,internalVariables)}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00028}00028\ \ \ \ \ \textcolor{keywordflow}{elif}\ isinstance(node,c\_ast.FuncCall):}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00029}00029\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ node.name.name\ ==\ \textcolor{stringliteral}{"{}reg"{}}:}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00030}00030\ \ \ \ \ \ \ \ \ \ \ \ \ varName\ =\ str(node.args.exprs[0].name)\ +\ \textcolor{stringliteral}{"{}\_reg"{}};}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00031}00031\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ varName\ \textcolor{keywordflow}{not}\ \textcolor{keywordflow}{in}\ internalVariables:}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00032}00032\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ internalVariables[varName]\ =\ \{}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00033}00033\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}type"{}}\ :\ \textcolor{stringliteral}{"{}reg"{}},}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00034}00034\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}value"{}}\ :\ str(node.args.exprs[0].name)}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ varName;}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00037}00037\ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00038}00038\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{raise}\ ValueError(f\textcolor{stringliteral}{"{}Unsupported\ node\ type:\ \{type(node).\_\_name\_\_\}"{}})}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00039}00039\ }
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00040}00040\ \textcolor{comment}{\#block\ handlers\ for\ corresponding\ blocks/nodes}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00041}\mbox{\hyperlink{namespaceblockHandlers_a16a9081e9bfd68a0c66bd5a390adeee5}{00041}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespaceblockHandlers_a16a9081e9bfd68a0c66bd5a390adeee5}{handleDeclBlock}}(node,internalVariables):}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00042}00042\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00043}00043\ \textcolor{stringliteral}{\ \ \ \ @brief\ Handles\ declaration\ blocks\ in\ the\ AST\ and\ updates\ internal\ variables.}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00044}00044\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00045}00045\ \textcolor{stringliteral}{\ \ \ \ This\ function\ processes\ declaration\ nodes\ to\ determine\ the\ type\ of\ the\ variable\ (either\ "{}reg"{}\ or\ "{}wire"{})\ and\ reconstructs\ its\ initial\ value.}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00046}00046\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00047}00047\ \textcolor{stringliteral}{\ \ \ \ @param\ node:\ The\ declaration\ node\ being\ processed.}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00048}00048\ \textcolor{stringliteral}{\ \ \ \ @type\ node:\ pycparser.c\_ast.Decl}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00049}00049\ \textcolor{stringliteral}{\ \ \ \ @param\ internalVariables:\ A\ dictionary\ to\ store\ and\ manage\ internal\ variables.}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00050}00050\ \textcolor{stringliteral}{\ \ \ \ @type\ internalVariables:\ dict}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00051}00051\ \textcolor{stringliteral}{\ \ \ \ @return:\ Boolean\ indicating\ if\ a\ register\ variable\ is\ present.}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00052}00052\ \textcolor{stringliteral}{\ \ \ \ @rtype:\ bool}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00053}00053\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00054}00054\ \ \ \ \ regPresent\ =\ \textcolor{keyword}{False}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00055}00055\ \ \ \ \ \textcolor{keywordflow}{if}\ node.name\ \textcolor{keywordflow}{not}\ \textcolor{keywordflow}{in}\ internalVariables:}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00056}00056\ \ \ \ \ \ \ \ \ internalVariables[node.name]\ =\ \{}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}type"{}}\ :\ \textcolor{stringliteral}{"{}"{}},}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}value"{}}\ :\ \textcolor{stringliteral}{"{}"{}}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00059}00059\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00060}00060\ \ \ \ \ \textcolor{keywordflow}{if}\ isinstance(node.init,c\_ast.FuncCall)\ \textcolor{keywordflow}{and}\ node.init.name.name\ ==\ \textcolor{stringliteral}{"{}reg"{}}:}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00061}00061\ \ \ \ \ \ \ \ \ internalVariables[node.name][\textcolor{stringliteral}{"{}type"{}}]\ =\ \textcolor{stringliteral}{"{}reg"{}}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00062}00062\ \ \ \ \ \ \ \ \ regPresent\ =\ \textcolor{keyword}{True}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00063}00063\ \ \ \ \ \ \ \ \ exp\ =\ \mbox{\hyperlink{namespaceblockHandlers_a84efb877474d8cafc4cbe5f7b3de8393}{reconstruct\_expression}}(node.init.args.exprs[0],internalVariables)}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00064}00064\ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00065}00065\ \ \ \ \ \ \ \ \ internalVariables[node.name][\textcolor{stringliteral}{"{}type"{}}]\ =\ \textcolor{stringliteral}{"{}wire"{}}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00066}00066\ \ \ \ \ \ \ \ \ exp\ =\ \mbox{\hyperlink{namespaceblockHandlers_a84efb877474d8cafc4cbe5f7b3de8393}{reconstruct\_expression}}(node.init,internalVariables)}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00067}00067\ \ \ \ \ internalVariables[node.name][\textcolor{stringliteral}{"{}value"{}}]\ =\ exp}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00068}00068\ \ \ \ \ \textcolor{keywordflow}{return}\ regPresent}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00069}00069\ }
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00070}\mbox{\hyperlink{namespaceblockHandlers_af59f29d8cf9d1492480a20226c87ec8f}{00070}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespaceblockHandlers_af59f29d8cf9d1492480a20226c87ec8f}{handleAssignmentBlock}}(node,internalVariables):}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00071}00071\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00072}00072\ \textcolor{stringliteral}{\ \ \ \ @brief\ Handles\ assignment\ blocks\ in\ the\ AST\ and\ updates\ internal\ variables.}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00073}00073\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00074}00074\ \textcolor{stringliteral}{\ \ \ \ This\ function\ processes\ assignment\ nodes\ to\ determine\ the\ type\ of\ the\ variable\ (either\ "{}reg"{}\ or\ "{}wire"{})\ and\ reconstructs\ its\ assigned\ value.}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00075}00075\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00076}00076\ \textcolor{stringliteral}{\ \ \ \ @param\ node:\ The\ assignment\ node\ being\ processed.}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00077}00077\ \textcolor{stringliteral}{\ \ \ \ @type\ node:\ pycparser.c\_ast.Assignment}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00078}00078\ \textcolor{stringliteral}{\ \ \ \ @param\ internalVariables:\ A\ dictionary\ to\ store\ and\ manage\ internal\ variables.}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00079}00079\ \textcolor{stringliteral}{\ \ \ \ @type\ internalVariables:\ dict}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00080}00080\ \textcolor{stringliteral}{\ \ \ \ @return:\ Boolean\ indicating\ if\ a\ register\ variable\ is\ present.}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00081}00081\ \textcolor{stringliteral}{\ \ \ \ @rtype:\ bool}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00082}00082\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00083}00083\ \ \ \ \ regPresent\ =\ \textcolor{keyword}{False}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00084}00084\ \ \ \ \ lval\ =\ node.lvalue.name\ \textcolor{keywordflow}{if}\ isinstance(node.lvalue,c\_ast.ID)\ \textcolor{keywordflow}{else}\ node.lvalue.expr.name}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00085}00085\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00086}00086\ \ \ \ \ \textcolor{keywordflow}{if}\ isinstance(node.rvalue,c\_ast.FuncCall)\ \textcolor{keywordflow}{and}\ node.rvalue.name.name\ ==\ \textcolor{stringliteral}{"{}reg"{}}:}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00087}00087\ \ \ \ \ \ \ \ \ exp\ =\ \mbox{\hyperlink{namespaceblockHandlers_a84efb877474d8cafc4cbe5f7b3de8393}{reconstruct\_expression}}(node.rvalue.args.exprs[0],internalVariables)}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00088}00088\ \ \ \ \ \ \ \ \ internalVariables[lval]\ =\ \{\}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00089}00089\ \ \ \ \ \ \ \ \ internalVariables[lval][\textcolor{stringliteral}{"{}type"{}}]\ =\ \textcolor{stringliteral}{"{}reg"{}}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00090}00090\ \ \ \ \ \ \ \ \ regPresent\ =\ \textcolor{keyword}{True}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00091}00091\ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00092}00092\ \ \ \ \ \ \ \ \ exp\ =\ \mbox{\hyperlink{namespaceblockHandlers_a84efb877474d8cafc4cbe5f7b3de8393}{reconstruct\_expression}}(node.rvalue,internalVariables)}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00093}00093\ \ \ \ \ \ \ \ \ internalVariables[lval]\ =\ \{\}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00094}00094\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isinstance(node.lvalue,c\_ast.UnaryOp):}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ internalVariables[lval][\textcolor{stringliteral}{"{}type"{}}]\ =\ \textcolor{stringliteral}{"{}reg"{}}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ regPresent\ =\ \textcolor{keyword}{True}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00097}00097\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ internalVariables[lval][\textcolor{stringliteral}{"{}type"{}}]\ =\ \textcolor{stringliteral}{"{}wire"{}}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00099}00099\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00100}00100\ \ \ \ \ internalVariables[lval][\textcolor{stringliteral}{"{}value"{}}]\ =\ exp}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00101}00101\ \ \ \ \ \textcolor{keywordflow}{return}\ regPresent}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00102}00102\ }
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00103}\mbox{\hyperlink{namespaceblockHandlers_a5b8d1c81e628d19f7ac74a072cf2470f}{00103}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespaceblockHandlers_a5b8d1c81e628d19f7ac74a072cf2470f}{handleReturnBlock}}(node,internalVariables,functions,fName):}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00104}00104\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00105}00105\ \textcolor{stringliteral}{\ \ \ \ @brief\ Handles\ return\ blocks\ in\ the\ AST\ and\ updates\ function\ outputs.}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00106}00106\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00107}00107\ \textcolor{stringliteral}{\ \ \ \ This\ function\ processes\ return\ nodes\ to\ identify\ output\ variables\ and\ updates\ the\ function's\ output\ list\ or\ internal\ variables\ accordingly.}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00108}00108\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00109}00109\ \textcolor{stringliteral}{\ \ \ \ @param\ node:\ The\ return\ node\ being\ processed.}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00110}00110\ \textcolor{stringliteral}{\ \ \ \ @type\ node:\ pycparser.c\_ast.Return}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00111}00111\ \textcolor{stringliteral}{\ \ \ \ @param\ internalVariables:\ A\ dictionary\ to\ store\ and\ manage\ internal\ variables.}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00112}00112\ \textcolor{stringliteral}{\ \ \ \ @type\ internalVariables:\ dict}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00113}00113\ \textcolor{stringliteral}{\ \ \ \ @param\ functions:\ A\ dictionary\ containing\ function\ information.}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00114}00114\ \textcolor{stringliteral}{\ \ \ \ @type\ functions:\ dict}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00115}00115\ \textcolor{stringliteral}{\ \ \ \ @param\ fName:\ The\ name\ of\ the\ function\ being\ processed.}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00116}00116\ \textcolor{stringliteral}{\ \ \ \ @type\ fName:\ str}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00117}00117\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00118}00118\ \ \ \ \ \textcolor{keywordflow}{if}\ isinstance(node.expr,c\_ast.ID):}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00119}00119\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ node.expr.name\ \textcolor{keywordflow}{not}\ \textcolor{keywordflow}{in}\ functions[fName][\textcolor{stringliteral}{"{}outputs"{}}]:}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ functions[fName][\textcolor{stringliteral}{"{}outputs"{}}].append(node.expr.name)}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00121}00121\ \ \ \ \ \textcolor{keywordflow}{elif}\ isinstance(node.expr,\ c\_ast.BinaryOp):}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00122}00122\ \ \ \ \ \ \ \ \ internalVariables[\textcolor{stringliteral}{"{}r\_val"{}}]\ =\ \{\}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00123}00123\ \ \ \ \ \ \ \ \ internalVariables[\textcolor{stringliteral}{"{}r\_val"{}}][\textcolor{stringliteral}{"{}type"{}}]\ =\ \textcolor{stringliteral}{"{}wire"{}}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00124}00124\ \ \ \ \ \ \ \ \ internalVariables[\textcolor{stringliteral}{"{}r\_val"{}}][\textcolor{stringliteral}{"{}value"{}}]\ =\ \mbox{\hyperlink{namespaceblockHandlers_a84efb877474d8cafc4cbe5f7b3de8393}{reconstruct\_expression}}(node.expr,internalVariables)}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00125}00125\ }
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00126}\mbox{\hyperlink{namespaceblockHandlers_aed1756990605a5cb9dfff50253ce4ae9}{00126}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespaceblockHandlers_aed1756990605a5cb9dfff50253ce4ae9}{handleFuncCallBlock}}(node,functions,fName,functionCalls,internalVariables):}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00127}00127\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00128}00128\ \textcolor{stringliteral}{\ \ \ \ @brief\ Handles\ function\ call\ blocks\ in\ the\ AST\ and\ updates\ the\ function\ calls\ list.}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00129}00129\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00130}00130\ \textcolor{stringliteral}{\ \ \ \ This\ function\ processes\ function\ call\ nodes\ to\ record\ the\ function\ instance,\ parameter\ list,\ and\ update\ the\ function\ call\ information.}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00131}00131\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00132}00132\ \textcolor{stringliteral}{\ \ \ \ @param\ node:\ The\ function\ call\ node\ being\ processed.}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00133}00133\ \textcolor{stringliteral}{\ \ \ \ @type\ node:\ pycparser.c\_ast.FuncCall}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00134}00134\ \textcolor{stringliteral}{\ \ \ \ @param\ functions:\ A\ dictionary\ containing\ function\ information.}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00135}00135\ \textcolor{stringliteral}{\ \ \ \ @type\ functions:\ dict}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00136}00136\ \textcolor{stringliteral}{\ \ \ \ @param\ fName:\ The\ name\ of\ the\ function\ making\ the\ call.}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00137}00137\ \textcolor{stringliteral}{\ \ \ \ @type\ fName:\ str}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00138}00138\ \textcolor{stringliteral}{\ \ \ \ @param\ functionCalls:\ A\ dictionary\ to\ store\ function\ calls\ information.}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00139}00139\ \textcolor{stringliteral}{\ \ \ \ @type\ functionCalls:\ dict}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00140}00140\ \textcolor{stringliteral}{\ \ \ \ @param\ internalVariables:\ A\ dictionary\ to\ store\ and\ manage\ internal\ variables.}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00141}00141\ \textcolor{stringliteral}{\ \ \ \ @type\ internalVariables:\ dict}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00142}00142\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00143}00143\ \ \ \ \ called\ =\ functions[fName][\textcolor{stringliteral}{"{}called"{}}];}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00144}00144\ \ \ \ \ called\ =\ called\ +\ 1}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00145}00145\ \ \ \ \ inst\ =\ node.name.name\ +\ str(called)}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00146}00146\ \ \ \ \ functions[fName][\textcolor{stringliteral}{"{}called"{}}]\ =\ called}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00147}00147\ \ \ \ \ paramList\ =\ []}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00148}00148\ \ \ \ \ paramList.append(\textcolor{stringliteral}{"{}clk"{}})}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00149}00149\ \ \ \ \ \textcolor{keywordflow}{for}\ expr\ \textcolor{keywordflow}{in}\ node.args.exprs:}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00150}00150\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isinstance(expr,c\_ast.UnaryOp):}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00151}00151\ \ \ \ \ \ \ \ \ \ \ \ \ exp\ =\ \mbox{\hyperlink{namespaceblockHandlers_a84efb877474d8cafc4cbe5f7b3de8393}{reconstruct\_expression}}(expr.expr,internalVariables)}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00152}00152\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00153}00153\ \ \ \ \ \ \ \ \ \ \ \ \ exp\ =\ \mbox{\hyperlink{namespaceblockHandlers_a84efb877474d8cafc4cbe5f7b3de8393}{reconstruct\_expression}}(expr,internalVariables)}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00154}00154\ \ \ \ \ \ \ \ \ paramList.append(exp)}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00155}00155\ \ \ \ \ functionCalls[fName].append(\{}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00156}00156\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}instanceName"{}}\ :\ inst,}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00157}00157\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}paramList"{}}\ :\ paramList,}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00158}00158\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}callee"{}}\ :\ node.name.name}
+\DoxyCodeLine{\Hypertarget{blockHandlers_8py_source_l00159}00159\ \ \ \ \ \})}
+
+\end{DoxyCode}

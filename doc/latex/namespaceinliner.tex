@@ -1,0 +1,135 @@
+\doxysection{inliner Namespace Reference}
+\hypertarget{namespaceinliner}{}\label{namespaceinliner}\index{inliner@{inliner}}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{namespaceinliner_a56297b7fef6c00ea6e9222890e0bd94e}{main\+Inline}} (input\+File, output\+File, top\+Module)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{namespaceinliner_a8187411843a6284ffb964ef3fb9fcab3}{args}} = json.\+load(file)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{namespaceinliner_a56297b7fef6c00ea6e9222890e0bd94e}\index{inliner@{inliner}!mainInline@{mainInline}}
+\index{mainInline@{mainInline}!inliner@{inliner}}
+\doxysubsubsection{\texorpdfstring{mainInline()}{mainInline()}}
+{\footnotesize\ttfamily \label{namespaceinliner_a56297b7fef6c00ea6e9222890e0bd94e} 
+main\+Inline (\begin{DoxyParamCaption}\item[{}]{input\+File}{, }\item[{}]{output\+File}{, }\item[{}]{top\+Module}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Processes a C source file to inline functions, handle constants, and generate a new C file.
+
+This function parses the provided C source file, constructs a directed graph of functions, performs topological
+sorting, processes functions based on dependencies, handles array and constant values, and finally generates
+an updated C source file.
+
+@param inputFile: The path to the input C source file to be processed.
+@type inputFile: str
+@param outputFile: The path where the processed C source file will be saved.
+@type outputFile: str
+@param topModule: The name of the top-level module (function) to be used as the entry point.
+@type topModule: str
+
+@raises SystemExit: If the top module is not found in the sorted function list or if no functions are present.
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{inliner_8py_source_l00012}{12}} of file \mbox{\hyperlink{inliner_8py_source}{inliner.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00012\ \textcolor{keyword}{def\ }mainInline(inputFile,outputFile,topModule): }
+\DoxyCodeLine{00013\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{} }}
+\DoxyCodeLine{00014\ \textcolor{stringliteral}{\ \ \ \ @brief\ Processes\ a\ C\ source\ file\ to\ inline\ functions,\ handle\ constants,\ and\ generate\ a\ new\ C\ file. }}
+\DoxyCodeLine{00015\ \textcolor{stringliteral}{ }}
+\DoxyCodeLine{00016\ \textcolor{stringliteral}{\ \ \ \ This\ function\ parses\ the\ provided\ C\ source\ file,\ constructs\ a\ directed\ graph\ of\ functions,\ performs\ topological }}
+\DoxyCodeLine{00017\ \textcolor{stringliteral}{\ \ \ \ sorting,\ processes\ functions\ based\ on\ dependencies,\ handles\ array\ and\ constant\ values,\ and\ finally\ generates }}
+\DoxyCodeLine{00018\ \textcolor{stringliteral}{\ \ \ \ an\ updated\ C\ source\ file. }}
+\DoxyCodeLine{00019\ \textcolor{stringliteral}{ }}
+\DoxyCodeLine{00020\ \textcolor{stringliteral}{\ \ \ \ @param\ inputFile:\ The\ path\ to\ the\ input\ C\ source\ file\ to\ be\ processed. }}
+\DoxyCodeLine{00021\ \textcolor{stringliteral}{\ \ \ \ @type\ inputFile:\ str }}
+\DoxyCodeLine{00022\ \textcolor{stringliteral}{\ \ \ \ @param\ outputFile:\ The\ path\ where\ the\ processed\ C\ source\ file\ will\ be\ saved. }}
+\DoxyCodeLine{00023\ \textcolor{stringliteral}{\ \ \ \ @type\ outputFile:\ str }}
+\DoxyCodeLine{00024\ \textcolor{stringliteral}{\ \ \ \ @param\ topModule:\ The\ name\ of\ the\ top-\/level\ module\ (function)\ to\ be\ used\ as\ the\ entry\ point. }}
+\DoxyCodeLine{00025\ \textcolor{stringliteral}{\ \ \ \ @type\ topModule:\ str }}
+\DoxyCodeLine{00026\ \textcolor{stringliteral}{ }}
+\DoxyCodeLine{00027\ \textcolor{stringliteral}{\ \ \ \ @raises\ SystemExit:\ If\ the\ top\ module\ is\ not\ found\ in\ the\ sorted\ function\ list\ or\ if\ no\ functions\ are\ present. }}
+\DoxyCodeLine{00028\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}} }
+\DoxyCodeLine{00029\ \ \ \ \ ast\ =\ parse\_file(inputFile,\ use\_cpp=\textcolor{keyword}{True}) }
+\DoxyCodeLine{00030\ \ \ \ \ arrMap\ =\ \{\} }
+\DoxyCodeLine{00031\ \ \ \ \ arrVisitor\ =\ DeclVisitor(arrayMap=arrMap,ast=ast) }
+\DoxyCodeLine{00032\ \ \ \ \ arrVisitor.visit(ast) }
+\DoxyCodeLine{00033\ \ \ \ \ functionGraph\ =\ \mbox{\hyperlink{namespaceDiGraph}{DiGraph}}() }
+\DoxyCodeLine{00034\ \ \ \ \ functionInfo\ =\ \{\} }
+\DoxyCodeLine{00035\  }
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keywordflow}{for}\ fDef\ \textcolor{keywordflow}{in}\ ast.ext: }
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isinstance(fDef,c\_ast.FuncDef): }
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \ \ \ \ functionGraph.addFunction(fDef.decl.name) }
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \ \ \ \ visitor\ =\ FunctionVisitor(functionGraph,fDef.decl.name) }
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \ \ \ \ visitor.visit(fDef) }
+\DoxyCodeLine{00041\  }
+\DoxyCodeLine{00042\ \ \ \ \ sortedList\ =\ functionGraph.topoSort() }
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keywordflow}{if}\ topModule\ \textcolor{keywordflow}{not}\ \textcolor{keywordflow}{in}\ sortedList: }
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ print(f\textcolor{stringliteral}{"{}No\ top\ module\ named\ \{topModule\}\ in\ given\ input\ file."{}}) }
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}Note\ :\ The\ name\ of\ module\ is\ case\ sensitive"{}}) }
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ sys.exit(1) }
+\DoxyCodeLine{00047\ \ \ \ \ if(len(sortedList)\ ==\ 1): }
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ generate\_c\_file(ast,outputFile) }
+\DoxyCodeLine{00049\  }
+\DoxyCodeLine{00050\  }
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keywordflow}{for}\ function\ \textcolor{keywordflow}{in}\ sortedList: }
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ inDegree\ =\ functionGraph.getIndegreeOf(function) }
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ inDegree\ ==\ 0: }
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ fDef\ \textcolor{keywordflow}{in}\ ast.ext[:]: }
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isinstance(fDef,c\_ast.FuncDef)\ \textcolor{keywordflow}{and}\ fDef.decl.name\ ==\ function: }
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ extractFunctionInfo(fDef,functionInfo) }
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ast.ext.remove(fDef) }
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break} }
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \  }
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ function\ !=\ topModule: }
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ fDef\ \textcolor{keywordflow}{in}\ ast.ext[:]: }
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isinstance(fDef,c\_ast.FuncDef)\ \textcolor{keywordflow}{and}\ fDef.decl.name\ ==\ function: }
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ processDependantFunctions(fDef,functionInfo,\textcolor{keyword}{False}) }
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ extractFunctionInfo(fDef,functionInfo) }
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ast.ext.remove(fDef) }
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break} }
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}: }
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ fDef\ \textcolor{keywordflow}{in}\ ast.ext[:]: }
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isinstance(fDef,c\_ast.FuncDef)\ \textcolor{keywordflow}{and}\ fDef.decl.name\ ==\ function: }
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ processDependantFunctions(fDef,functionInfo,\textcolor{keyword}{True}) }
+\DoxyCodeLine{00071\ \ \ \ \  }
+\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keywordflow}{for}\ fDef\ \textcolor{keywordflow}{in}\ ast.ext[:]: }
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isinstance(fDef,c\_ast.Decl)\ \textcolor{keywordflow}{and}\ isinstance(fDef.type,c\_ast.ArrayDecl): }
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \ \ \ \ ast.ext.remove(fDef) }
+\DoxyCodeLine{00075\  }
+\DoxyCodeLine{00076\ \ \ \ \ constArr\ =\ [] }
+\DoxyCodeLine{00077\ \ \ \ \ arrValueReplacer\ =\ ArrayValueReplacer(arrMap,constArr) }
+\DoxyCodeLine{00078\ \ \ \ \ arrValueReplacer.visit(ast) }
+\DoxyCodeLine{00079\  }
+\DoxyCodeLine{00080\ \ \ \ \ constToVar\ =\ ConstToVar() }
+\DoxyCodeLine{00081\ \ \ \ \ constToVar.visit(ast) }
+\DoxyCodeLine{00082\ \ \ \ \ insertAssignmentsAndDeclForConstants(ast,constArr) }
+\DoxyCodeLine{00083\  }
+\DoxyCodeLine{00084\ \ \ \ \ assignmentChecker\ =\ AssignmentChecker(); }
+\DoxyCodeLine{00085\ \ \ \ \ assignmentChecker.visit(ast) }
+\DoxyCodeLine{00086\ \ \ \ \ generate\_c\_file(ast,outputFile) }
+\DoxyCodeLine{00087\  }
+\DoxyCodeLine{00088\  }
+\DoxyCodeLine{00089\  }
+
+\end{DoxyCode}
+
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{namespaceinliner_a8187411843a6284ffb964ef3fb9fcab3}\index{inliner@{inliner}!args@{args}}
+\index{args@{args}!inliner@{inliner}}
+\doxysubsubsection{\texorpdfstring{args}{args}}
+{\footnotesize\ttfamily \label{namespaceinliner_a8187411843a6284ffb964ef3fb9fcab3} 
+args = json.\+load(file)}
+
+
+
+Definition at line \mbox{\hyperlink{inliner_8py_source_l00092}{92}} of file \mbox{\hyperlink{inliner_8py_source}{inliner.\+py}}.
+

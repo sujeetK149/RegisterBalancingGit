@@ -1,0 +1,169 @@
+\doxysection{utils.\+py}
+\hypertarget{Compiler_2utils_8py_source}{}\label{Compiler_2utils_8py_source}\index{Compiler/utils.py@{Compiler/utils.py}}
+\mbox{\hyperlink{Compiler_2utils_8py}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00001}\mbox{\hyperlink{namespaceutils}{00001}}\ \textcolor{keyword}{from}\ pycparser\ \textcolor{keyword}{import}\ c\_ast}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00002}00002\ \textcolor{keyword}{from}\ blockHandlers\ \textcolor{keyword}{import}\ handleDeclBlock,handleAssignmentBlock,handleReturnBlock,handleFuncCallBlock}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00003}00003\ \textcolor{keyword}{import}\ sys}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00004}00004\ }
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00005}\mbox{\hyperlink{namespaceutils_ad6fbd134eb0eb58bb912381e7c87db50}{00005}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespaceutils_ad6fbd134eb0eb58bb912381e7c87db50}{writeVerilogToFile}}(funcName,\ functions,\ internalVariables,\ functionCalls,\ filename,width):}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00006}00006\ \ \ \ \ \textcolor{comment}{\#width\ =\ "{}\ [7:0]\ "{}\ if\ width=='int'\ else\ "{}\ "{}}}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00007}00007\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00008}00008\ \textcolor{stringliteral}{\ \ \ \ @brief\ Writes\ the\ Verilog\ code\ for\ a\ given\ function\ to\ a\ file.}}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00009}00009\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00010}00010\ \textcolor{stringliteral}{\ \ \ \ This\ function\ generates\ a\ Verilog\ module\ for\ the\ specified\ function\ based\ on\ its\ inputs,\ outputs,}}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00011}00011\ \textcolor{stringliteral}{\ \ \ \ intermediate\ variables,\ and\ function\ calls.\ It\ writes\ the\ module\ declaration,\ input\ and\ output\ ports,}}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00012}00012\ \textcolor{stringliteral}{\ \ \ \ intermediate\ value\ declarations,\ wire\ and\ reg\ assignments,\ and\ instantiations\ of\ other\ modules.}}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00013}00013\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00014}00014\ \textcolor{stringliteral}{\ \ \ \ @param\ funcName:\ The\ name\ of\ the\ function\ for\ which\ the\ Verilog\ code\ is\ generated.}}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00015}00015\ \textcolor{stringliteral}{\ \ \ \ @param\ functions:\ A\ dictionary\ containing\ information\ about\ functions,\ including\ their\ inputs,\ outputs,\ and\ parameter\ order.}}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00016}00016\ \textcolor{stringliteral}{\ \ \ \ @param\ internalVariables:\ A\ dictionary\ of\ internal\ variables\ used\ in\ the\ function,\ including\ their\ types\ and\ values.}}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00017}00017\ \textcolor{stringliteral}{\ \ \ \ @param\ functionCalls:\ A\ dictionary\ of\ function\ calls\ made\ within\ the\ function,\ including\ the\ instance\ names\ and\ parameter\ lists.}}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00018}00018\ \textcolor{stringliteral}{\ \ \ \ @param\ filename:\ The\ name\ of\ the\ file\ to\ which\ the\ Verilog\ code\ will\ be\ written.}}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00019}00019\ \textcolor{stringliteral}{\ \ \ \ @param\ width:\ The\ bit\ width\ for\ the\ variables.\ If\ '0',\ no\ width\ is\ added;\ otherwise,\ a\ range\ is\ added\ to\ the\ variable\ declaration.}}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00020}00020\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00021}00021\ \textcolor{stringliteral}{\ \ \ \ @raises\ IOError:\ If\ the\ file\ cannot\ be\ opened\ or\ written\ to.}}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00022}00022\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00023}00023\ \ \ \ \ width\ =\ \textcolor{stringliteral}{"{}\ "{}}\ \textcolor{keywordflow}{if}\ width==\textcolor{stringliteral}{'0'}\ \textcolor{keywordflow}{else}\ \textcolor{stringliteral}{"{}\ ["{}}\ +\ width\ +\ \textcolor{stringliteral}{"{}:0]\ "{}}}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00024}00024\ \ \ \ \ \textcolor{keyword}{with}\ open(filename,\ \textcolor{stringliteral}{'w'})\ \textcolor{keyword}{as}\ file:}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00025}00025\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Redirect\ print\ output\ to\ the\ file}}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00026}00026\ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}module\ "{}}\ +\ funcName\ +\ \textcolor{stringliteral}{"{}("{}},\ file=file)}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00027}00027\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ ip\ \textcolor{keywordflow}{in}\ functions[funcName][\textcolor{stringliteral}{"{}inputs"{}}]:}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00028}00028\ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}\ \ \ \ "{}}\ +\ ip\ +\ \textcolor{stringliteral}{"{},"{}},\ file=file)}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00029}00029\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ op\ \textcolor{keywordflow}{in}\ functions[funcName][\textcolor{stringliteral}{"{}outputs"{}}]:}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00030}00030\ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}\ \ \ \ "{}}\ +\ op\ +\ \textcolor{stringliteral}{"{},"{}},\ file=file)}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00031}00031\ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{});"{}},\ file=file)}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00032}00032\ }
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00033}00033\ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}//INPUTS"{}},\ file=file)}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00034}00034\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ ip\ \textcolor{keywordflow}{in}\ functions[funcName][\textcolor{stringliteral}{"{}inputs"{}}]:}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (ip==\textcolor{stringliteral}{"{}clk"{}}):}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}\ \ \ \ input\ "{}}\ +ip\ +\ \textcolor{stringliteral}{"{};"{}},\ file=file)}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}\ \ \ \ input\ "{}}\ +\ width\ +ip\ +\ \textcolor{stringliteral}{"{};"{}},\ file=file)}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00039}00039\ }
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00040}00040\ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}//OUTPUTS"{}},\ file=file)}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00041}00041\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ op\ \textcolor{keywordflow}{in}\ functions[funcName][\textcolor{stringliteral}{"{}outputs"{}}]:}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ internalVariables[op][\textcolor{stringliteral}{"{}type"{}}]\ ==\ \textcolor{stringliteral}{"{}reg"{}}:}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}\ \ \ \ output\ reg\ "{}}\ +\ width\ +\ op\ +\ \textcolor{stringliteral}{"{};"{}},\ file=file)}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}\ \ \ \ output\ "{}}\ +\ width\ +\ op\ +\ \textcolor{stringliteral}{"{};"{}},\ file=file)}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00046}00046\ }
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00047}00047\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ intermediate\ value\ decl}}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00048}00048\ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}//Intermediate\ values"{}},\ file=file)}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00049}00049\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ key\ \textcolor{keywordflow}{in}\ internalVariables.keys():}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ key\ \textcolor{keywordflow}{not}\ \textcolor{keywordflow}{in}\ functions[funcName][\textcolor{stringliteral}{"{}outputs"{}}]:}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}\ \ \ \ "{}}\ +\ internalVariables[key][\textcolor{stringliteral}{"{}type"{}}]\ +\ width\ +\ key\ +\ \textcolor{stringliteral}{"{};"{}},\ file=file)}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00052}00052\ }
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00053}00053\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ wire\ assignments}}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00054}00054\ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}"{}},\ file=file)}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00055}00055\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ key\ \textcolor{keywordflow}{in}\ internalVariables.keys():}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ internalVariables[key][\textcolor{stringliteral}{"{}type"{}}]\ ==\ \textcolor{stringliteral}{"{}wire"{}}:}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}\ \ \ \ assign\ "{}}\ +\ key\ +\ \textcolor{stringliteral}{"{}\ =\ "{}}\ +\ internalVariables[key][\textcolor{stringliteral}{"{}value"{}}]\ +\ \textcolor{stringliteral}{"{};"{}},\ file=file)}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00058}00058\ }
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00059}00059\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ reg\ assignments}}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00060}00060\ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}"{}},\ file=file)}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00061}00061\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ functions[funcName][\textcolor{stringliteral}{"{}regPresent"{}}]\ \textcolor{keywordflow}{is}\ \textcolor{keyword}{True}:}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}\ \ \ \ always\ @(posedge\ clk)\ begin"{}},\ file=file)}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ key\ \textcolor{keywordflow}{in}\ internalVariables.keys():}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ internalVariables[key][\textcolor{stringliteral}{"{}type"{}}]\ ==\ \textcolor{stringliteral}{"{}reg"{}}:}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}\ \ \ \ \ \ \ \ "{}}\ +\ key\ +\ \textcolor{stringliteral}{"{}\ <=\ "{}}\ +\ internalVariables[key][\textcolor{stringliteral}{"{}value"{}}]\ +\ \textcolor{stringliteral}{"{};"{}},\ file=file)}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}\ \ \ \ end"{}},\ file=file)}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00067}00067\ }
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00068}00068\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ module\ instantiations}}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00069}00069\ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}"{}},\ file=file)}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00070}00070\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ func\_calls\ \textcolor{keywordflow}{in}\ functionCalls[funcName]:}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ callee\ =\ func\_calls[\textcolor{stringliteral}{"{}callee"{}}]}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ inst\ =\ func\_calls[\textcolor{stringliteral}{"{}instanceName"{}}]}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ paramList\ =\ func\_calls[\textcolor{stringliteral}{"{}paramList"{}}]}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}\ \ \ \ "{}}\ +\ callee\ +\ \textcolor{stringliteral}{"{}\ "{}}\ +\ inst\ +\ \textcolor{stringliteral}{"{}("{}},\ end=\textcolor{stringliteral}{"{}"{}},\ file=file)}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ paramOrder\ =\ functions[callee][\textcolor{stringliteral}{"{}paramOrder"{}}]}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ i\ \textcolor{keywordflow}{in}\ range(len(paramOrder)):}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}."{}}\ +\ paramOrder[i]\ +\ \textcolor{stringliteral}{"{}("{}}\ +\ paramList[i]\ +\ \textcolor{stringliteral}{"{})"{}},\ end=\textcolor{stringliteral}{"{}"{}},\ file=file)}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ i\ !=\ len(paramOrder)\ -\/\ 1:}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{},\ "{}},\ end=\textcolor{stringliteral}{"{}"{}},\ file=file)}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{});"{}},\ file=file)}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00082}00082\ }
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00083}00083\ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}endmodule"{}},\ file=file)}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00084}00084\ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}"{}},file=file)}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00085}00085\ }
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00086}00086\ }
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00087}\mbox{\hyperlink{namespaceutils_a1ffd1dd47727022933be90797aac97de}{00087}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespaceutils_a1ffd1dd47727022933be90797aac97de}{processFunctions}}(functions,fDef,functionCalls,intermediateAssignments):}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00088}00088\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00089}00089\ \textcolor{stringliteral}{\ \ \ \ @brief\ Processes\ a\ function\ definition\ to\ extract\ its\ inputs,\ outputs,\ intermediate\ variables,\ and\ function\ calls.}}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00090}00090\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00091}00091\ \textcolor{stringliteral}{\ \ \ \ This\ function\ analyzes\ the\ function\ definition\ to\ build\ a\ dictionary\ of\ function\ information,\ including}}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00092}00092\ \textcolor{stringliteral}{\ \ \ \ the\ inputs,\ outputs,\ and\ function\ calls.\ It\ also\ updates\ intermediate\ variable\ assignments\ based\ on\ the\ function\ body.}}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00093}00093\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00094}00094\ \textcolor{stringliteral}{\ \ \ \ @param\ functions:\ A\ dictionary\ to\ store\ information\ about\ functions,\ including\ their\ inputs,\ outputs,\ and\ parameter\ order.}}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00095}00095\ \textcolor{stringliteral}{\ \ \ \ @param\ fDef:\ The\ function\ definition\ node\ from\ the\ C\ Abstract\ Syntax\ Tree\ (AST).}}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00096}00096\ \textcolor{stringliteral}{\ \ \ \ @param\ functionCalls:\ A\ dictionary\ to\ store\ function\ calls\ made\ within\ the\ function.}}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00097}00097\ \textcolor{stringliteral}{\ \ \ \ @param\ intermediateAssignments:\ A\ dictionary\ to\ store\ intermediate\ variable\ assignments\ for\ the\ function.}}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00098}00098\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00099}00099\ \textcolor{stringliteral}{\ \ \ \ @raises\ ValueError:\ If\ the\ return\ type\ of\ the\ function\ is\ other\ than\ \`{}void\`{}.}}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00100}00100\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00101}00101\ \ \ \ \ regPresent\ =\ \textcolor{keyword}{False}}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00102}00102\ \ \ \ \ function\_decl\ =\ fDef.decl}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00103}00103\ \ \ \ \ fName\ =\ function\_decl.name}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00104}00104\ \ \ \ \ functions[fName]\ =\ \{}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00105}00105\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}inputs"{}}\ :\ [],}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00106}00106\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}outputs"{}}\ :\ [],}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00107}00107\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}paramOrder"{}}\ :\ [],}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00108}00108\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}called"{}}\ :\ 0,}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00109}00109\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}regPresent"{}}\ :\ \textcolor{keyword}{False}}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00110}00110\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00111}00111\ \ \ \ \ functionCalls[fName]\ =\ []}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00112}00112\ \ \ \ \ intermediateAssignments[fName]\ =\ \{\}}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00113}00113\ }
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00114}00114\ \ \ \ \ \mbox{\hyperlink{namespaceutils_a64760885dba6d92351caf3fe931e4f87}{defineInputsAndOutputs}}(fName,functions,function\_decl)}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00115}00115\ }
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00116}00116\ \ \ \ \ \textcolor{comment}{\#type,\ value}}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00117}00117\ \ \ \ \ internalVariables\ =\ \{\}}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00118}00118\ \ \ \ \ exp\ =\ \textcolor{stringliteral}{"{}"{}}}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00119}00119\ \ \ \ \ function\_body\ =\ fDef.body}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00120}00120\ \ \ \ \ \textcolor{keywordflow}{for}\ node\ \textcolor{keywordflow}{in}\ function\_body.block\_items:}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00121}00121\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isinstance(node,c\_ast.Decl)\ \textcolor{keywordflow}{and}\ node.init\ \textcolor{keywordflow}{is}\ \textcolor{keywordflow}{not}\ \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00122}00122\ \ \ \ \ \ \ \ \ \ \ \ \ regPresent\ =\ handleDeclBlock(node,internalVariables)}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00123}00123\ }
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00124}00124\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ isinstance(node,c\_ast.Assignment):}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00125}00125\ \ \ \ \ \ \ \ \ \ \ \ \ regPresent\ =\ handleAssignmentBlock(node,internalVariables)}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00126}00126\ }
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00127}00127\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ isinstance(node,c\_ast.Return):}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00128}00128\ \ \ \ \ \ \ \ \ \ \ \ \ handleReturnBlock(node,internalVariables,functions,fName)}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00129}00129\ }
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00130}00130\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ isinstance(node,c\_ast.FuncCall):}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00131}00131\ \ \ \ \ \ \ \ \ \ \ \ \ handleFuncCallBlock(node,functions,fName,functionCalls,internalVariables)}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00132}00132\ }
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00133}00133\ \ \ \ \ \ \ \ \ if(regPresent):}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00134}00134\ \ \ \ \ \ \ \ \ \ \ \ \ functions[fName][\textcolor{stringliteral}{"{}regPresent"{}}]\ =\ regPresent}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00135}00135\ \ \ \ \ intermediateAssignments[fName]\ =\ internalVariables}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00136}00136\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00137}\mbox{\hyperlink{namespaceutils_a64760885dba6d92351caf3fe931e4f87}{00137}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespaceutils_a64760885dba6d92351caf3fe931e4f87}{defineInputsAndOutputs}}(fName,functions,function\_decl):}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00138}00138\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00139}00139\ \textcolor{stringliteral}{\ \ \ \ @brief\ Defines\ the\ inputs\ and\ outputs\ for\ a\ function\ based\ on\ its\ declaration.}}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00140}00140\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00141}00141\ \textcolor{stringliteral}{\ \ \ \ This\ function\ updates\ the\ \`{}functions\`{}\ dictionary\ with\ the\ input\ and\ output\ ports\ of\ the\ function,}}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00142}00142\ \textcolor{stringliteral}{\ \ \ \ and\ also\ stores\ the\ order\ of\ parameters.}}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00143}00143\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00144}00144\ \textcolor{stringliteral}{\ \ \ \ @param\ fName:\ The\ name\ of\ the\ function\ being\ processed.}}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00145}00145\ \textcolor{stringliteral}{\ \ \ \ @param\ functions:\ A\ dictionary\ to\ store\ information\ about\ functions.}}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00146}00146\ \textcolor{stringliteral}{\ \ \ \ @param\ function\_decl:\ The\ function\ declaration\ node\ from\ the\ C\ Abstract\ Syntax\ Tree\ (AST).}}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00147}00147\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00148}00148\ \textcolor{stringliteral}{\ \ \ \ @raises\ ValueError:\ If\ the\ return\ type\ of\ the\ function\ is\ other\ than\ \`{}void\`{}.}}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00149}00149\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00150}00150\ \ \ \ \ functions[fName][\textcolor{stringliteral}{"{}inputs"{}}].append(\textcolor{stringliteral}{"{}clk"{}})}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00151}00151\ \ \ \ \ functions[fName][\textcolor{stringliteral}{"{}paramOrder"{}}].append(\textcolor{stringliteral}{"{}clk"{}})}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00152}00152\ \ \ \ \ params\ =\ function\_decl.type.args.params}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00153}00153\ \ \ \ \ \textcolor{keywordflow}{for}\ param\_decl\ \textcolor{keywordflow}{in}\ params:}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00154}00154\ \ \ \ \ \ \ \ \ node\ =\ param\_decl.type;}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00155}00155\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isinstance(node,c\_ast.TypeDecl):}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00156}00156\ \ \ \ \ \ \ \ \ \ \ \ \ functions[fName][\textcolor{stringliteral}{"{}inputs"{}}].append(node.declname)}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00157}00157\ \ \ \ \ \ \ \ \ \ \ \ \ functions[fName][\textcolor{stringliteral}{"{}paramOrder"{}}].append(node.declname)}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00158}00158\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00159}00159\ \ \ \ \ \ \ \ \ \ \ \ \ functions[fName][\textcolor{stringliteral}{"{}outputs"{}}].append(node.type.declname)}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00160}00160\ \ \ \ \ \ \ \ \ \ \ \ \ functions[fName][\textcolor{stringliteral}{"{}paramOrder"{}}].append(node.type.declname)}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00161}00161\ \ \ \ \ if(function\_decl.type.type.type.names[0]\ !=\ \textcolor{stringliteral}{"{}void"{}}):}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00162}00162\ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}Return\ type\ other\ than\ void\ not\ supported."{}})}
+\DoxyCodeLine{\Hypertarget{Compiler_2utils_8py_source_l00163}00163\ \ \ \ \ \ \ \ \ sys.exit(1)}
+
+\end{DoxyCode}

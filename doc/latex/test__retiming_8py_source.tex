@@ -1,0 +1,53 @@
+\doxysection{test\+\_\+retiming.\+py}
+\hypertarget{test__retiming_8py_source}{}\label{test__retiming_8py_source}\index{RegBalancer/src/test\_retiming.py@{RegBalancer/src/test\_retiming.py}}
+\mbox{\hyperlink{test__retiming_8py}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{test__retiming_8py_source_l00001}\mbox{\hyperlink{namespaceRegBalancer_1_1src_1_1test__retiming}{00001}}\ \textcolor{keyword}{import}\ rustworkx\ \textcolor{keyword}{as}\ rx}
+\DoxyCodeLine{\Hypertarget{test__retiming_8py_source_l00002}00002\ \textcolor{keyword}{from}\ rustworkx.visualization\ \textcolor{keyword}{import}\ graphviz\_draw}
+\DoxyCodeLine{\Hypertarget{test__retiming_8py_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{test__retiming_8py_source_l00004}00004\ \textcolor{keyword}{from}\ modules.GraphNode\ \textcolor{keyword}{import}\ ASTGraphNode,\ TextGraphNode}
+\DoxyCodeLine{\Hypertarget{test__retiming_8py_source_l00005}00005\ \textcolor{keyword}{from}\ modules.Retime\ \textcolor{keyword}{import}\ RetimeDFG}
+\DoxyCodeLine{\Hypertarget{test__retiming_8py_source_l00006}00006\ }
+\DoxyCodeLine{\Hypertarget{test__retiming_8py_source_l00007}00007\ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{test__retiming_8py_source_l00008}00008\ \textcolor{stringliteral}{@brief\ Script\ for\ creating\ a\ sample\ data\ flow\ graph\ (DFG),\ applying\ retiming,\ and\ visualizing\ the\ graph.}}
+\DoxyCodeLine{\Hypertarget{test__retiming_8py_source_l00009}00009\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{test__retiming_8py_source_l00010}00010\ \textcolor{stringliteral}{This\ script:}}
+\DoxyCodeLine{\Hypertarget{test__retiming_8py_source_l00011}00011\ \textcolor{stringliteral}{-\/\ Creates\ a\ sample\ directed\ graph\ (DFG)\ with\ nodes\ and\ edges.}}
+\DoxyCodeLine{\Hypertarget{test__retiming_8py_source_l00012}00012\ \textcolor{stringliteral}{-\/\ Uses\ the\ \`{}RetimeDFG\`{}\ class\ to\ apply\ retiming\ operations\ to\ the\ DFG.}}
+\DoxyCodeLine{\Hypertarget{test__retiming_8py_source_l00013}00013\ \textcolor{stringliteral}{-\/\ Visualizes\ the\ graph\ using\ \`{}graphviz\_draw\`{}\ and\ saves\ the\ visualizations\ to\ files.}}
+\DoxyCodeLine{\Hypertarget{test__retiming_8py_source_l00014}00014\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{test__retiming_8py_source_l00015}00015\ \textcolor{stringliteral}{@details}}
+\DoxyCodeLine{\Hypertarget{test__retiming_8py_source_l00016}00016\ \textcolor{stringliteral}{-\/\ The\ graph\ is\ created\ with\ nodes\ labeled\ "{}Source"{},\ "{}Sink"{},\ "{}3"{},\ "{}4"{},\ and\ "{}Dummy"{}.}}
+\DoxyCodeLine{\Hypertarget{test__retiming_8py_source_l00017}00017\ \textcolor{stringliteral}{-\/\ The\ \`{}RetimeDFG\`{}\ class\ methods\ are\ called\ to\ set\ weights,\ create\ a\ constraint\ graph,\ and\ solve\ it.}}
+\DoxyCodeLine{\Hypertarget{test__retiming_8py_source_l00018}00018\ \textcolor{stringliteral}{-\/\ Two\ graph\ visualizations\ are\ saved\ as\ PNG\ files.}}
+\DoxyCodeLine{\Hypertarget{test__retiming_8py_source_l00019}00019\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{test__retiming_8py_source_l00020}00020\ \textcolor{stringliteral}{@file}}
+\DoxyCodeLine{\Hypertarget{test__retiming_8py_source_l00021}00021\ \textcolor{stringliteral}{Ensure\ that\ \`{}rustworkx\`{},\ \`{}graphviz\`{},\ and\ any\ custom\ modules\ are\ properly\ installed\ and\ configured.}}
+\DoxyCodeLine{\Hypertarget{test__retiming_8py_source_l00022}00022\ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{test__retiming_8py_source_l00023}00023\ }
+\DoxyCodeLine{\Hypertarget{test__retiming_8py_source_l00024}00024\ }
+\DoxyCodeLine{\Hypertarget{test__retiming_8py_source_l00025}00025\ \textcolor{keywordflow}{if}\ \_\_name\_\_\ ==\ \textcolor{stringliteral}{"{}\_\_main\_\_"{}}:}
+\DoxyCodeLine{\Hypertarget{test__retiming_8py_source_l00026}\mbox{\hyperlink{namespaceRegBalancer_1_1src_1_1test__retiming_a8d509c28896865f8640f328f30f15721}{00026}}\ \ \ \ \ dfg\ =\ rx.PyDiGraph()}
+\DoxyCodeLine{\Hypertarget{test__retiming_8py_source_l00027}\mbox{\hyperlink{namespaceRegBalancer_1_1src_1_1test__retiming_a9932f6d3a67f65e538d7ae56541a85da}{00027}}\ \ \ \ \ node1\ =\ dfg.add\_node(TextGraphNode(\textcolor{stringliteral}{"{}Source"{}}))}
+\DoxyCodeLine{\Hypertarget{test__retiming_8py_source_l00028}\mbox{\hyperlink{namespaceRegBalancer_1_1src_1_1test__retiming_a6f72570c732db7d8ffbb64f7eef9dea3}{00028}}\ \ \ \ \ node2\ =\ dfg.add\_node(TextGraphNode(\textcolor{stringliteral}{"{}Sink"{}}))}
+\DoxyCodeLine{\Hypertarget{test__retiming_8py_source_l00029}\mbox{\hyperlink{namespaceRegBalancer_1_1src_1_1test__retiming_a18dee1ca5dda5195c4e2e7f663a3a1dd}{00029}}\ \ \ \ \ node3\ =\ dfg.add\_node(TextGraphNode(\textcolor{stringliteral}{"{}3"{}},\ 1))}
+\DoxyCodeLine{\Hypertarget{test__retiming_8py_source_l00030}\mbox{\hyperlink{namespaceRegBalancer_1_1src_1_1test__retiming_a5a06a6e27e760a838df9849e283cdb4c}{00030}}\ \ \ \ \ node4\ =\ dfg.add\_node(TextGraphNode(\textcolor{stringliteral}{"{}4"{}}))}
+\DoxyCodeLine{\Hypertarget{test__retiming_8py_source_l00031}\mbox{\hyperlink{namespaceRegBalancer_1_1src_1_1test__retiming_ae47890d9ef0dda045dc2824bd221ff36}{00031}}\ \ \ \ \ node5\ =\ dfg.add\_node(TextGraphNode(\textcolor{stringliteral}{"{}Dummy"{}},\ 1))}
+\DoxyCodeLine{\Hypertarget{test__retiming_8py_source_l00032}00032\ \ \ \ \ dfg.add\_edge(node3,\ node5,\ 0)}
+\DoxyCodeLine{\Hypertarget{test__retiming_8py_source_l00033}00033\ \ \ \ \ dfg.add\_edge(node5,\ node2,\ 0)}
+\DoxyCodeLine{\Hypertarget{test__retiming_8py_source_l00034}00034\ \ \ \ \ dfg.add\_edge(node2,\ node1,\ 0)}
+\DoxyCodeLine{\Hypertarget{test__retiming_8py_source_l00035}00035\ \ \ \ \ dfg.add\_edge(node1,\ node3,\ 0)}
+\DoxyCodeLine{\Hypertarget{test__retiming_8py_source_l00036}00036\ \ \ \ \ dfg.add\_edge(node1,\ node4,\ 0)}
+\DoxyCodeLine{\Hypertarget{test__retiming_8py_source_l00037}00037\ \ \ \ \ dfg.add\_edge(node4,\ node2,\ 0)}
+\DoxyCodeLine{\Hypertarget{test__retiming_8py_source_l00038}\mbox{\hyperlink{namespaceRegBalancer_1_1src_1_1test__retiming_a1209559bbc0dbee87e2e3044b791a287}{00038}}\ \ \ \ \ retimer\ =\ RetimeDFG(dfg)}
+\DoxyCodeLine{\Hypertarget{test__retiming_8py_source_l00039}00039\ \ \ \ \ retimer.set\_source\_sink\_weight()}
+\DoxyCodeLine{\Hypertarget{test__retiming_8py_source_l00040}00040\ \ \ \ \ retimer.set\_w\_d\_matrix()}
+\DoxyCodeLine{\Hypertarget{test__retiming_8py_source_l00041}00041\ \ \ \ \ retimer.create\_constraint\_graph()}
+\DoxyCodeLine{\Hypertarget{test__retiming_8py_source_l00042}00042\ \ \ \ \ retimer.save\_constraint\_graph()}
+\DoxyCodeLine{\Hypertarget{test__retiming_8py_source_l00043}00043\ \ \ \ \ retimer.solve\_constraint\_graph()}
+\DoxyCodeLine{\Hypertarget{test__retiming_8py_source_l00044}\mbox{\hyperlink{namespaceRegBalancer_1_1src_1_1test__retiming_a64aa603bc3c6c1587e7c6542452481ac}{00044}}\ \ \ \ \ fig\ =\ graphviz\_draw(dfg,\ node\_attr\_fn=\textcolor{keyword}{lambda}\ n:\ \{\textcolor{stringliteral}{"{}label"{}}:\ n.label()\})}
+\DoxyCodeLine{\Hypertarget{test__retiming_8py_source_l00045}00045\ \ \ \ \ fig.save(\textcolor{stringliteral}{'graph2.png'})}
+\DoxyCodeLine{\Hypertarget{test__retiming_8py_source_l00046}00046\ \ \ \ \ fig\ =\ graphviz\_draw(dfg)}
+\DoxyCodeLine{\Hypertarget{test__retiming_8py_source_l00047}00047\ \ \ \ \ fig.save(\textcolor{stringliteral}{'graph.png'})}
+
+\end{DoxyCode}

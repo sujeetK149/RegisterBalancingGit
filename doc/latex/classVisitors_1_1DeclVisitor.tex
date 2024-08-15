@@ -1,0 +1,163 @@
+\doxysection{Decl\+Visitor Class Reference}
+\hypertarget{classVisitors_1_1DeclVisitor}{}\label{classVisitors_1_1DeclVisitor}\index{DeclVisitor@{DeclVisitor}}
+Inheritance diagram for Decl\+Visitor\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classVisitors_1_1DeclVisitor}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classVisitors_1_1DeclVisitor_a163257fae21a67bfccbc93cf3a035cf6}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, \mbox{\hyperlink{classVisitors_1_1DeclVisitor_a3c14dac355802b0266a75f0ee417c14b}{array\+Map}}=None, \mbox{\hyperlink{classVisitors_1_1DeclVisitor_a83d838e3813fb5999c0492e0d9474bd9}{ast}}=None)
+\item 
+\mbox{\hyperlink{classVisitors_1_1DeclVisitor_abb880930eb7b72c49b57d4bc914a05f9}{store\+Array}} (self, node)
+\item 
+\mbox{\hyperlink{classVisitors_1_1DeclVisitor_ab8a51ec3b8cdf3c34881859017860d2b}{visit\+\_\+\+Decl}} (self, node)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classVisitors_1_1DeclVisitor_a3c14dac355802b0266a75f0ee417c14b}{array\+Map}} = array\+Map
+\item 
+\mbox{\hyperlink{classVisitors_1_1DeclVisitor_a83d838e3813fb5999c0492e0d9474bd9}{ast}} = ast
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb}@brief Visits declaration nodes to store array initialization values.
+
+This visitor collects initialization values for array declarations and stores them in a map.
+
+@param arrayMap: Dictionary to store array names and their corresponding values.
+@type arrayMap: dict
+@param ast: The Abstract Syntax Tree being processed.
+@type ast: pycparser.c_ast.FileAST
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{Visitors_8py_source_l00057}{57}} of file \mbox{\hyperlink{Visitors_8py_source}{Visitors.\+py}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classVisitors_1_1DeclVisitor_a163257fae21a67bfccbc93cf3a035cf6}\index{DeclVisitor@{DeclVisitor}!\_\_init\_\_@{\_\_init\_\_}}
+\index{\_\_init\_\_@{\_\_init\_\_}!DeclVisitor@{DeclVisitor}}
+\doxysubsubsection{\texorpdfstring{\_\_init\_\_()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily \label{classVisitors_1_1DeclVisitor_a163257fae21a67bfccbc93cf3a035cf6} 
+\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{array\+Map}{ = {\ttfamily None}, }\item[{}]{ast}{ = {\ttfamily None}}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{Visitors_8py_source_l00068}{68}} of file \mbox{\hyperlink{Visitors_8py_source}{Visitors.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00068\ \ \ \ \ \textcolor{keyword}{def\ }\_\_init\_\_(self,arrayMap\ =\ None,ast\ =\ None): }
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ self.arrayMap\ =\ arrayMap }
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ self.ast\ =\ ast }
+\DoxyCodeLine{00071\  }
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classVisitors_1_1DeclVisitor_abb880930eb7b72c49b57d4bc914a05f9}\index{DeclVisitor@{DeclVisitor}!storeArray@{storeArray}}
+\index{storeArray@{storeArray}!DeclVisitor@{DeclVisitor}}
+\doxysubsubsection{\texorpdfstring{storeArray()}{storeArray()}}
+{\footnotesize\ttfamily \label{classVisitors_1_1DeclVisitor_abb880930eb7b72c49b57d4bc914a05f9} 
+store\+Array (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{node}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Stores the values of an array declaration in the array map.
+
+@param node: The array declaration node to process.
+@type node: pycparser.c_ast.Decl
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{Visitors_8py_source_l00072}{72}} of file \mbox{\hyperlink{Visitors_8py_source}{Visitors.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keyword}{def\ }storeArray(self,node): }
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{} }}
+\DoxyCodeLine{00074\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @brief\ Stores\ the\ values\ of\ an\ array\ declaration\ in\ the\ array\ map. }}
+\DoxyCodeLine{00075\ \textcolor{stringliteral}{ }}
+\DoxyCodeLine{00076\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @param\ node:\ The\ array\ declaration\ node\ to\ process. }}
+\DoxyCodeLine{00077\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @type\ node:\ pycparser.c\_ast.Decl }}
+\DoxyCodeLine{00078\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ "{}"{}"{}} }
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ arrName\ =\ node.name }
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ contents\ =\ [] }
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ item\ \textcolor{keywordflow}{in}\ node.init.exprs: }
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ item.value.startswith(\textcolor{stringliteral}{"{}0x"{}}): }
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ decVal\ =\ int(item.value[2:],16) }
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}: }
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ decVal\ =\ int(item.value) }
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \ \ \ \ contents.append(decVal) }
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ self.arrayMap[arrName]\ =\ contents }
+\DoxyCodeLine{00088\  }
+
+\end{DoxyCode}
+\Hypertarget{classVisitors_1_1DeclVisitor_ab8a51ec3b8cdf3c34881859017860d2b}\index{DeclVisitor@{DeclVisitor}!visit\_Decl@{visit\_Decl}}
+\index{visit\_Decl@{visit\_Decl}!DeclVisitor@{DeclVisitor}}
+\doxysubsubsection{\texorpdfstring{visit\_Decl()}{visit\_Decl()}}
+{\footnotesize\ttfamily \label{classVisitors_1_1DeclVisitor_ab8a51ec3b8cdf3c34881859017860d2b} 
+visit\+\_\+\+Decl (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{node}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Processes declaration nodes to handle array declarations.
+
+Calls the storeArray method if the declaration is an array.
+
+@param node: The declaration node being visited.
+@type node: pycparser.c_ast.Decl
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{Visitors_8py_source_l00089}{89}} of file \mbox{\hyperlink{Visitors_8py_source}{Visitors.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00089\ \ \ \ \ \textcolor{keyword}{def\ }visit\_Decl(self,node): }
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{} }}
+\DoxyCodeLine{00091\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @brief\ Processes\ declaration\ nodes\ to\ handle\ array\ declarations. }}
+\DoxyCodeLine{00092\ \textcolor{stringliteral}{ }}
+\DoxyCodeLine{00093\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ Calls\ the\ storeArray\ method\ if\ the\ declaration\ is\ an\ array. }}
+\DoxyCodeLine{00094\ \textcolor{stringliteral}{ }}
+\DoxyCodeLine{00095\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @param\ node:\ The\ declaration\ node\ being\ visited. }}
+\DoxyCodeLine{00096\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @type\ node:\ pycparser.c\_ast.Decl }}
+\DoxyCodeLine{00097\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ "{}"{}"{}} }
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ declType\ =\ node.type.type }
+\DoxyCodeLine{00099\  }
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isinstance(node.type,c\_ast.ArrayDecl): }
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \ \ \ \ self.storeArray(node) }
+\DoxyCodeLine{00102\  }
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classVisitors_1_1DeclVisitor_a3c14dac355802b0266a75f0ee417c14b}\index{DeclVisitor@{DeclVisitor}!arrayMap@{arrayMap}}
+\index{arrayMap@{arrayMap}!DeclVisitor@{DeclVisitor}}
+\doxysubsubsection{\texorpdfstring{arrayMap}{arrayMap}}
+{\footnotesize\ttfamily \label{classVisitors_1_1DeclVisitor_a3c14dac355802b0266a75f0ee417c14b} 
+array\+Map = array\+Map}
+
+
+
+Definition at line \mbox{\hyperlink{Visitors_8py_source_l00069}{69}} of file \mbox{\hyperlink{Visitors_8py_source}{Visitors.\+py}}.
+
+\Hypertarget{classVisitors_1_1DeclVisitor_a83d838e3813fb5999c0492e0d9474bd9}\index{DeclVisitor@{DeclVisitor}!ast@{ast}}
+\index{ast@{ast}!DeclVisitor@{DeclVisitor}}
+\doxysubsubsection{\texorpdfstring{ast}{ast}}
+{\footnotesize\ttfamily \label{classVisitors_1_1DeclVisitor_a83d838e3813fb5999c0492e0d9474bd9} 
+ast = ast}
+
+
+
+Definition at line \mbox{\hyperlink{Visitors_8py_source_l00070}{70}} of file \mbox{\hyperlink{Visitors_8py_source}{Visitors.\+py}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Inliner/\mbox{\hyperlink{Visitors_8py}{Visitors.\+py}}\end{DoxyCompactItemize}

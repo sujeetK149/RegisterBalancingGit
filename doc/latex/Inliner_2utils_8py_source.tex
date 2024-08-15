@@ -1,0 +1,219 @@
+\doxysection{utils.\+py}
+\hypertarget{Inliner_2utils_8py_source}{}\label{Inliner_2utils_8py_source}\index{Inliner/utils.py@{Inliner/utils.py}}
+\mbox{\hyperlink{Inliner_2utils_8py}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00001}00001\ \textcolor{keyword}{from}\ pycparser\ \textcolor{keyword}{import}\ c\_ast,c\_generator}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00002}00002\ \textcolor{keyword}{from}\ Visitors\ \textcolor{keyword}{import}\ LocalVariablesModifier,DeclVisitor,InputParamModifier,IdVisitor}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00003}00003\ \textcolor{keyword}{from}\ astNodes\ \textcolor{keyword}{import}\ getDeclarationNode,getSimpleAssignmentNode}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00004}00004\ \textcolor{keyword}{import}\ copy}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00005}00005\ }
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00006}\mbox{\hyperlink{namespaceutils_a5a59b688089dff450de907724aacb7c9}{00006}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespaceutils_a5a59b688089dff450de907724aacb7c9}{getFunctionAssignments}}(functionInfo,argumentMap,localVariablesMap,assignmentNodes):}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00007}00007\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00008}00008\ \textcolor{stringliteral}{\ \ \ \ @brief\ Extracts\ and\ modifies\ function\ assignment\ nodes\ based\ on\ argument\ and\ local\ variable\ mappings.}}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00009}00009\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00010}00010\ \textcolor{stringliteral}{\ \ \ \ This\ function\ processes\ the\ assignment\ nodes\ of\ a\ given\ function,\ updating\ identifiers\ according\ to\ the\ provided\ }}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00011}00011\ \textcolor{stringliteral}{\ \ \ \ argument\ and\ local\ variable\ mappings,\ and\ appends\ the\ modified\ nodes\ to\ the\ assignmentNodes\ list.}}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00012}00012\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00013}00013\ \textcolor{stringliteral}{\ \ \ \ @param\ functionInfo:\ Dictionary\ containing\ function\ information,\ including\ assignment\ nodes.}}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00014}00014\ \textcolor{stringliteral}{\ \ \ \ @type\ functionInfo:\ dict}}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00015}00015\ \textcolor{stringliteral}{\ \ \ \ @param\ argumentMap:\ Mapping\ from\ function\ parameters\ to\ argument\ names.}}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00016}00016\ \textcolor{stringliteral}{\ \ \ \ @type\ argumentMap:\ dict}}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00017}00017\ \textcolor{stringliteral}{\ \ \ \ @param\ localVariablesMap:\ Mapping\ from\ local\ variables\ to\ new\ variable\ names.}}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00018}00018\ \textcolor{stringliteral}{\ \ \ \ @type\ localVariablesMap:\ dict}}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00019}00019\ \textcolor{stringliteral}{\ \ \ \ @param\ assignmentNodes:\ List\ to\ which\ modified\ assignment\ nodes\ will\ be\ appended.}}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00020}00020\ \textcolor{stringliteral}{\ \ \ \ @type\ assignmentNodes:\ list}}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00021}00021\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00022}00022\ \ \ \ \ copyAssignmentNodes\ =\ copy.deepcopy(functionInfo[\textcolor{stringliteral}{'assignmentNodes'}])}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00023}00023\ \ \ \ \ \textcolor{keywordflow}{for}\ node\ \textcolor{keywordflow}{in}\ copyAssignmentNodes:}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00024}00024\ \ \ \ \ \ \ \ \ visitor\ =\ \mbox{\hyperlink{classVisitors_1_1IdVisitor}{IdVisitor}}(argumentMap,localVariablesMap)}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00025}00025\ \ \ \ \ \ \ \ \ visitor.visit(node)}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00026}00026\ \ \ \ \ \ \ \ \ assignmentNodes.append(node);}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00027}00027\ }
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00028}\mbox{\hyperlink{namespaceutils_abee3c46ce009c4e3722f4f378831572c}{00028}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespaceutils_abee3c46ce009c4e3722f4f378831572c}{getType}}(node):}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00029}00029\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00030}00030\ \textcolor{stringliteral}{\ \ \ \ @brief\ Retrieves\ the\ type\ name\ from\ a\ type\ node.}}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00031}00031\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00032}00032\ \textcolor{stringliteral}{\ \ \ \ This\ function\ extracts\ the\ type\ name\ from\ a\ given\ node.\ It\ supports\ both\ IdentifierType\ and\ other\ type\ nodes.}}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00033}00033\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00034}00034\ \textcolor{stringliteral}{\ \ \ \ @param\ node:\ The\ type\ node\ from\ which\ to\ extract\ the\ type\ name.}}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00035}00035\ \textcolor{stringliteral}{\ \ \ \ @type\ node:\ pycparser.c\_ast.Type}}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00036}00036\ \textcolor{stringliteral}{\ \ \ \ @return:\ The\ type\ name\ as\ a\ string.}}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00037}00037\ \textcolor{stringliteral}{\ \ \ \ @rtype:\ str}}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00038}00038\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00039}00039\ \ \ \ \ \textcolor{keywordflow}{if}\ isinstance(node,c\_ast.IdentifierType):}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00040}00040\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ node.names[0]}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00041}00041\ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00042}00042\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ node.type.names[0]}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00043}00043\ }
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00044}\mbox{\hyperlink{namespaceutils_a55edef8aa55113152dc0ba5c37518a99}{00044}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespaceutils_a55edef8aa55113152dc0ba5c37518a99}{extractFunctionInfo}}(node,functionInfo):}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00045}00045\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00046}00046\ \textcolor{stringliteral}{\ \ \ \ @brief\ Extracts\ information\ about\ a\ function,\ including\ parameters,\ local\ variables,\ and\ assignment\ nodes.}}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00047}00047\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00048}00048\ \textcolor{stringliteral}{\ \ \ \ This\ function\ collects\ parameters,\ local\ variables,\ and\ assignment\ nodes\ from\ a\ function\ definition\ node\ and}}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00049}00049\ \textcolor{stringliteral}{\ \ \ \ stores\ the\ information\ in\ the\ functionInfo\ dictionary.}}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00050}00050\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00051}00051\ \textcolor{stringliteral}{\ \ \ \ @param\ node:\ The\ function\ definition\ node\ to\ extract\ information\ from.}}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00052}00052\ \textcolor{stringliteral}{\ \ \ \ @type\ node:\ pycparser.c\_ast.FuncDef}}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00053}00053\ \textcolor{stringliteral}{\ \ \ \ @param\ functionInfo:\ Dictionary\ to\ store\ extracted\ function\ information.}}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00054}00054\ \textcolor{stringliteral}{\ \ \ \ @type\ functionInfo:\ dict}}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00055}00055\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00056}00056\ \ \ \ \ function\_name\ =\ node.decl.name}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00057}00057\ \ \ \ \ parameters\ =\ []}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00058}00058\ \ \ \ \ localVariables\ =\ []}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00059}00059\ \ \ \ \ localVariablesType\ =\ []}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00060}00060\ \ \ \ \ assignmentNodes\ =\ []}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00061}00061\ }
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00062}00062\ \ \ \ \ \textcolor{keywordflow}{if}\ node.decl.type.args:}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00063}00063\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ param\_decl\ \textcolor{keywordflow}{in}\ node.decl.type.args.params:}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ parameters.append(param\_decl.name)}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00065}00065\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00066}00066\ \ \ \ \ functionBody\ =\ node.body}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00067}00067\ \ \ \ \ \textcolor{keywordflow}{for}\ blockItem\ \textcolor{keywordflow}{in}\ functionBody.block\_items:}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00068}00068\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isinstance(blockItem,c\_ast.Decl):}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ typeOfId\ =\ \mbox{\hyperlink{namespaceutils_abee3c46ce009c4e3722f4f378831572c}{getType}}(blockItem.type.type)}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ localVariablesType.append(typeOfId)}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ localVariables.append(blockItem.name)}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00072}00072\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isinstance(blockItem,c\_ast.Assignment):}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isinstance(blockItem.lvalue,c\_ast.UnaryOp):}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ blockItem.lvalue\ =\ c\_ast.ID(blockItem.lvalue.expr.name)}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ visitor\ =\ \mbox{\hyperlink{classVisitors_1_1LocalVariablesModifier}{LocalVariablesModifier}}(localVariables,function\_name)}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ visitor.visit(blockItem)}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ assignmentNodes.append(blockItem)}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00078}00078\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00079}00079\ \ \ \ \ \textcolor{keywordflow}{for}\ index\ \textcolor{keywordflow}{in}\ range(len(localVariables)):}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00080}00080\ \ \ \ \ \ \ \ \ localVariables[index]\ +=\ (\textcolor{stringliteral}{'\_'}\ +\ function\_name)}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00081}00081\ }
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00082}00082\ \ \ \ \ functionInfo[function\_name]\ =\ \{}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00083}00083\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'parameters'}\ :\ parameters,}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00084}00084\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'localVariables'}\ :\ localVariables,}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00085}00085\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'localVariablesType'}\ :\ localVariablesType,}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00086}00086\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'assignmentNodes'}\ :\ assignmentNodes,}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00087}00087\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'firstTimeProcessing'}\ :\ \textcolor{keyword}{True},}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00088}00088\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'timesCalled'}\ :\ 0}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00089}00089\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00090}00090\ }
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00091}\mbox{\hyperlink{namespaceutils_a044818bd87d9d443b283f98462af3565}{00091}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespaceutils_a044818bd87d9d443b283f98462af3565}{processDependantFunctions}}(node,functionInfo,isTopModule):}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00092}00092\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00093}00093\ \textcolor{stringliteral}{\ \ \ \ @brief\ Processes\ function\ calls\ within\ a\ given\ function,\ handling\ parameter\ and\ local\ variable\ modifications.}}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00094}00094\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00095}00095\ \textcolor{stringliteral}{\ \ \ \ This\ function\ modifies\ function\ calls\ within\ the\ function\ body,\ updates\ the\ parameter\ and\ local\ variable\ mappings,}}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00096}00096\ \textcolor{stringliteral}{\ \ \ \ and\ inserts\ appropriate\ declarations\ and\ assignments\ into\ the\ function\ body.}}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00097}00097\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00098}00098\ \textcolor{stringliteral}{\ \ \ \ @param\ node:\ The\ function\ definition\ node\ to\ process.}}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00099}00099\ \textcolor{stringliteral}{\ \ \ \ @type\ node:\ pycparser.c\_ast.FuncDef}}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00100}00100\ \textcolor{stringliteral}{\ \ \ \ @param\ functionInfo:\ Dictionary\ containing\ information\ about\ all\ functions.}}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00101}00101\ \textcolor{stringliteral}{\ \ \ \ @type\ functionInfo:\ dict}}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00102}00102\ \textcolor{stringliteral}{\ \ \ \ @param\ isTopModule:\ Boolean\ indicating\ if\ the\ function\ is\ the\ top\ module.}}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00103}00103\ \textcolor{stringliteral}{\ \ \ \ @type\ isTopModule:\ bool}}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00104}00104\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00105}00105\ \ \ \ \ functionBody\ =\ node.body}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00106}00106\ \ \ \ \ changedInputMap\ =\ \{\}}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00107}00107\ \ \ \ \ bodyNodes\ =\ []}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00108}00108\ }
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00109}00109\ \ \ \ \ \textcolor{keywordflow}{if}\ isTopModule:}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00110}00110\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ node.decl.type.args:}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00111}00111\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ param\_decl\ \textcolor{keywordflow}{in}\ node.decl.type.args.params:}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00112}00112\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ visitor\ =\ \mbox{\hyperlink{classVisitors_1_1DeclVisitor}{DeclVisitor}}()}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00113}00113\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ visitor.visit(param\_decl)}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00114}00114\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ declType\ =\ param\_decl.type}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00115}00115\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isinstance(declType,c\_ast.TypeDecl):}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ typeOfId\ =\ \mbox{\hyperlink{namespaceutils_abee3c46ce009c4e3722f4f378831572c}{getType}}(declType.type)}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00117}00117\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ bodyNodes.append(getDeclarationNode(param\_decl.name\ +\ \textcolor{stringliteral}{'\_inp'},typeOfId))}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00118}00118\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ changedInputMap[param\_decl.name]\ =\ param\_decl.name\ +\ \textcolor{stringliteral}{'\_inp'}}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00119}00119\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ param\_decl\ \textcolor{keywordflow}{in}\ node.decl.type.args.params:}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ declType\ =\ param\_decl.type}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00121}00121\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isinstance(declType,c\_ast.TypeDecl):}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00122}00122\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ bodyNodes.append(getSimpleAssignmentNode(param\_decl.name\ +\ \textcolor{stringliteral}{'\_inp'},param\_decl.name))}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00123}00123\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00124}00124\ \ \ \ \ \textcolor{keywordflow}{for}\ blockItem\ \textcolor{keywordflow}{in}\ functionBody.block\_items:}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00125}00125\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isinstance(blockItem,c\_ast.Decl):}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00126}00126\ \ \ \ \ \ \ \ \ \ \ \ \ visitor\ =\ \mbox{\hyperlink{classVisitors_1_1DeclVisitor}{DeclVisitor}}()}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00127}00127\ \ \ \ \ \ \ \ \ \ \ \ \ visitor.visit(blockItem)}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00128}00128\ \ \ \ \ \ \ \ \ \ \ \ \ bodyNodes.append(blockItem)}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00129}00129\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00130}00130\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isinstance(blockItem,c\_ast.Assignment):}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00131}00131\ \ \ \ \ \ \ \ \ \ \ \ \ visitor\ =\ \mbox{\hyperlink{classVisitors_1_1InputParamModifier}{InputParamModifier}}(changedInputMap)}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00132}00132\ \ \ \ \ \ \ \ \ \ \ \ \ visitor.visit(blockItem)}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00133}00133\ \ \ \ \ \ \ \ \ \ \ \ \ bodyNodes.append(blockItem)}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00134}00134\ }
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00135}00135\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isinstance(blockItem,c\_ast.FuncCall):}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00136}00136\ \ \ \ \ \ \ \ \ \ \ \ \ argumentMap\ =\ \{\}}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00137}00137\ \ \ \ \ \ \ \ \ \ \ \ \ localVariablesMap\ =\ \{\}}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00138}00138\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00139}00139\ \ \ \ \ \ \ \ \ \ \ \ \ functionName\ =\ blockItem.name.name}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00140}00140\ \ \ \ \ \ \ \ \ \ \ \ \ parameters\ =\ functionInfo[functionName][\textcolor{stringliteral}{'parameters'}]}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00141}00141\ \ \ \ \ \ \ \ \ \ \ \ \ localVariables\ =\ functionInfo[functionName][\textcolor{stringliteral}{'localVariables'}]}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00142}00142\ \ \ \ \ \ \ \ \ \ \ \ \ localVariablesType\ =\ functionInfo[functionName][\textcolor{stringliteral}{'localVariablesType'}]}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00143}00143\ \ \ \ \ \ \ \ \ \ \ \ \ timesCalled\ =\ functionInfo[functionName][\textcolor{stringliteral}{'timesCalled'}]}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00144}00144\ \ \ \ \ \ \ \ \ \ \ \ \ arguments\ =\ blockItem.args.exprs}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00145}00145\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ index\ \textcolor{keywordflow}{in}\ range(len(arguments)):}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00146}00146\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isinstance(arguments[index],c\_ast.UnaryOp):}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00147}00147\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ arguments[index]\ =\ c\_ast.ID(arguments[index].expr.name)}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00148}00148\ }
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00149}00149\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ localVariable,localVariableType\ \textcolor{keywordflow}{in}\ zip(localVariables,localVariablesType):}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00150}00150\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ declNode\ =\ getDeclarationNode(localVariable\ +\ str(timesCalled),localVariableType)}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00151}00151\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ localVariablesMap[localVariable]\ =\ localVariable\ +\ str(timesCalled)}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00152}00152\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ bodyNodes.append(declNode)}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00153}00153\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00154}00154\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ index\ \textcolor{keywordflow}{in}\ range(len(parameters)):}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00155}00155\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ arguments[index].name\ \textcolor{keywordflow}{in}\ changedInputMap:}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00156}00156\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ argName\ =\ arguments[index].name\ +\ \textcolor{stringliteral}{'\_inp'}}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00157}00157\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00158}00158\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ argName\ =\ arguments[index].name}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00159}00159\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ argumentMap[parameters[index]]\ =\ argName}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00160}00160\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00161}00161\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespaceutils_a5a59b688089dff450de907724aacb7c9}{getFunctionAssignments}}(functionInfo[functionName],argumentMap,localVariablesMap,bodyNodes)}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00162}00162\ \ \ \ \ \ \ \ \ \ \ \ \ functionInfo[functionName][\textcolor{stringliteral}{'timesCalled'}]\ +=\ 1}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00163}00163\ \ \ \ \ node.body\ =\ c\_ast.Compound(block\_items=bodyNodes)}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00164}00164\ }
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00165}\mbox{\hyperlink{namespaceutils_a2850c02b1717c8d6c2dd5d035800d353}{00165}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespaceutils_a2850c02b1717c8d6c2dd5d035800d353}{mergeConstants}}(ast):}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00166}00166\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00167}00167\ \textcolor{stringliteral}{\ \ \ \ @brief\ Placeholder\ function\ for\ merging\ constants.}}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00168}00168\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00169}00169\ \textcolor{stringliteral}{\ \ \ \ This\ function\ currently\ does\ nothing\ and\ is\ intended\ to\ be\ implemented\ with\ logic\ for\ merging\ constants\ in\ the\ AST.}}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00170}00170\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00171}00171\ \textcolor{stringliteral}{\ \ \ \ @param\ ast:\ The\ Abstract\ Syntax\ Tree\ to\ be\ processed.}}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00172}00172\ \textcolor{stringliteral}{\ \ \ \ @type\ ast:\ pycparser.c\_ast.FileAST}}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00173}00173\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00174}00174\ \ \ \ \ a\ =\ 1}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00175}00175\ }
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00176}\mbox{\hyperlink{namespaceutils_a5cfaa93fe4012b806d808ada74f3594a}{00176}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespaceutils_a5cfaa93fe4012b806d808ada74f3594a}{insertAssignmentsAndDeclForConstants}}(ast,constArr):}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00177}00177\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00178}00178\ \textcolor{stringliteral}{\ \ \ \ @brief\ Inserts\ assignments\ and\ declarations\ for\ constants\ into\ the\ AST.}}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00179}00179\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00180}00180\ \textcolor{stringliteral}{\ \ \ \ This\ function\ adds\ declarations\ and\ assignments\ for\ constants\ into\ the\ function's\ parameter\ list\ and\ body\ nodes.}}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00181}00181\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00182}00182\ \textcolor{stringliteral}{\ \ \ \ @param\ ast:\ The\ Abstract\ Syntax\ Tree\ to\ be\ updated.}}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00183}00183\ \textcolor{stringliteral}{\ \ \ \ @type\ ast:\ pycparser.c\_ast.FileAST}}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00184}00184\ \textcolor{stringliteral}{\ \ \ \ @param\ constArr:\ List\ of\ constant\ names\ to\ be\ added\ to\ the\ AST.}}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00185}00185\ \textcolor{stringliteral}{\ \ \ \ @type\ constArr:\ list\ of\ str}}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00186}00186\ \textcolor{stringliteral}{\ \ \ \ @return:\ The\ updated\ Abstract\ Syntax\ Tree.}}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00187}00187\ \textcolor{stringliteral}{\ \ \ \ @rtype:\ pycparser.c\_ast.FileAST}}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00188}00188\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00189}00189\ \ \ \ \ paramList\ =\ ast.ext[0].decl.type.args.params}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00190}00190\ \ \ \ \ bodyNodes\ =\ ast.ext[0].body.block\_items}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00191}00191\ \ \ \ \ \textcolor{keywordflow}{for}\ const\ \textcolor{keywordflow}{in}\ constArr:}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00192}00192\ \ \ \ \ \ \ \ \ bodyNodes.insert(0,getSimpleAssignmentNode(const\ +\ \textcolor{stringliteral}{"{}\_inp"{}},const))}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00193}00193\ \ \ \ \ \textcolor{keywordflow}{for}\ const\ \textcolor{keywordflow}{in}\ constArr:}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00194}00194\ \ \ \ \ \ \ \ \ bodyNodes.insert(0,getDeclarationNode(const\ +\ \textcolor{stringliteral}{"{}\_inp"{}},\textcolor{stringliteral}{"{}int"{}}))}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00195}00195\ \ \ \ \ \textcolor{keywordflow}{for}\ const\ \textcolor{keywordflow}{in}\ constArr:}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00196}00196\ \ \ \ \ \ \ \ \ paramList.append(getDeclarationNode(const,\textcolor{stringliteral}{"{}int"{}}))}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00197}00197\ \ \ \ \ \textcolor{keywordflow}{return}\ ast}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00198}00198\ }
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00199}00199\ }
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00200}\mbox{\hyperlink{namespaceutils_a78d4c1eea6eb65a4bdd659bb059bedbf}{00200}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespaceutils_a78d4c1eea6eb65a4bdd659bb059bedbf}{generate\_c\_file}}(ast,filename):}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00201}00201\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00202}00202\ \textcolor{stringliteral}{\ \ \ \ @brief\ Generates\ C\ code\ from\ the\ provided\ Abstract\ Syntax\ Tree\ (AST)\ and\ writes\ it\ to\ a\ file.}}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00203}00203\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00204}00204\ \textcolor{stringliteral}{\ \ \ \ This\ function\ uses\ the\ C\ generator\ to\ convert\ the\ AST\ into\ C\ code\ and\ saves\ the\ generated\ code\ to\ the\ specified\ file.}}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00205}00205\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00206}00206\ \textcolor{stringliteral}{\ \ \ \ @param\ ast:\ The\ Abstract\ Syntax\ Tree\ to\ be\ converted\ into\ C\ code.}}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00207}00207\ \textcolor{stringliteral}{\ \ \ \ @type\ ast:\ pycparser.c\_ast.FileAST}}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00208}00208\ \textcolor{stringliteral}{\ \ \ \ @param\ filename:\ The\ name\ of\ the\ file\ where\ the\ generated\ C\ code\ will\ be\ saved.}}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00209}00209\ \textcolor{stringliteral}{\ \ \ \ @type\ filename:\ str}}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00210}00210\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00211}00211\ \ \ \ \ generator\ =\ c\_generator.CGenerator()}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00212}00212\ \ \ \ \ \textcolor{keyword}{with}\ open(filename,\ \textcolor{stringliteral}{'w'})\ \textcolor{keyword}{as}\ output\_file:}
+\DoxyCodeLine{\Hypertarget{Inliner_2utils_8py_source_l00213}00213\ \ \ \ \ \ \ \ \ print(generator.visit(ast),\ file=output\_file)}
+
+\end{DoxyCode}

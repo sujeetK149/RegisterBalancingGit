@@ -1,0 +1,182 @@
+\doxysection{domand.\+c}
+\hypertarget{domand_8c_source}{}\label{domand_8c_source}\index{RegBalancer/src/domand.c@{RegBalancer/src/domand.c}}
+\mbox{\hyperlink{domand_8c}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00001}00001\ \textcolor{preprocessor}{\#include\ <stdbool.h>}}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00002}\mbox{\hyperlink{domand_8c_a711cc021ef860c4fffc532afd53b3758}{00002}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{domand_8c_a711cc021ef860c4fffc532afd53b3758}{sbox}}(\textcolor{keywordtype}{bool}\ x0\_0,\ \textcolor{keywordtype}{bool}\ x1\_0,\ \textcolor{keywordtype}{bool}\ x2\_0,\ \textcolor{keywordtype}{bool}\ x3\_0,\ \textcolor{keywordtype}{bool}\ x0\_1,\ \textcolor{keywordtype}{bool}\ x1\_1,\ \textcolor{keywordtype}{bool}\ x2\_1,\ \textcolor{keywordtype}{bool}\ x3\_1,\ \textcolor{keywordtype}{bool}\ r,\ \textcolor{keywordtype}{bool}\ *Y0\_0,\ \textcolor{keywordtype}{bool}\ *Y1\_0,\ \textcolor{keywordtype}{bool}\ *Y2\_0,\ \textcolor{keywordtype}{bool}\ *Y3\_0,\ \textcolor{keywordtype}{bool}\ *Y0\_1,\ \textcolor{keywordtype}{bool}\ *Y1\_1,\ \textcolor{keywordtype}{bool}\ *Y2\_1,\ \textcolor{keywordtype}{bool}\ *Y3\_1)}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00003}00003\ \{}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00004}00004\ \ \ \textcolor{keywordtype}{bool}\ x0\_0\_inp;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00005}00005\ \ \ \textcolor{keywordtype}{bool}\ x1\_0\_inp;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00006}00006\ \ \ \textcolor{keywordtype}{bool}\ x2\_0\_inp;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00007}00007\ \ \ \textcolor{keywordtype}{bool}\ x3\_0\_inp;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00008}00008\ \ \ \textcolor{keywordtype}{bool}\ x0\_1\_inp;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00009}00009\ \ \ \textcolor{keywordtype}{bool}\ x1\_1\_inp;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00010}00010\ \ \ \textcolor{keywordtype}{bool}\ x2\_1\_inp;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00011}00011\ \ \ \textcolor{keywordtype}{bool}\ x3\_1\_inp;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00012}00012\ \ \ \textcolor{keywordtype}{bool}\ r\_inp;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00013}00013\ \ \ x0\_0\_inp\ =\ x0\_0;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00014}00014\ \ \ x1\_0\_inp\ =\ x1\_0;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00015}00015\ \ \ x2\_0\_inp\ =\ x2\_0;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00016}00016\ \ \ x3\_0\_inp\ =\ x3\_0;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00017}00017\ \ \ x0\_1\_inp\ =\ x0\_1;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00018}00018\ \ \ x1\_1\_inp\ =\ x1\_1;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00019}00019\ \ \ x2\_1\_inp\ =\ x2\_1;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00020}00020\ \ \ x3\_1\_inp\ =\ x3\_1;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00021}00021\ \ \ r\_inp\ =\ r;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00022}00022\ \ \ \textcolor{keywordtype}{bool}\ L0\_0;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00023}00023\ \ \ \textcolor{keywordtype}{bool}\ L1\_0;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00024}00024\ \ \ \textcolor{keywordtype}{bool}\ L2\_0;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00025}00025\ \ \ \textcolor{keywordtype}{bool}\ L3\_0;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00026}00026\ \ \ \textcolor{keywordtype}{bool}\ L4\_0;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00027}00027\ \ \ \textcolor{keywordtype}{bool}\ L5\_0;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00028}00028\ \ \ \textcolor{keywordtype}{bool}\ L6\_0;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00029}00029\ \ \ \textcolor{keywordtype}{bool}\ L7\_0;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00030}00030\ \ \ \textcolor{keywordtype}{bool}\ L8\_0;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00031}00031\ \ \ \textcolor{keywordtype}{bool}\ L9\_0;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00032}00032\ \ \ \textcolor{keywordtype}{bool}\ L10\_0;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00033}00033\ \ \ \textcolor{keywordtype}{bool}\ L11\_0;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00034}00034\ \ \ \textcolor{keywordtype}{bool}\ Q0\_0;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00035}00035\ \ \ \textcolor{keywordtype}{bool}\ Q1\_0;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00036}00036\ \ \ \textcolor{keywordtype}{bool}\ Q2\_0;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00037}00037\ \ \ \textcolor{keywordtype}{bool}\ Q3\_0;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00038}00038\ \ \ \textcolor{keywordtype}{bool}\ Q4\_0;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00039}00039\ \ \ \textcolor{keywordtype}{bool}\ Q5\_0;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00040}00040\ \ \ \textcolor{keywordtype}{bool}\ Q6\_0;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00041}00041\ \ \ \textcolor{keywordtype}{bool}\ Q7\_0;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00042}00042\ \ \ \textcolor{keywordtype}{bool}\ T0\_0;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00043}00043\ \ \ \textcolor{keywordtype}{bool}\ T1\_0;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00044}00044\ \ \ \textcolor{keywordtype}{bool}\ T2\_0;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00045}00045\ \ \ \textcolor{keywordtype}{bool}\ T3\_0;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00046}00046\ \ \ \textcolor{keywordtype}{bool}\ L0\_1;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00047}00047\ \ \ \textcolor{keywordtype}{bool}\ L1\_1;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00048}00048\ \ \ \textcolor{keywordtype}{bool}\ L2\_1;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00049}00049\ \ \ \textcolor{keywordtype}{bool}\ L3\_1;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00050}00050\ \ \ \textcolor{keywordtype}{bool}\ L4\_1;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00051}00051\ \ \ \textcolor{keywordtype}{bool}\ L5\_1;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00052}00052\ \ \ \textcolor{keywordtype}{bool}\ L6\_1;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00053}00053\ \ \ \textcolor{keywordtype}{bool}\ L7\_1;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00054}00054\ \ \ \textcolor{keywordtype}{bool}\ L8\_1;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00055}00055\ \ \ \textcolor{keywordtype}{bool}\ L9\_1;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00056}00056\ \ \ \textcolor{keywordtype}{bool}\ L10\_1;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00057}00057\ \ \ \textcolor{keywordtype}{bool}\ L11\_1;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00058}00058\ \ \ \textcolor{keywordtype}{bool}\ Q0\_1;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00059}00059\ \ \ \textcolor{keywordtype}{bool}\ Q1\_1;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00060}00060\ \ \ \textcolor{keywordtype}{bool}\ Q2\_1;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00061}00061\ \ \ \textcolor{keywordtype}{bool}\ Q3\_1;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00062}00062\ \ \ \textcolor{keywordtype}{bool}\ Q4\_1;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00063}00063\ \ \ \textcolor{keywordtype}{bool}\ Q5\_1;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00064}00064\ \ \ \textcolor{keywordtype}{bool}\ Q6\_1;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00065}00065\ \ \ \textcolor{keywordtype}{bool}\ Q7\_1;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00066}00066\ \ \ \textcolor{keywordtype}{bool}\ T0\_1;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00067}00067\ \ \ \textcolor{keywordtype}{bool}\ T1\_1;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00068}00068\ \ \ \textcolor{keywordtype}{bool}\ T2\_1;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00069}00069\ \ \ \textcolor{keywordtype}{bool}\ T3\_1;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00070}00070\ \ \ \textcolor{keywordtype}{bool}\ Y0\_01;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00071}00071\ \ \ \textcolor{keywordtype}{bool}\ Y1\_01;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00072}00072\ \ \ \textcolor{keywordtype}{bool}\ Y0\_11;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00073}00073\ \ \ \textcolor{keywordtype}{bool}\ Y1\_11;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00074}00074\ \ \ L0\_0\ =\ x1\_0\_inp\ \string^\ x2\_0\_inp;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00075}00075\ \ \ L1\_0\ =\ x0\_0\_inp\ \string^\ x1\_0\_inp;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00076}00076\ \ \ L8\_0\ =\ x2\_0\_inp\ \string^\ x0\_0\_inp;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00077}00077\ \ \ L5\_0\ =\ x0\_0\_inp\ \string^\ x3\_0\_inp;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00078}00078\ \ \ L0\_1\ =\ x1\_1\_inp\ \string^\ x2\_1\_inp;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00079}00079\ \ \ L1\_1\ =\ x0\_1\_inp\ \string^\ x1\_1\_inp;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00080}00080\ \ \ L8\_1\ =\ x2\_1\_inp\ \string^\ x0\_1\_inp;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00081}00081\ \ \ L5\_1\ =\ x0\_1\_inp\ \string^\ x3\_1\_inp;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00082}00082\ \ \ Q0\_0\ =\ !L0\_0;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00083}00083\ \ \ Q1\_0\ =\ !L1\_0;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00084}00084\ \ \ Q3\_0\ =\ !x3\_0\_inp;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00085}00085\ \ \ Q4\_0\ =\ !x2\_0\_inp;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00086}00086\ \ \ Q0\_1\ =\ !L0\_1;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00087}00087\ \ \ Q1\_1\ =\ !L1\_1;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00088}00088\ \ \ Q3\_1\ =\ !x3\_1\_inp;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00089}00089\ \ \ Q4\_1\ =\ !x2\_1\_inp;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00090}00090\ \ \ L2\_0\ =\ Q1\_0\ \string^\ x2\_0\_inp;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00091}00091\ \ \ L3\_0\ =\ Q0\_0\ \string^\ x3\_0\_inp;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00092}00092\ \ \ L2\_1\ =\ Q1\_1\ \string^\ x2\_1\_inp;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00093}00093\ \ \ L3\_1\ =\ Q0\_1\ \string^\ x3\_1\_inp;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00094}00094\ \ \ \textcolor{keywordtype}{bool}\ i1\_domand0;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00095}00095\ \ \ \textcolor{keywordtype}{bool}\ i2\_domand0;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00096}00096\ \ \ \textcolor{keywordtype}{bool}\ p2\_domand0;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00097}00097\ \ \ \textcolor{keywordtype}{bool}\ p3\_domand0;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00098}00098\ \ \ \textcolor{keywordtype}{bool}\ p1\_domand0;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00099}00099\ \ \ \textcolor{keywordtype}{bool}\ p4\_domand0;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00100}00100\ \ \ p2\_domand0\ =\ Q0\_0\ \&\ Q1\_1;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00101}00101\ \ \ i1\_domand0\ =\ p2\_domand0\ \string^\ r\_inp;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00102}00102\ \ \ p3\_domand0\ =\ Q0\_1\ \&\ Q1\_0;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00103}00103\ \ \ i2\_domand0\ =\ p3\_domand0\ \string^\ r\_inp;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00104}00104\ \ \ p1\_domand0\ =\ Q0\_0\ \&\ Q1\_0;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00105}00105\ \ \ p4\_domand0\ =\ Q0\_1\ \&\ Q1\_1;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00106}00106\ \ \ T0\_0\ =\ reg(i1\_domand0)\ \string^\ p1\_domand0;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00107}00107\ \ \ T0\_1\ =\ reg(i2\_domand0)\ \string^\ p4\_domand0;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00108}00108\ \ \ L10\_0\ =\ !L2\_0;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00109}00109\ \ \ L10\_1\ =\ !L2\_1;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00110}00110\ \ \ \textcolor{keywordtype}{bool}\ i1\_domand1;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00111}00111\ \ \ \textcolor{keywordtype}{bool}\ i2\_domand1;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00112}00112\ \ \ \textcolor{keywordtype}{bool}\ p2\_domand1;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00113}00113\ \ \ \textcolor{keywordtype}{bool}\ p3\_domand1;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00114}00114\ \ \ \textcolor{keywordtype}{bool}\ p1\_domand1;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00115}00115\ \ \ \textcolor{keywordtype}{bool}\ p4\_domand1;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00116}00116\ \ \ p2\_domand1\ =\ x1\_0\_inp\ \&\ Q4\_1;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00117}00117\ \ \ i1\_domand1\ =\ p2\_domand1\ \string^\ r\_inp;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00118}00118\ \ \ p3\_domand1\ =\ x1\_1\_inp\ \&\ Q4\_0;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00119}00119\ \ \ i2\_domand1\ =\ p3\_domand1\ \string^\ r\_inp;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00120}00120\ \ \ p1\_domand1\ =\ x1\_0\_inp\ \&\ Q4\_0;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00121}00121\ \ \ p4\_domand1\ =\ x1\_1\_inp\ \&\ Q4\_1;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00122}00122\ \ \ T2\_0\ =\ reg(i1\_domand1)\ \string^\ p1\_domand1;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00123}00123\ \ \ T2\_1\ =\ reg(i2\_domand1)\ \string^\ p4\_domand1;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00124}00124\ \ \ Q2\_0\ =\ T0\_0\ \string^\ L2\_0;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00125}00125\ \ \ L4\_0\ =\ T0\_0\ \string^\ T2\_0;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00126}00126\ \ \ Q7\_0\ =\ T0\_0\ \string^\ L5\_0;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00127}00127\ \ \ Q6\_0\ =\ L4\_0\ \string^\ L3\_0;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00128}00128\ \ \ Q2\_1\ =\ T0\_1\ \string^\ L2\_1;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00129}00129\ \ \ L4\_1\ =\ T0\_1\ \string^\ T2\_1;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00130}00130\ \ \ Q7\_1\ =\ T0\_1\ \string^\ L5\_1;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00131}00131\ \ \ Q6\_1\ =\ L4\_1\ \string^\ L3\_1;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00132}00132\ \ \ \textcolor{keywordtype}{bool}\ i1\_domand2;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00133}00133\ \ \ \textcolor{keywordtype}{bool}\ i2\_domand2;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00134}00134\ \ \ \textcolor{keywordtype}{bool}\ p2\_domand2;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00135}00135\ \ \ \textcolor{keywordtype}{bool}\ p3\_domand2;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00136}00136\ \ \ \textcolor{keywordtype}{bool}\ p1\_domand2;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00137}00137\ \ \ \textcolor{keywordtype}{bool}\ p4\_domand2;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00138}00138\ \ \ p2\_domand2\ =\ Q2\_0\ \&\ Q3\_1;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00139}00139\ \ \ i1\_domand2\ =\ p2\_domand2\ \string^\ r\_inp;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00140}00140\ \ \ p3\_domand2\ =\ Q2\_1\ \&\ Q3\_0;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00141}00141\ \ \ i2\_domand2\ =\ p3\_domand2\ \string^\ r\_inp;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00142}00142\ \ \ p1\_domand2\ =\ Q2\_0\ \&\ Q3\_0;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00143}00143\ \ \ p4\_domand2\ =\ Q2\_1\ \&\ Q3\_1;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00144}00144\ \ \ T1\_0\ =\ reg(i1\_domand2)\ \string^\ p1\_domand2;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00145}00145\ \ \ T1\_1\ =\ reg(i2\_domand2)\ \string^\ p4\_domand2;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00146}00146\ \ \ \textcolor{keywordtype}{bool}\ i1\_domand3;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00147}00147\ \ \ \textcolor{keywordtype}{bool}\ i2\_domand3;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00148}00148\ \ \ \textcolor{keywordtype}{bool}\ p2\_domand3;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00149}00149\ \ \ \textcolor{keywordtype}{bool}\ p3\_domand3;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00150}00150\ \ \ \textcolor{keywordtype}{bool}\ p1\_domand3;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00151}00151\ \ \ \textcolor{keywordtype}{bool}\ p4\_domand3;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00152}00152\ \ \ p2\_domand3\ =\ Q6\_0\ \&\ Q7\_1;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00153}00153\ \ \ i1\_domand3\ =\ p2\_domand3\ \string^\ r\_inp;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00154}00154\ \ \ p3\_domand3\ =\ Q6\_1\ \&\ Q7\_0;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00155}00155\ \ \ i2\_domand3\ =\ p3\_domand3\ \string^\ r\_inp;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00156}00156\ \ \ p1\_domand3\ =\ Q6\_0\ \&\ Q7\_0;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00157}00157\ \ \ p4\_domand3\ =\ Q6\_1\ \&\ Q7\_1;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00158}00158\ \ \ T3\_0\ =\ reg(i1\_domand3)\ \string^\ p1\_domand3;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00159}00159\ \ \ T3\_1\ =\ reg(i2\_domand3)\ \string^\ p4\_domand3;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00160}00160\ \ \ L7\_0\ =\ T0\_0\ \string^\ T1\_0;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00161}00161\ \ \ L11\_0\ =\ T1\_0\ \string^\ L10\_0;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00162}00162\ \ \ L7\_1\ =\ T0\_1\ \string^\ T1\_1;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00163}00163\ \ \ L11\_1\ =\ T1\_1\ \string^\ L10\_1;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00164}00164\ \ \ Y0\_01\ =\ L7\_0\ \string^\ T2\_0;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00165}00165\ \ \ Y1\_01\ =\ L8\_0\ \string^\ T3\_0;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00166}00166\ \ \ Y0\_11\ =\ L7\_1\ \string^\ T2\_1;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00167}00167\ \ \ Y1\_11\ =\ L8\_1\ \string^\ T3\_1;}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00168}00168\ \ \ *Y0\_0\ =\ reg(x3\_0\_inp\ \string^\ Y0\_01);}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00169}00169\ \ \ *Y1\_0\ =\ reg(L7\_0\ \string^\ Y1\_01);}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00170}00170\ \ \ *Y2\_0\ =\ reg(L11\_0\ \string^\ T2\_0);}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00171}00171\ \ \ *Y3\_0\ =\ reg(T2\_0\ \string^\ L5\_0);}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00172}00172\ \ \ *Y0\_1\ =\ reg(x3\_1\_inp\ \string^\ Y0\_11);}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00173}00173\ \ \ *Y1\_1\ =\ reg(L7\_1\ \string^\ Y1\_11);}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00174}00174\ \ \ *Y2\_1\ =\ reg(L11\_1\ \string^\ T2\_1);}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00175}00175\ \ \ *Y3\_1\ =\ reg(T2\_1\ \string^\ L5\_1);}
+\DoxyCodeLine{\Hypertarget{domand_8c_source_l00176}00176\ \}}
+
+\end{DoxyCode}

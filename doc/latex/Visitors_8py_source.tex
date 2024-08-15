@@ -1,0 +1,305 @@
+\doxysection{Visitors.\+py}
+\hypertarget{Visitors_8py_source}{}\label{Visitors_8py_source}\index{Inliner/Visitors.py@{Inliner/Visitors.py}}
+\mbox{\hyperlink{Visitors_8py}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00001}\mbox{\hyperlink{namespaceVisitors}{00001}}\ \textcolor{keyword}{from}\ pycparser\ \textcolor{keyword}{import}\ c\_ast}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00002}00002\ \textcolor{keyword}{from}\ DiGraph\ \textcolor{keyword}{import}\ DiGraph}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00004}\mbox{\hyperlink{classVisitors_1_1FunctionVisitor}{00004}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classVisitors_1_1FunctionVisitor}{FunctionVisitor}}(c\_ast.NodeVisitor):}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00005}00005\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00006}00006\ \textcolor{stringliteral}{\ \ \ \ @brief\ Visits\ function\ call\ nodes\ in\ the\ AST\ and\ updates\ the\ dependency\ graph.}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00007}00007\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00008}00008\ \textcolor{stringliteral}{\ \ \ \ This\ visitor\ traverses\ the\ function\ call\ nodes\ in\ the\ AST\ to\ build\ a\ dependency\ graph\ of\ functions.}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00009}00009\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00010}00010\ \textcolor{stringliteral}{\ \ \ \ @param\ diGraph:\ The\ directed\ graph\ that\ tracks\ function\ dependencies.}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00011}00011\ \textcolor{stringliteral}{\ \ \ \ @type\ diGraph:\ DiGraph}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00012}00012\ \textcolor{stringliteral}{\ \ \ \ @param\ functionName:\ The\ name\ of\ the\ current\ function\ being\ processed.}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00013}00013\ \textcolor{stringliteral}{\ \ \ \ @type\ functionName:\ str}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00014}00014\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00015}\mbox{\hyperlink{classVisitors_1_1FunctionVisitor_a7aae8bcbe680c7c3e6ab2e8bad3e6f94}{00015}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classVisitors_1_1FunctionVisitor_a7aae8bcbe680c7c3e6ab2e8bad3e6f94}{\_\_init\_\_}}(self,diGraph\ :\ DiGraph,functionName):}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00016}\mbox{\hyperlink{classVisitors_1_1FunctionVisitor_a773d3c032f7708247230d5a2e169fe4d}{00016}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classVisitors_1_1FunctionVisitor_a773d3c032f7708247230d5a2e169fe4d}{diGraph}}\ =\ diGraph}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00017}00017\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classVisitors_1_1FunctionVisitor_ab781b0aec3a9de0632eb6afda1e10288}{functionName}}\ =\ functionName}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00018}\mbox{\hyperlink{classVisitors_1_1FunctionVisitor_a905ff50baff07f42b5c0a8d46148c755}{00018}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classVisitors_1_1FunctionVisitor_a905ff50baff07f42b5c0a8d46148c755}{visit\_FuncCall}}(self,node):}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00019}00019\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00020}00020\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @brief\ Processes\ function\ call\ nodes\ and\ updates\ the\ function\ dependency\ graph.}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00021}00021\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00022}00022\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ Adds\ the\ function\ called\ to\ the\ graph\ and\ creates\ an\ edge\ from\ the\ called\ function\ to\ the\ current\ function.}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00023}00023\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00024}00024\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @param\ node:\ The\ function\ call\ node\ being\ visited.}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00025}00025\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @type\ node:\ pycparser.c\_ast.FuncCall}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00026}00026\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00027}00027\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ node.name.name\ !=\ \textcolor{stringliteral}{'reg'}:}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00028}00028\ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classVisitors_1_1FunctionVisitor_a773d3c032f7708247230d5a2e169fe4d}{diGraph}}.addFunction(node.name.name)}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00029}\mbox{\hyperlink{classVisitors_1_1FunctionVisitor_ab781b0aec3a9de0632eb6afda1e10288}{00029}}\ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classVisitors_1_1FunctionVisitor_a773d3c032f7708247230d5a2e169fe4d}{diGraph}}.addEdgeBetween(node.name.name,self.\mbox{\hyperlink{classVisitors_1_1FunctionVisitor_ab781b0aec3a9de0632eb6afda1e10288}{functionName}})}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00030}00030\ }
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00031}\mbox{\hyperlink{classVisitors_1_1LocalVariablesModifier}{00031}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classVisitors_1_1LocalVariablesModifier}{LocalVariablesModifier}}(c\_ast.NodeVisitor):}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00032}00032\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00033}00033\ \textcolor{stringliteral}{\ \ \ \ @brief\ Modifies\ local\ variable\ names\ by\ appending\ the\ function\ name.}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00034}00034\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00035}00035\ \textcolor{stringliteral}{\ \ \ \ This\ visitor\ updates\ the\ names\ of\ local\ variables\ by\ appending\ the\ function\ name\ to\ ensure\ uniqueness.}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00036}00036\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00037}00037\ \textcolor{stringliteral}{\ \ \ \ @param\ localVariables:\ List\ of\ local\ variable\ names\ to\ be\ modified.}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00038}00038\ \textcolor{stringliteral}{\ \ \ \ @type\ localVariables:\ list\ of\ str}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00039}00039\ \textcolor{stringliteral}{\ \ \ \ @param\ fName:\ The\ name\ of\ the\ function\ to\ append\ to\ local\ variable\ names.}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00040}00040\ \textcolor{stringliteral}{\ \ \ \ @type\ fName:\ str}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00041}00041\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00042}\mbox{\hyperlink{classVisitors_1_1LocalVariablesModifier_a2739396f41c449e08246b5df9e54fb4a}{00042}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classVisitors_1_1LocalVariablesModifier_a2739396f41c449e08246b5df9e54fb4a}{\_\_init\_\_}}(self,localVariables,fName):}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00043}\mbox{\hyperlink{classVisitors_1_1LocalVariablesModifier_af117185a96147e67251924514b93a25e}{00043}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classVisitors_1_1LocalVariablesModifier_af117185a96147e67251924514b93a25e}{localVariables}}\ =\ localVariables}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00044}00044\ \ \ \ \ \ \ \ \ self.fName\ =\ fName}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00045}\mbox{\hyperlink{classVisitors_1_1LocalVariablesModifier_a96d9baa4a0602d7577cbc4a3c0820de7}{00045}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classVisitors_1_1LocalVariablesModifier_a96d9baa4a0602d7577cbc4a3c0820de7}{visit\_ID}}(self,node):}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00046}00046\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00047}00047\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @brief\ Updates\ local\ variable\ names\ with\ function\ name\ suffix.}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00048}00048\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00049}00049\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ Appends\ the\ function\ name\ to\ the\ local\ variable\ name\ if\ it\ is\ found\ in\ the\ list\ of\ local\ variables.}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00050}00050\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00051}00051\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @param\ node:\ The\ identifier\ node\ representing\ a\ local\ variable.}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00052}00052\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @type\ node:\ pycparser.c\_ast.ID}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00053}00053\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00054}00054\ \ \ \ \ \ \ \ \ if(node.name\ \textcolor{keywordflow}{in}\ self.\mbox{\hyperlink{classVisitors_1_1LocalVariablesModifier_af117185a96147e67251924514b93a25e}{localVariables}}):}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ node.name\ =\ node.name\ +\ \textcolor{stringliteral}{'\_'}\ +\ self.fName}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00056}00056\ }
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00057}\mbox{\hyperlink{classVisitors_1_1DeclVisitor}{00057}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classVisitors_1_1DeclVisitor}{DeclVisitor}}(c\_ast.NodeVisitor):}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00058}00058\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00059}00059\ \textcolor{stringliteral}{\ \ \ \ @brief\ Visits\ declaration\ nodes\ to\ store\ array\ initialization\ values.}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00060}00060\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00061}00061\ \textcolor{stringliteral}{\ \ \ \ This\ visitor\ collects\ initialization\ values\ for\ array\ declarations\ and\ stores\ them\ in\ a\ map.}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00062}00062\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00063}00063\ \textcolor{stringliteral}{\ \ \ \ @param\ arrayMap:\ Dictionary\ to\ store\ array\ names\ and\ their\ corresponding\ values.}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00064}00064\ \textcolor{stringliteral}{\ \ \ \ @type\ arrayMap:\ dict}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00065}00065\ \textcolor{stringliteral}{\ \ \ \ @param\ ast:\ The\ Abstract\ Syntax\ Tree\ being\ processed.}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00066}00066\ \textcolor{stringliteral}{\ \ \ \ @type\ ast:\ pycparser.c\_ast.FileAST}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00067}00067\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00068}\mbox{\hyperlink{classVisitors_1_1DeclVisitor_a163257fae21a67bfccbc93cf3a035cf6}{00068}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classVisitors_1_1DeclVisitor_a163257fae21a67bfccbc93cf3a035cf6}{\_\_init\_\_}}(self,arrayMap\ =\ None,ast\ =\ None):}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00069}\mbox{\hyperlink{classVisitors_1_1DeclVisitor_a3c14dac355802b0266a75f0ee417c14b}{00069}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classVisitors_1_1DeclVisitor_a3c14dac355802b0266a75f0ee417c14b}{arrayMap}}\ =\ arrayMap}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00070}\mbox{\hyperlink{classVisitors_1_1DeclVisitor_a83d838e3813fb5999c0492e0d9474bd9}{00070}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classVisitors_1_1DeclVisitor_a83d838e3813fb5999c0492e0d9474bd9}{ast}}\ =\ ast}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00071}00071\ }
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00072}\mbox{\hyperlink{classVisitors_1_1DeclVisitor_abb880930eb7b72c49b57d4bc914a05f9}{00072}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classVisitors_1_1DeclVisitor_abb880930eb7b72c49b57d4bc914a05f9}{storeArray}}(self,node):}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00073}00073\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00074}00074\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @brief\ Stores\ the\ values\ of\ an\ array\ declaration\ in\ the\ array\ map.}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00075}00075\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00076}00076\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @param\ node:\ The\ array\ declaration\ node\ to\ process.}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00077}00077\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @type\ node:\ pycparser.c\_ast.Decl}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00078}00078\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00079}00079\ \ \ \ \ \ \ \ \ arrName\ =\ node.name}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00080}00080\ \ \ \ \ \ \ \ \ contents\ =\ []}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00081}00081\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ item\ \textcolor{keywordflow}{in}\ node.init.exprs:}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ item.value.startswith(\textcolor{stringliteral}{"{}0x"{}}):}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ decVal\ =\ int(item.value[2:],16)}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ decVal\ =\ int(item.value)}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ contents.append(decVal)}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00087}00087\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classVisitors_1_1DeclVisitor_a3c14dac355802b0266a75f0ee417c14b}{arrayMap}}[arrName]\ =\ contents}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00088}00088\ }
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00089}\mbox{\hyperlink{classVisitors_1_1DeclVisitor_ab8a51ec3b8cdf3c34881859017860d2b}{00089}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classVisitors_1_1DeclVisitor_ab8a51ec3b8cdf3c34881859017860d2b}{visit\_Decl}}(self,node):}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00090}00090\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00091}00091\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @brief\ Processes\ declaration\ nodes\ to\ handle\ array\ declarations.}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00092}00092\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00093}00093\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ Calls\ the\ storeArray\ method\ if\ the\ declaration\ is\ an\ array.}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00094}00094\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00095}00095\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @param\ node:\ The\ declaration\ node\ being\ visited.}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00096}00096\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @type\ node:\ pycparser.c\_ast.Decl}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00097}00097\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00098}00098\ \ \ \ \ \ \ \ \ declType\ =\ node.type.type}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00099}00099\ }
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00100}00100\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isinstance(node.type,c\_ast.ArrayDecl):}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00101}00101\ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classVisitors_1_1DeclVisitor_abb880930eb7b72c49b57d4bc914a05f9}{storeArray}}(node)}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00102}00102\ }
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00103}\mbox{\hyperlink{classVisitors_1_1InputParamModifier}{00103}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classVisitors_1_1InputParamModifier}{InputParamModifier}}(c\_ast.NodeVisitor):}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00104}00104\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00105}00105\ \textcolor{stringliteral}{\ \ \ \ @brief\ Modifies\ input\ parameter\ names\ based\ on\ a\ mapping.}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00106}00106\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00107}00107\ \textcolor{stringliteral}{\ \ \ \ This\ visitor\ updates\ the\ names\ of\ input\ parameters\ according\ to\ a\ provided\ mapping.}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00108}00108\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00109}00109\ \textcolor{stringliteral}{\ \ \ \ @param\ changedInputMap:\ Mapping\ of\ original\ input\ parameter\ names\ to\ new\ names.}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00110}00110\ \textcolor{stringliteral}{\ \ \ \ @type\ changedInputMap:\ dict}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00111}00111\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00112}\mbox{\hyperlink{classVisitors_1_1InputParamModifier_aa5b8df14e5ebf83d262610d4e0c77287}{00112}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classVisitors_1_1InputParamModifier_aa5b8df14e5ebf83d262610d4e0c77287}{\_\_init\_\_}}(self,changedInputMap):}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00113}00113\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classVisitors_1_1InputParamModifier_a4ca1ea41a954d2675cd3c1915c9568e9}{changedInputMap}}\ =\ changedInputMap}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00114}\mbox{\hyperlink{classVisitors_1_1InputParamModifier_a96d9baa4a0602d7577cbc4a3c0820de7}{00114}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classVisitors_1_1InputParamModifier_a96d9baa4a0602d7577cbc4a3c0820de7}{visit\_ID}}(self,node):}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00115}00115\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00116}00116\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @brief\ Updates\ input\ parameter\ names\ based\ on\ the\ mapping.}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00117}00117\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00118}00118\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ Replaces\ the\ parameter\ name\ with\ the\ new\ name\ from\ the\ mapping\ if\ it\ exists.}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00119}00119\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00120}00120\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @param\ node:\ The\ identifier\ node\ representing\ an\ input\ parameter.}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00121}00121\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @type\ node:\ pycparser.c\_ast.ID}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00122}00122\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00123}\mbox{\hyperlink{classVisitors_1_1InputParamModifier_a4ca1ea41a954d2675cd3c1915c9568e9}{00123}}\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ node.name\ \textcolor{keywordflow}{in}\ self.\mbox{\hyperlink{classVisitors_1_1InputParamModifier_a4ca1ea41a954d2675cd3c1915c9568e9}{changedInputMap}}:}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00124}00124\ \ \ \ \ \ \ \ \ \ \ \ \ node.name\ =\ self.\mbox{\hyperlink{classVisitors_1_1InputParamModifier_a4ca1ea41a954d2675cd3c1915c9568e9}{changedInputMap}}[node.name]}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00125}00125\ }
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00126}\mbox{\hyperlink{classVisitors_1_1IdVisitor}{00126}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classVisitors_1_1IdVisitor}{IdVisitor}}(c\_ast.NodeVisitor):}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00127}00127\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00128}00128\ \textcolor{stringliteral}{\ \ \ \ @brief\ Visits\ identifier\ nodes\ and\ updates\ their\ names\ based\ on\ provided\ mappings.}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00129}00129\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00130}00130\ \textcolor{stringliteral}{\ \ \ \ This\ visitor\ changes\ the\ names\ of\ identifiers\ according\ to\ the\ argument\ and\ local\ variable\ mappings.}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00131}00131\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00132}00132\ \textcolor{stringliteral}{\ \ \ \ @param\ argumentMap:\ Mapping\ of\ argument\ names\ to\ new\ names.}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00133}00133\ \textcolor{stringliteral}{\ \ \ \ @type\ argumentMap:\ dict}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00134}00134\ \textcolor{stringliteral}{\ \ \ \ @param\ localVariablesMap:\ Mapping\ of\ local\ variable\ names\ to\ new\ names.}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00135}00135\ \textcolor{stringliteral}{\ \ \ \ @type\ localVariablesMap:\ dict}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00136}00136\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00137}\mbox{\hyperlink{classVisitors_1_1IdVisitor_a42325f032412a1c82bafd4f11a984df3}{00137}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classVisitors_1_1IdVisitor_a42325f032412a1c82bafd4f11a984df3}{\_\_init\_\_}}(self,argumentMap,localVariablesMap):}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00138}\mbox{\hyperlink{classVisitors_1_1IdVisitor_ad7cca8103c884420bac50cbb68183848}{00138}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classVisitors_1_1IdVisitor_ad7cca8103c884420bac50cbb68183848}{localVariablesMap}}\ =\ localVariablesMap}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00139}00139\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classVisitors_1_1IdVisitor_a976941a4c7ae422cebf58ddfd2e8b479}{argumentMap}}\ =\ argumentMap}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00140}\mbox{\hyperlink{classVisitors_1_1IdVisitor_a96d9baa4a0602d7577cbc4a3c0820de7}{00140}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classVisitors_1_1IdVisitor_a96d9baa4a0602d7577cbc4a3c0820de7}{visit\_ID}}(self,\ node):}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00141}00141\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00142}00142\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @brief\ Updates\ identifier\ names\ based\ on\ argument\ and\ local\ variable\ mappings.}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00143}00143\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00144}00144\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @param\ node:\ The\ identifier\ node\ to\ be\ updated.}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00145}00145\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @type\ node:\ pycparser.c\_ast.ID}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00146}00146\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00147}\mbox{\hyperlink{classVisitors_1_1IdVisitor_a976941a4c7ae422cebf58ddfd2e8b479}{00147}}\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ node.name\ \textcolor{keywordflow}{in}\ self.\mbox{\hyperlink{classVisitors_1_1IdVisitor_a976941a4c7ae422cebf58ddfd2e8b479}{argumentMap}}:}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00148}00148\ \ \ \ \ \ \ \ \ \ \ \ \ node.name\ =\ self.\mbox{\hyperlink{classVisitors_1_1IdVisitor_a976941a4c7ae422cebf58ddfd2e8b479}{argumentMap}}[node.name]}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00149}00149\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ node.name\ \textcolor{keywordflow}{in}\ self.\mbox{\hyperlink{classVisitors_1_1IdVisitor_ad7cca8103c884420bac50cbb68183848}{localVariablesMap}}:}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00150}00150\ \ \ \ \ \ \ \ \ \ \ \ \ node.name\ =\ self.\mbox{\hyperlink{classVisitors_1_1IdVisitor_ad7cca8103c884420bac50cbb68183848}{localVariablesMap}}[node.name]}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00151}00151\ }
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00152}\mbox{\hyperlink{classVisitors_1_1ArrayValueReplacer}{00152}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classVisitors_1_1ArrayValueReplacer}{ArrayValueReplacer}}(c\_ast.NodeVisitor):}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00153}00153\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00154}00154\ \textcolor{stringliteral}{\ \ \ \ @brief\ Replaces\ array\ references\ with\ their\ actual\ values.}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00155}00155\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00156}00156\ \textcolor{stringliteral}{\ \ \ \ This\ visitor\ converts\ array\ references\ in\ expressions\ to\ their\ constant\ values.}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00157}00157\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00158}00158\ \textcolor{stringliteral}{\ \ \ \ @param\ arrayMap:\ Dictionary\ mapping\ array\ names\ to\ their\ values.}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00159}00159\ \textcolor{stringliteral}{\ \ \ \ @type\ arrayMap:\ dict}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00160}00160\ \textcolor{stringliteral}{\ \ \ \ @param\ constantArray:\ List\ to\ store\ unique\ constants\ found\ during\ replacement.}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00161}00161\ \textcolor{stringliteral}{\ \ \ \ @type\ constantArray:\ list\ of\ str}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00162}00162\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00163}\mbox{\hyperlink{classVisitors_1_1ArrayValueReplacer_adb72276f4bb9c36a4e6abe5375229983}{00163}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classVisitors_1_1ArrayValueReplacer_adb72276f4bb9c36a4e6abe5375229983}{\_\_init\_\_}}(self,arrayMap,constantArray):}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00164}\mbox{\hyperlink{classVisitors_1_1ArrayValueReplacer_a3c14dac355802b0266a75f0ee417c14b}{00164}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classVisitors_1_1ArrayValueReplacer_a3c14dac355802b0266a75f0ee417c14b}{arrayMap}}\ =\ arrayMap}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00165}\mbox{\hyperlink{classVisitors_1_1ArrayValueReplacer_af8146ce56c53debb8b28c2c19e357077}{00165}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classVisitors_1_1ArrayValueReplacer_af8146ce56c53debb8b28c2c19e357077}{constantArray}}\ =\ constantArray}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00166}00166\ }
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00167}\mbox{\hyperlink{classVisitors_1_1ArrayValueReplacer_a9e92beaff94ac47de44785afbac8787f}{00167}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classVisitors_1_1ArrayValueReplacer_a9e92beaff94ac47de44785afbac8787f}{visit\_BinaryOp}}(self,node):}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00168}00168\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00169}00169\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @brief\ Replaces\ array\ references\ in\ binary\ operations\ with\ their\ constant\ values.}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00170}00170\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00171}00171\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @param\ node:\ The\ binary\ operation\ node\ containing\ the\ array\ reference.}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00172}00172\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @type\ node:\ pycparser.c\_ast.BinaryOp}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00173}00173\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00174}00174\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isinstance(node.right,c\_ast.ArrayRef):}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00175}00175\ \ \ \ \ \ \ \ \ \ \ \ \ arrName\ =\ node.right.name.name}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00176}00176\ \ \ \ \ \ \ \ \ \ \ \ \ contents\ =\ self.\mbox{\hyperlink{classVisitors_1_1ArrayValueReplacer_a3c14dac355802b0266a75f0ee417c14b}{arrayMap}}[arrName]}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00177}00177\ \ \ \ \ \ \ \ \ \ \ \ \ value\ =\ contents[int(node.right.subscript.value)]}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00178}00178\ \ \ \ \ \ \ \ \ \ \ \ \ node.right\ =\ c\_ast.Constant(type=\textcolor{stringliteral}{'int'},value=str(value))}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00179}00179\ \ \ \ \ \ \ \ \ self.generic\_visit(node)}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00180}00180\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00181}\mbox{\hyperlink{classVisitors_1_1ArrayValueReplacer_ae613561ea9dc3acb5bfe136b5290888a}{00181}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classVisitors_1_1ArrayValueReplacer_ae613561ea9dc3acb5bfe136b5290888a}{visit\_Constant}}(self,node):}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00182}00182\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00183}00183\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @brief\ Converts\ constant\ values\ to\ decimal\ and\ stores\ unique\ constants.}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00184}00184\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00185}00185\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @param\ node:\ The\ constant\ node\ being\ processed.}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00186}00186\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @type\ node:\ pycparser.c\_ast.Constant}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00187}00187\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00188}00188\ \ \ \ \ \ \ \ \ value\ =\ node.value}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00189}00189\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ value.startswith(\textcolor{stringliteral}{"{}0x"{}}):}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00190}00190\ \ \ \ \ \ \ \ \ \ \ \ \ decVal\ =\ str(int(value[2:],16))}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00191}00191\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00192}00192\ \ \ \ \ \ \ \ \ \ \ \ \ decVal\ =\ value}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00193}00193\ \ \ \ \ \ \ \ \ node.value\ =\ decVal}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00194}00194\ \ \ \ \ \ \ \ \ const\ =\ \textcolor{stringliteral}{"{}dec\_"{}}\ +\ decVal}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00195}00195\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ const\ \textcolor{keywordflow}{not}\ \textcolor{keywordflow}{in}\ self.\mbox{\hyperlink{classVisitors_1_1ArrayValueReplacer_af8146ce56c53debb8b28c2c19e357077}{constantArray}}:}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00196}00196\ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classVisitors_1_1ArrayValueReplacer_af8146ce56c53debb8b28c2c19e357077}{constantArray}}.append(\textcolor{stringliteral}{"{}dec\_"{}}\ +\ decVal)}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00197}00197\ }
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00198}\mbox{\hyperlink{classVisitors_1_1ConstToVar}{00198}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classVisitors_1_1ConstToVar}{ConstToVar}}(c\_ast.NodeVisitor):}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00199}00199\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00200}00200\ \textcolor{stringliteral}{\ \ \ \ @brief\ Converts\ constant\ values\ in\ the\ AST\ to\ variable\ names.}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00201}00201\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00202}00202\ \textcolor{stringliteral}{\ \ \ \ This\ visitor\ replaces\ constant\ values\ in\ assignments\ and\ binary\ operations\ with\ corresponding\ variable\ names.}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00203}00203\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00204}00204\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00205}\mbox{\hyperlink{classVisitors_1_1ConstToVar_ac6393736fa9ce70a0640e0c792f0a2d4}{00205}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classVisitors_1_1ConstToVar_ac6393736fa9ce70a0640e0c792f0a2d4}{visit\_Assignment}}(self,node):}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00206}00206\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00207}00207\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @brief\ Replaces\ constant\ values\ in\ assignment\ operations\ with\ variable\ names.}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00208}00208\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00209}00209\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @param\ node:\ The\ assignment\ node\ being\ processed.}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00210}00210\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @type\ node:\ pycparser.c\_ast.Assignment}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00211}00211\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00212}00212\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isinstance(node.rvalue,c\_ast.Constant):}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00213}00213\ \ \ \ \ \ \ \ \ \ \ \ \ constName\ =\ node.rvalue.value}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00214}00214\ \ \ \ \ \ \ \ \ \ \ \ \ node.rvalue\ =\ c\_ast.ID(name=\textcolor{stringliteral}{"{}dec\_"{}}\ +\ constName\ +\ \textcolor{stringliteral}{"{}\_inp"{}})}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00215}00215\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00216}00216\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00217}00217\ \ \ \ \ \ \ \ \ \ \ \ \ self.generic\_visit(node)}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00218}\mbox{\hyperlink{classVisitors_1_1ConstToVar_a9e92beaff94ac47de44785afbac8787f}{00218}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classVisitors_1_1ConstToVar_a9e92beaff94ac47de44785afbac8787f}{visit\_BinaryOp}}(self,node):}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00219}00219\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00220}00220\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @brief\ Replaces\ constant\ values\ in\ binary\ operations\ with\ variable\ names.}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00221}00221\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00222}00222\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @param\ node:\ The\ binary\ operation\ node\ being\ processed.}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00223}00223\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @type\ node:\ pycparser.c\_ast.BinaryOp}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00224}00224\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00225}00225\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isinstance(node.right,c\_ast.Constant):}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00226}00226\ \ \ \ \ \ \ \ \ \ \ \ \ constName\ =\ node.right.value}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00227}00227\ \ \ \ \ \ \ \ \ \ \ \ \ node.right\ =\ c\_ast.ID(name=\textcolor{stringliteral}{"{}dec\_"{}}\ +\ constName\ +\ \textcolor{stringliteral}{"{}\_inp"{}})}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00228}00228\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isinstance(node.left,c\_ast.Constant):}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00229}00229\ \ \ \ \ \ \ \ \ \ \ \ \ constName\ =\ node.left.value}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00230}00230\ \ \ \ \ \ \ \ \ \ \ \ \ node.left\ =\ c\_ast.ID(name=\textcolor{stringliteral}{"{}dec\_"{}}\ +\ constName\ +\ \textcolor{stringliteral}{"{}\_inp"{}})}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00231}00231\ }
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00232}\mbox{\hyperlink{classVisitors_1_1ConstantMerger}{00232}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classVisitors_1_1ConstantMerger}{ConstantMerger}}(c\_ast.NodeVisitor):}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00233}00233\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00234}00234\ \textcolor{stringliteral}{\ \ \ \ @brief\ Merges\ constants\ into\ global\ variables\ and\ updates\ local\ variable\ mappings.}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00235}00235\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00236}00236\ \textcolor{stringliteral}{\ \ \ \ This\ visitor\ consolidates\ constant\ values\ into\ global\ variables\ and\ updates\ local\ variable\ mappings\ accordingly.}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00237}00237\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00238}00238\ \textcolor{stringliteral}{\ \ \ \ @param\ constToGlobalMap:\ Mapping\ of\ constant\ values\ to\ global\ variable\ names.}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00239}00239\ \textcolor{stringliteral}{\ \ \ \ @type\ constToGlobalMap:\ dict}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00240}00240\ \textcolor{stringliteral}{\ \ \ \ @param\ localToGlobalMap:\ Mapping\ of\ local\ variable\ names\ to\ global\ variable\ names.}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00241}00241\ \textcolor{stringliteral}{\ \ \ \ @type\ localToGlobalMap:\ dict}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00242}00242\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00243}\mbox{\hyperlink{classVisitors_1_1ConstantMerger_a82a9cc988b1950d97e3d6035eae773a4}{00243}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classVisitors_1_1ConstantMerger_a82a9cc988b1950d97e3d6035eae773a4}{\_\_init\_\_}}(self,constToGlobalMap,localToGlobalMap):}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00244}\mbox{\hyperlink{classVisitors_1_1ConstantMerger_a09a8838a26160063ff7f70a6d8ca53f8}{00244}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classVisitors_1_1ConstantMerger_a09a8838a26160063ff7f70a6d8ca53f8}{constToGlobalMap}}\ =\ constToGlobalMap}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00245}\mbox{\hyperlink{classVisitors_1_1ConstantMerger_a6aa7ad73b0ac6388e786fd93172a1421}{00245}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classVisitors_1_1ConstantMerger_a6aa7ad73b0ac6388e786fd93172a1421}{localToGlobalMap}}\ =\ localToGlobalMap}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00246}00246\ }
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00247}00247\ \ \ \ \ \textcolor{keyword}{def\ }\_\_getNameForConstants(self,value):}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00248}00248\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00249}00249\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @brief\ Generates\ a\ unique\ name\ for\ constants\ based\ on\ their\ value.}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00250}00250\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00251}00251\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @param\ value:\ The\ constant\ value.}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00252}00252\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @type\ value:\ str}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00253}00253\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @return:\ A\ unique\ name\ for\ the\ constant.}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00254}00254\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @rtype:\ str}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00255}00255\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00256}00256\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ value.startswith(\textcolor{stringliteral}{"{}0x"{}}):}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00257}00257\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}hex"{}}\ +\ value[2:]}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00258}00258\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:\ }
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00259}00259\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}dec"{}}\ +\ value}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00260}00260\ }
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00261}\mbox{\hyperlink{classVisitors_1_1ConstantMerger_ac6393736fa9ce70a0640e0c792f0a2d4}{00261}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classVisitors_1_1ConstantMerger_ac6393736fa9ce70a0640e0c792f0a2d4}{visit\_Assignment}}(self,node):}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00262}00262\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00263}00263\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @brief\ Converts\ constant\ values\ in\ assignments\ to\ global\ variable\ names.}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00264}00264\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00265}00265\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @param\ node:\ The\ assignment\ node\ being\ processed.}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00266}00266\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @type\ node:\ pycparser.c\_ast.Assignment}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00267}00267\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00268}00268\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isinstance(node.rvalue,c\_ast.Constant):}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00269}00269\ \ \ \ \ \ \ \ \ \ \ \ \ constValue\ =\ node.rvalue.value}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00270}00270\ \ \ \ \ \ \ \ \ \ \ \ \ idConstValue\ =\ self.\mbox{\hyperlink{classVisitors_1_1ConstantMerger_aa96ebcd2b7e735737368091027f5c1b4}{\_\_getNameForConstants}}(constValue)}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00271}00271\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ constValue\ \textcolor{keywordflow}{not}\ \textcolor{keywordflow}{in}\ self.\mbox{\hyperlink{classVisitors_1_1ConstantMerger_a09a8838a26160063ff7f70a6d8ca53f8}{constToGlobalMap}}:}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00272}00272\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classVisitors_1_1ConstantMerger_a09a8838a26160063ff7f70a6d8ca53f8}{constToGlobalMap}}[constValue]\ =\ idConstValue}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00273}00273\ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classVisitors_1_1ConstantMerger_a6aa7ad73b0ac6388e786fd93172a1421}{localToGlobalMap}}[node.lvalue.name]\ =\ idConstValue}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00274}00274\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isinstance(node.rvalue,c\_ast.BinaryOp):}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00275}00275\ \ \ \ \ \ \ \ \ \ \ \ \ constName\ =\ node.rvalue.right.name}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00276}00276\ \ \ \ \ \ \ \ \ \ \ \ \ node.rvalue.right.name\ =\ self.\mbox{\hyperlink{classVisitors_1_1ConstantMerger_a6aa7ad73b0ac6388e786fd93172a1421}{localToGlobalMap}}[constName]}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00277}00277\ }
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00278}\mbox{\hyperlink{classVisitors_1_1AssignmentChecker}{00278}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classVisitors_1_1AssignmentChecker}{AssignmentChecker}}(c\_ast.NodeVisitor):}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00279}00279\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00280}00280\ \textcolor{stringliteral}{\ \ \ \ @brief\ Checks\ for\ multiple\ instantiations\ of\ the\ same\ variable\ in\ assignments.}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00281}00281\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00282}00282\ \textcolor{stringliteral}{\ \ \ \ This\ visitor\ detects\ if\ a\ variable\ is\ assigned\ multiple\ times\ in\ the\ code.}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00283}00283\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00284}00284\ \textcolor{stringliteral}{\ \ \ \ @param\ mp:\ Dictionary\ to\ track\ variables\ and\ their\ assignment\ status.}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00285}00285\ \textcolor{stringliteral}{\ \ \ \ @type\ mp:\ dict}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00286}00286\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00287}\mbox{\hyperlink{classVisitors_1_1AssignmentChecker_a27205a0f90fd58bac32d0fb42b8a5b0e}{00287}}\ \ \ \ \ mp\ =\ \{\}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00288}\mbox{\hyperlink{classVisitors_1_1AssignmentChecker_ac6393736fa9ce70a0640e0c792f0a2d4}{00288}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classVisitors_1_1AssignmentChecker_ac6393736fa9ce70a0640e0c792f0a2d4}{visit\_Assignment}}(self,node):}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00289}00289\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00290}00290\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @brief\ Detects\ multiple\ instantiations\ of\ the\ same\ variable.}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00291}00291\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00292}00292\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @param\ node:\ The\ assignment\ node\ being\ processed.}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00293}00293\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @type\ node:\ pycparser.c\_ast.Assignment}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00294}00294\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00295}00295\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isinstance(node.lvalue,c\_ast.ID):}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00296}\mbox{\hyperlink{classVisitors_1_1AssignmentChecker_a3433d8ee7cad22736b2654b1598a47a2}{00296}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ node.lvalue.name\ \textcolor{keywordflow}{in}\ self.\mbox{\hyperlink{classVisitors_1_1AssignmentChecker_a27205a0f90fd58bac32d0fb42b8a5b0e}{mp}}\mbox{\hyperlink{classVisitors_1_1AssignmentChecker_a3433d8ee7cad22736b2654b1598a47a2}{mp}}:}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00297}00297\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(f\textcolor{stringliteral}{"{}\{node.lvalue.name\}\ instantiated\ twice"{}})}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00298}00298\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{Visitors_8py_source_l00299}00299\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classVisitors_1_1AssignmentChecker_a27205a0f90fd58bac32d0fb42b8a5b0e}{mp}}\mbox{\hyperlink{classVisitors_1_1AssignmentChecker_a3433d8ee7cad22736b2654b1598a47a2}{mp}}[node.lvalue.name]\ =\ \textcolor{keyword}{True}}
+
+\end{DoxyCode}

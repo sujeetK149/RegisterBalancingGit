@@ -1,0 +1,105 @@
+\doxysection{ast\+Nodes.\+py}
+\hypertarget{PostProcessor_2astNodes_8py_source}{}\label{PostProcessor_2astNodes_8py_source}\index{PostProcessor/astNodes.py@{PostProcessor/astNodes.py}}
+\mbox{\hyperlink{PostProcessor_2astNodes_8py}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00001}\mbox{\hyperlink{namespacePostProcessor_1_1astNodes}{00001}}\ \textcolor{keyword}{from}\ pycparser\ \textcolor{keyword}{import}\ c\_ast}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00002}00002\ \textcolor{keyword}{import}\ globalVariables}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00003}00003\ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00004}00004\ \textcolor{stringliteral}{@brief\ Provides\ utility\ functions\ for\ creating\ and\ manipulating\ AST\ nodes.}}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00005}00005\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00006}00006\ \textcolor{stringliteral}{This\ module\ defines\ several\ utility\ functions\ for\ generating\ different\ types\ of\ AST\ nodes,\ including\ assignments,\ declarations,\ and\ function\ calls\ in\ C\ code.}}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00007}00007\ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00008}\mbox{\hyperlink{namespacePostProcessor_1_1astNodes_aae65132b1c46a78356b1aa7604267822}{00008}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespacePostProcessor_1_1astNodes_aae65132b1c46a78356b1aa7604267822}{getRegFuncCallNode}}(name):}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00009}00009\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00010}00010\ \textcolor{stringliteral}{\ \ \ \ Creates\ a\ function\ call\ node\ for\ the\ 'reg'\ function\ with\ a\ given\ argument.}}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00011}00011\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00012}00012\ \textcolor{stringliteral}{\ \ \ \ @param\ name:\ The\ argument\ name\ for\ the\ 'reg'\ function.}}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00013}00013\ \textcolor{stringliteral}{\ \ \ \ @type\ name:\ str}}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00014}00014\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00015}00015\ \textcolor{stringliteral}{\ \ \ \ @return:\ A\ \`{}c\_ast.FuncCall\`{}\ node\ representing\ a\ function\ call\ to\ 'reg'\ with\ the\ specified\ argument.}}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00016}00016\ \textcolor{stringliteral}{\ \ \ \ @rtype:\ c\_ast.FuncCall}}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00017}00017\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00018}00018\ \ \ \ \ node\ =\ c\_ast.FuncCall(name=c\_ast.ID(name=\textcolor{stringliteral}{'reg'}),args=c\_ast.ExprList(exprs=[c\_ast.ID(name=name)]))}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00019}00019\ \ \ \ \ \textcolor{keywordflow}{return}\ node}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00020}00020\ }
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00021}\mbox{\hyperlink{namespacePostProcessor_1_1astNodes_a5c1acf1f8844cf100422aeaa05ff8f26}{00021}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespacePostProcessor_1_1astNodes_a5c1acf1f8844cf100422aeaa05ff8f26}{getLeftOrRightNodeOfAssignment}}(operand):}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00022}00022\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00023}00023\ \textcolor{stringliteral}{\ \ \ \ Generates\ the\ corresponding\ AST\ node\ for\ a\ given\ operand\ based\ on\ its\ type.}}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00024}00024\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00025}00025\ \textcolor{stringliteral}{\ \ \ \ @param\ operand:\ The\ operand\ for\ which\ to\ create\ the\ AST\ node.}}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00026}00026\ \textcolor{stringliteral}{\ \ \ \ @type\ operand:\ str}}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00027}00027\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00028}00028\ \textcolor{stringliteral}{\ \ \ \ @return:\ A\ \`{}c\_ast.ID\`{},\ \`{}c\_ast.UnaryOp\`{},\ or\ \`{}c\_ast.FuncCall\`{}\ node\ based\ on\ the\ operand's\ prefix.}}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00029}00029\ \textcolor{stringliteral}{\ \ \ \ @rtype:\ c\_ast.ID\ |\ c\_ast.UnaryOp\ |\ c\_ast.FuncCall}}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00030}00030\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00031}00031\ \ \ \ \ \textcolor{keywordflow}{if}\ operand.startswith(\textcolor{stringliteral}{"{}v\_reg"{}}):}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00032}00032\ \ \ \ \ \ \ \ \ node\ =\ getRegFuncCallNode(operand[6:])}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00033}00033\ \ \ \ \ \textcolor{keywordflow}{elif}\ operand.startswith(\textcolor{stringliteral}{"{}v\_neg"{}}):}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00034}00034\ \ \ \ \ \ \ \ \ \ \ \ \ node\ =\ c\_ast.UnaryOp(op=\textcolor{stringliteral}{'!'},expr=c\_ast.ID(name=operand[6:]))}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00035}00035\ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00036}00036\ \ \ \ \ \ \ \ \ node\ =\ c\_ast.ID(name=operand)}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00037}00037\ \ \ \ \ \textcolor{keywordflow}{return}\ node}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00038}00038\ }
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00039}\mbox{\hyperlink{namespacePostProcessor_1_1astNodes_a7cf6fff12c1730216ea4d4f05b68fe2c}{00039}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespacePostProcessor_1_1astNodes_a7cf6fff12c1730216ea4d4f05b68fe2c}{getSimpleAssignmentNode}}(lvalue,rvalue):}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00040}00040\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00041}00041\ \textcolor{stringliteral}{\ \ \ \ Creates\ a\ simple\ assignment\ node\ with\ the\ specified\ left-\/hand\ side\ and\ right-\/hand\ side.}}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00042}00042\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00043}00043\ \textcolor{stringliteral}{\ \ \ \ @param\ lvalue:\ The\ left-\/hand\ side\ of\ the\ assignment.}}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00044}00044\ \textcolor{stringliteral}{\ \ \ \ @type\ lvalue:\ str}}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00045}00045\ \textcolor{stringliteral}{\ \ \ \ @param\ rvalue:\ The\ right-\/hand\ side\ of\ the\ assignment.}}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00046}00046\ \textcolor{stringliteral}{\ \ \ \ @type\ rvalue:\ c\_ast.Node}}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00047}00047\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00048}00048\ \textcolor{stringliteral}{\ \ \ \ @return:\ A\ \`{}c\_ast.Assignment\`{}\ node\ representing\ the\ assignment\ operation.}}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00049}00049\ \textcolor{stringliteral}{\ \ \ \ @rtype:\ c\_ast.Assignment}}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00050}00050\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00051}00051\ \ \ \ \ \textcolor{keywordflow}{return}\ c\_ast.Assignment(op=\textcolor{stringliteral}{'='},lvalue=c\_ast.ID(name=lvalue),rvalue=rvalue)}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00052}00052\ }
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00053}\mbox{\hyperlink{namespacePostProcessor_1_1astNodes_a6b16ab2b52f2086efff4c6898667616c}{00053}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespacePostProcessor_1_1astNodes_a6b16ab2b52f2086efff4c6898667616c}{getAssignmentNode}}(operands,operator,varToAssign):}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00054}00054\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00055}00055\ \textcolor{stringliteral}{\ \ \ \ Creates\ an\ assignment\ node\ with\ a\ binary\ operation\ if\ there\ are\ multiple\ operands,\ or\ a\ single\ operand\ otherwise.}}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00056}00056\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00057}00057\ \textcolor{stringliteral}{\ \ \ \ @param\ operands:\ A\ list\ of\ operands\ for\ the\ assignment.}}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00058}00058\ \textcolor{stringliteral}{\ \ \ \ @type\ operands:\ list\ of\ str}}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00059}00059\ \textcolor{stringliteral}{\ \ \ \ @param\ operator:\ The\ operator\ to\ use\ if\ there\ are\ multiple\ operands.}}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00060}00060\ \textcolor{stringliteral}{\ \ \ \ @type\ operator:\ str}}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00061}00061\ \textcolor{stringliteral}{\ \ \ \ @param\ varToAssign:\ The\ variable\ name\ to\ which\ the\ result\ is\ assigned.}}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00062}00062\ \textcolor{stringliteral}{\ \ \ \ @type\ varToAssign:\ str}}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00063}00063\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00064}00064\ \textcolor{stringliteral}{\ \ \ \ @return:\ A\ \`{}c\_ast.Assignment\`{}\ node\ with\ the\ specified\ operands\ and\ operator.}}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00065}00065\ \textcolor{stringliteral}{\ \ \ \ @rtype:\ c\_ast.Assignment}}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00066}00066\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00067}00067\ \ \ \ \ left\ =\ \textcolor{keywordtype}{None}}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00068}00068\ \ \ \ \ right\ =\ \textcolor{keywordtype}{None}}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00069}00069\ \ \ \ \ rvalue\ =\ \textcolor{keywordtype}{None}}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00070}00070\ }
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00071}00071\ \ \ \ \ left\ =\ \mbox{\hyperlink{namespacePostProcessor_1_1astNodes_a5c1acf1f8844cf100422aeaa05ff8f26}{getLeftOrRightNodeOfAssignment}}(operands[0])}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00072}00072\ \ \ \ \ \textcolor{keywordflow}{if}\ len(operands)\ >\ 1:}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00073}00073\ \ \ \ \ \ \ \ \ right\ =\ \mbox{\hyperlink{namespacePostProcessor_1_1astNodes_a5c1acf1f8844cf100422aeaa05ff8f26}{getLeftOrRightNodeOfAssignment}}(operands[1])}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00074}00074\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00075}00075\ \ \ \ \ \textcolor{keywordflow}{if}\ right\ \textcolor{keywordflow}{is}\ \textcolor{keywordflow}{not}\ \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00076}00076\ \ \ \ \ \ \ \ \ rvalue\ =\ c\_ast.BinaryOp(op=operator,left=left,right=right)}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00077}00077\ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00078}00078\ \ \ \ \ \ \ \ \ rvalue\ =\ left}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00079}00079\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00080}00080\ \ \ \ \ \textcolor{keywordflow}{return}\ c\_ast.Assignment(op=\textcolor{stringliteral}{"{}="{}},lvalue=c\_ast.ID(name=varToAssign),rvalue=rvalue)}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00081}00081\ }
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00082}\mbox{\hyperlink{namespacePostProcessor_1_1astNodes_aff50f6fbf9bfabd8763cf6b989b60569}{00082}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespacePostProcessor_1_1astNodes_aff50f6fbf9bfabd8763cf6b989b60569}{getDeclarationNode}}(idName):}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00083}00083\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00084}00084\ \textcolor{stringliteral}{\ \ \ \ Creates\ a\ declaration\ node\ for\ a\ variable\ with\ the\ specified\ name\ and\ the\ global\ type.}}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00085}00085\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00086}00086\ \textcolor{stringliteral}{\ \ \ \ @param\ idName:\ The\ name\ of\ the\ variable\ to\ declare.}}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00087}00087\ \textcolor{stringliteral}{\ \ \ \ @type\ idName:\ str}}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00088}00088\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00089}00089\ \textcolor{stringliteral}{\ \ \ \ @return:\ A\ \`{}c\_ast.Decl\`{}\ node\ representing\ the\ variable\ declaration.}}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00090}00090\ \textcolor{stringliteral}{\ \ \ \ @rtype:\ c\_ast.Decl}}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00091}00091\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00092}00092\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00093}00093\ \ \ \ \ \textcolor{comment}{\#\ print(globalVariables.globalType)}}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00094}00094\ \ \ \ \ typeDeclNode\ =\ c\_ast.TypeDecl(declname\ =\ idName,quals\ =\ [],align\ =\ \textcolor{keywordtype}{None},}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ type=c\_ast.IdentifierType(names=[globalVariables.globalType]))}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00096}00096\ \ \ \ \ declNode\ =\ c\_ast.Decl(name=idName,\ quals=[],\ storage=[],\ funcspec=[],}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00097}00097\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ type=typeDeclNode,\ init=\textcolor{keywordtype}{None},}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ bitsize=\textcolor{keywordtype}{None},\ align=[])}
+\DoxyCodeLine{\Hypertarget{PostProcessor_2astNodes_8py_source_l00099}00099\ \ \ \ \ \textcolor{keywordflow}{return}\ declNode}
+
+\end{DoxyCode}

@@ -1,0 +1,123 @@
+\doxysection{Function\+Visitor Class Reference}
+\hypertarget{classVisitors_1_1FunctionVisitor}{}\label{classVisitors_1_1FunctionVisitor}\index{FunctionVisitor@{FunctionVisitor}}
+Inheritance diagram for Function\+Visitor\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classVisitors_1_1FunctionVisitor}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classVisitors_1_1FunctionVisitor_a7aae8bcbe680c7c3e6ab2e8bad3e6f94}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, \mbox{\hyperlink{classDiGraph_1_1DiGraph}{Di\+Graph}} \mbox{\hyperlink{classVisitors_1_1FunctionVisitor_a773d3c032f7708247230d5a2e169fe4d}{di\+Graph}}, \mbox{\hyperlink{classVisitors_1_1FunctionVisitor_ab781b0aec3a9de0632eb6afda1e10288}{function\+Name}})
+\item 
+\mbox{\hyperlink{classVisitors_1_1FunctionVisitor_a905ff50baff07f42b5c0a8d46148c755}{visit\+\_\+\+Func\+Call}} (self, node)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classVisitors_1_1FunctionVisitor_a773d3c032f7708247230d5a2e169fe4d}{di\+Graph}} = di\+Graph
+\item 
+\mbox{\hyperlink{classVisitors_1_1FunctionVisitor_ab781b0aec3a9de0632eb6afda1e10288}{function\+Name}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb}@brief Visits function call nodes in the AST and updates the dependency graph.
+
+This visitor traverses the function call nodes in the AST to build a dependency graph of functions.
+
+@param diGraph: The directed graph that tracks function dependencies.
+@type diGraph: DiGraph
+@param functionName: The name of the current function being processed.
+@type functionName: str
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{Visitors_8py_source_l00004}{4}} of file \mbox{\hyperlink{Visitors_8py_source}{Visitors.\+py}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classVisitors_1_1FunctionVisitor_a7aae8bcbe680c7c3e6ab2e8bad3e6f94}\index{FunctionVisitor@{FunctionVisitor}!\_\_init\_\_@{\_\_init\_\_}}
+\index{\_\_init\_\_@{\_\_init\_\_}!FunctionVisitor@{FunctionVisitor}}
+\doxysubsubsection{\texorpdfstring{\_\_init\_\_()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily \label{classVisitors_1_1FunctionVisitor_a7aae8bcbe680c7c3e6ab2e8bad3e6f94} 
+\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{\mbox{\hyperlink{classDiGraph_1_1DiGraph}{Di\+Graph}}}]{di\+Graph}{, }\item[{}]{function\+Name}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{Visitors_8py_source_l00015}{15}} of file \mbox{\hyperlink{Visitors_8py_source}{Visitors.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00015\ \ \ \ \ \textcolor{keyword}{def\ }\_\_init\_\_(self,diGraph\ :\ DiGraph,functionName): }
+\DoxyCodeLine{00016\ \ \ \ \ \ \ \ \ self.diGraph\ =\ diGraph }
+\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ self.functionName\ =\ functionName }
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classVisitors_1_1FunctionVisitor_a905ff50baff07f42b5c0a8d46148c755}\index{FunctionVisitor@{FunctionVisitor}!visit\_FuncCall@{visit\_FuncCall}}
+\index{visit\_FuncCall@{visit\_FuncCall}!FunctionVisitor@{FunctionVisitor}}
+\doxysubsubsection{\texorpdfstring{visit\_FuncCall()}{visit\_FuncCall()}}
+{\footnotesize\ttfamily \label{classVisitors_1_1FunctionVisitor_a905ff50baff07f42b5c0a8d46148c755} 
+visit\+\_\+\+Func\+Call (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{node}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Processes function call nodes and updates the function dependency graph.
+
+Adds the function called to the graph and creates an edge from the called function to the current function.
+
+@param node: The function call node being visited.
+@type node: pycparser.c_ast.FuncCall
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{Visitors_8py_source_l00018}{18}} of file \mbox{\hyperlink{Visitors_8py_source}{Visitors.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keyword}{def\ }visit\_FuncCall(self,node): }
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{} }}
+\DoxyCodeLine{00020\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @brief\ Processes\ function\ call\ nodes\ and\ updates\ the\ function\ dependency\ graph. }}
+\DoxyCodeLine{00021\ \textcolor{stringliteral}{ }}
+\DoxyCodeLine{00022\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ Adds\ the\ function\ called\ to\ the\ graph\ and\ creates\ an\ edge\ from\ the\ called\ function\ to\ the\ current\ function. }}
+\DoxyCodeLine{00023\ \textcolor{stringliteral}{ }}
+\DoxyCodeLine{00024\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @param\ node:\ The\ function\ call\ node\ being\ visited. }}
+\DoxyCodeLine{00025\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @type\ node:\ pycparser.c\_ast.FuncCall }}
+\DoxyCodeLine{00026\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ "{}"{}"{}} }
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ node.name.name\ !=\ \textcolor{stringliteral}{'reg'}: }
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \ \ \ \ self.diGraph.addFunction(node.name.name) }
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \ \ \ \ self.diGraph.addEdgeBetween(node.name.name,self.functionName) }
+\DoxyCodeLine{00030\  }
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classVisitors_1_1FunctionVisitor_a773d3c032f7708247230d5a2e169fe4d}\index{FunctionVisitor@{FunctionVisitor}!diGraph@{diGraph}}
+\index{diGraph@{diGraph}!FunctionVisitor@{FunctionVisitor}}
+\doxysubsubsection{\texorpdfstring{diGraph}{diGraph}}
+{\footnotesize\ttfamily \label{classVisitors_1_1FunctionVisitor_a773d3c032f7708247230d5a2e169fe4d} 
+di\+Graph = di\+Graph}
+
+
+
+Definition at line \mbox{\hyperlink{Visitors_8py_source_l00016}{16}} of file \mbox{\hyperlink{Visitors_8py_source}{Visitors.\+py}}.
+
+\Hypertarget{classVisitors_1_1FunctionVisitor_ab781b0aec3a9de0632eb6afda1e10288}\index{FunctionVisitor@{FunctionVisitor}!functionName@{functionName}}
+\index{functionName@{functionName}!FunctionVisitor@{FunctionVisitor}}
+\doxysubsubsection{\texorpdfstring{functionName}{functionName}}
+{\footnotesize\ttfamily \label{classVisitors_1_1FunctionVisitor_ab781b0aec3a9de0632eb6afda1e10288} 
+function\+Name}
+
+
+
+Definition at line \mbox{\hyperlink{Visitors_8py_source_l00029}{29}} of file \mbox{\hyperlink{Visitors_8py_source}{Visitors.\+py}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Inliner/\mbox{\hyperlink{Visitors_8py}{Visitors.\+py}}\end{DoxyCompactItemize}

@@ -1,0 +1,88 @@
+\doxysection{main.\+py}
+\hypertarget{main_8py_source}{}\label{main_8py_source}\index{RegBalancer/src/main.py@{RegBalancer/src/main.py}}
+\mbox{\hyperlink{main_8py}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00001}\mbox{\hyperlink{namespaceRegBalancer_1_1src_1_1main}{00001}}\ \textcolor{comment}{\#\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\#}}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00002}00002\ \textcolor{comment}{\#\ \ main\ file\ working\ the\ parser\ that\ constructs\ the\ dfg\ for\ a\ dom-\/c\ function\ and\ makes\ it\ hls\ ready\ \ \ \ \ \ \ \ \#}}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00003}00003\ \textcolor{comment}{\#\ use:\ python3\ ./main.py\ \ -\/-\/filename=../test/AES/DOM/Linear/input.c\ -\/-\/useLinearAlgorithm=True\ -\/-\/outputFilename=../test/AES/DOM/Linear/output.c}}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00004}00004\ \textcolor{comment}{\#\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\#}}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00005}00005\ \textcolor{keyword}{import}\ argparse}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00006}00006\ \textcolor{keyword}{import}\ json}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00007}00007\ \textcolor{keyword}{import}\ os}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00008}00008\ \textcolor{keyword}{import}\ modules}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00009}00009\ \textcolor{keyword}{from}\ modules.AddRegVisitor\ \textcolor{keyword}{import}\ AddRegVisitor}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00010}00010\ \textcolor{keyword}{from}\ modules.CrossDomainOp\ \textcolor{keyword}{import}\ CrossDomainOp}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00011}00011\ \textcolor{keyword}{from}\ modules.GenerateDFG\ \textcolor{keyword}{import}\ GenerateDFG}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00012}00012\ \textcolor{keyword}{from}\ modules.GraphNode\ \textcolor{keyword}{import}\ ASTGraphNode,\ BaseGraphNode,\ TextGraphNode}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00013}00013\ \textcolor{keyword}{from}\ modules.MyCGenerator\ \textcolor{keyword}{import}\ MyCGenerator}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00014}00014\ \textcolor{keyword}{from}\ modules.Retime\ \textcolor{keyword}{import}\ RetimeDFG}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00015}00015\ \textcolor{keyword}{import}\ rustworkx\ \textcolor{keyword}{as}\ rx}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00016}00016\ \textcolor{keyword}{from}\ pycparser\ \textcolor{keyword}{import}\ parse\_file,\ c\_generator}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00017}00017\ \textcolor{keyword}{import}\ pycparser.c\_ast\ \textcolor{keyword}{as}\ cast}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00018}00018\ \textcolor{keyword}{from}\ rustworkx.visualization\ \textcolor{keyword}{import}\ graphviz\_draw}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00019}00019\ \textcolor{keyword}{from}\ modules.utils\ \textcolor{keyword}{import}\ add\_dummy\_node\_fan\_out,\ add\_source\_sink,\ extract\_func\_body,\ file\_exists,\ generate\_c\_file,\ save\_graph,checkBalancing}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00020}00020\ \textcolor{keyword}{from}\ modules.utils\ \textcolor{keyword}{import}\ noOfRegistersManually}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00021}00021\ \textcolor{keyword}{import}\ time,sys}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00022}00022\ }
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00023}00023\ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00024}00024\ \textcolor{stringliteral}{@brief\ Main\ script\ for\ processing\ a\ C\ file\ into\ a\ data\ flow\ graph\ (DFG)\ and\ preparing\ it\ for\ high-\/level\ synthesis\ (HLS).}}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00025}00025\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00026}00026\ \textcolor{stringliteral}{This\ script:}}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00027}00027\ \textcolor{stringliteral}{-\/\ Parses\ a\ C\ file\ to\ extract\ and\ process\ function\ definitions.}}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00028}00028\ \textcolor{stringliteral}{-\/\ Constructs\ a\ DFG\ from\ the\ function's\ AST.}}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00029}00029\ \textcolor{stringliteral}{-\/\ Adds\ source\ and\ sink\ nodes\ to\ the\ DFG.}}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00030}00030\ \textcolor{stringliteral}{-\/\ Adds\ dummy\ nodes\ for\ fan-\/out\ and\ calculates\ manual\ register\ requirements.}}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00031}00031\ \textcolor{stringliteral}{-\/\ Optionally,\ retimes\ the\ DFG\ and\ adds\ register\ calls.}}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00032}00032\ \textcolor{stringliteral}{-\/\ Generates\ a\ new\ C\ file\ with\ updated\ code\ based\ on\ the\ modified\ DFG.}}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00033}00033\ \textcolor{stringliteral}{-\/\ Saves\ visualization\ of\ the\ graph\ for\ analysis.}}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00034}00034\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00035}00035\ \textcolor{stringliteral}{@details}}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00036}00036\ \textcolor{stringliteral}{-\/\ This\ script\ expects\ a\ configuration\ file\ \`{}systemArgs.json\`{}\ for\ input\ parameters.}}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00037}00037\ \textcolor{stringliteral}{-\/\ The\ script\ can\ be\ modified\ to\ include\ or\ exclude\ certain\ steps\ like\ checking\ balancing\ or\ saving\ graphs.}}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00038}00038\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00039}00039\ \textcolor{stringliteral}{@file}}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00040}00040\ \textcolor{stringliteral}{Ensure\ that\ all\ required\ modules\ and\ dependencies\ are\ installed\ and\ properly\ configured.}}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00041}00041\ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00042}00042\ }
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00043}00043\ \textcolor{keywordflow}{if}\ \_\_name\_\_\ ==\ \textcolor{stringliteral}{"{}\_\_main\_\_"{}}:}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00044}00044\ \ \ \ \ \textcolor{keyword}{with}\ open(\textcolor{stringliteral}{'./systemArgs.json'},\ \textcolor{stringliteral}{'r'})\ \textcolor{keyword}{as}\ file:}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00045}\mbox{\hyperlink{namespaceRegBalancer_1_1src_1_1main_a8187411843a6284ffb964ef3fb9fcab3}{00045}}\ \ \ \ \ \ \ \ \ args\ =\ json.load(file)}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00046}00046\ }
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00047}\mbox{\hyperlink{namespaceRegBalancer_1_1src_1_1main_a2530c3908f0179486a4c2255f792e27a}{00047}}\ \ \ \ \ start\_time\ =\ time.time()}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00048}\mbox{\hyperlink{namespaceRegBalancer_1_1src_1_1main_a7b981d9b48acf5de0d1fefa71978ce4a}{00048}}\ \ \ \ \ fileToParse\ =\ args[\textcolor{stringliteral}{"{}postProcessorOutput"{}}]\ if(args[\textcolor{stringliteral}{"{}checkBalancing"{}}])\ \ \textcolor{keywordflow}{else}\ args[\textcolor{stringliteral}{"{}inlinerOutput"{}}]}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00049}\mbox{\hyperlink{namespaceRegBalancer_1_1src_1_1main_a83d838e3813fb5999c0492e0d9474bd9}{00049}}\ \ \ \ \ ast\ =\ parse\_file(fileToParse,\ use\_cpp=\textcolor{keyword}{True})}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00050}\mbox{\hyperlink{namespaceRegBalancer_1_1src_1_1main_a6f1918359d19ff0f2ae80e155c83c951}{00050}}\ \ \ \ \ func\_body\ =\ extract\_func\_body(ast)}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00051}00051\ }
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00052}\mbox{\hyperlink{namespaceRegBalancer_1_1src_1_1main_aa5d70a518fbbc3f1e03d57deb06db2e4}{00052}}\ \ \ \ \ dfg\_gen\ =\ GenerateDFG()}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00053}00053\ \ \ \ \ dfg\_gen.visit(ast)}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00054}00054\ \ \ \ \ add\_source\_sink(dfg\_gen.dfg)}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00055}00055\ \ \ \ \ add\_dummy\_node\_fan\_out(dfg\_gen.dfg,dfg\_gen.nodesInfo,dfg\_gen.nameIndexMap)}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00056}00056\ }
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00057}00057\ \textcolor{comment}{\#-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00058}00058\ \ \ \ \ if(args[\textcolor{stringliteral}{"{}checkBalancing"{}}]):}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00059}00059\ \ \ \ \ \ \ \ \ checkBalancing(dfg\_gen.dfg)\ }
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00060}00060\ \ \ \ \ \ \ \ \ sys.exit(0)}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00061}00061\ \textcolor{comment}{\#-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00062}00062\ \ \ \ \ \textcolor{comment}{\#\ save\_graph(dfg\_gen.dfg,\ "{}graph.png"{})}}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00063}\mbox{\hyperlink{namespaceRegBalancer_1_1src_1_1main_aa9c65458d6900b176c9ff9b1ef34bed0}{00063}}\ \ \ \ \ manualRegisters\ =\ noOfRegistersManually(dfg\_gen.dfg)}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00064}00064\ \ \ \ \ print(\textcolor{stringliteral}{"{}-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/Nodes\ and\ edges-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/"{}})}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00065}00065\ \ \ \ \ print(dfg\_gen.dfg.num\_nodes())}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00066}00066\ \ \ \ \ print(dfg\_gen.dfg.num\_edges())}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00067}00067\ \ \ \ \ print(\textcolor{stringliteral}{"{}-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/"{}})}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00068}\mbox{\hyperlink{namespaceRegBalancer_1_1src_1_1main_af95bc90c71b62baff9856b60d6a69406}{00068}}\ \ \ \ \ useLinearAlgo\ =\ \textcolor{stringliteral}{"{}true"{}}}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00069}\mbox{\hyperlink{namespaceRegBalancer_1_1src_1_1main_a1209559bbc0dbee87e2e3044b791a287}{00069}}\ \ \ \ \ retimer\ =\ RetimeDFG(dfg\_gen.dfg)}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00070}00070\ \ \ \ \ retimer.set\_source\_sink\_weight(useLinearAlgo)}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00071}00071\ \ \ \ \ retimer.update\_retiming\_labels()}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00072}00072\ \ \ \ \ retimer.update\_edge\_weights()}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00073}00073\ \ \ \ \ \textcolor{comment}{\#\ retimer.printRetimedLabels()}}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00074}00074\ \ \ \ \ \textcolor{comment}{\#\ retimer.printEdgeWeights()}}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00075}00075\ \ \ \ \ \textcolor{comment}{\#\ save\_graph(dfg\_gen.dfg,\ "{}graph2.png"{})}}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00076}00076\ \ \ \ \ retimer.add\_reg\_calls(useLinearAlgo)}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00077}\mbox{\hyperlink{namespaceRegBalancer_1_1src_1_1main_afb358f48b1646c750fb9da6c6585be2b}{00077}}\ \ \ \ \ print(\textcolor{stringliteral}{"{}No\ of\ registers\ if\ added\ levelwise:\ "{}},end=\textcolor{stringliteral}{"{}"{}})}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00078}00078\ \ \ \ \ print(manualRegisters)}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00079}00079\ }
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00080}00080\ \ \ \ \ generate\_c\_file(ast,args[\textcolor{stringliteral}{"{}retimedOutput"{}}])}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00081}00081\ \ \ \ \ print(\textcolor{stringliteral}{"{}Execution\ Time"{}})}
+\DoxyCodeLine{\Hypertarget{main_8py_source_l00082}00082\ \ \ \ \ print(\textcolor{stringliteral}{"{}-\/-\/-\/\ \%s\ seconds\ -\/-\/-\/"{}}\ \%\ (time.time()\ -\/\ start\_time))}
+
+\end{DoxyCode}

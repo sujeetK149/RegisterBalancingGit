@@ -1,0 +1,59 @@
+\doxysection{composibility.\+py}
+\hypertarget{composibility_8py_source}{}\label{composibility_8py_source}\index{RegBalancer/src/composibility.py@{RegBalancer/src/composibility.py}}
+\mbox{\hyperlink{composibility_8py}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{composibility_8py_source_l00001}\mbox{\hyperlink{namespaceRegBalancer_1_1src_1_1composibility}{00001}}\ \textcolor{keyword}{from}\ copy\ \textcolor{keyword}{import}\ deepcopy}
+\DoxyCodeLine{\Hypertarget{composibility_8py_source_l00002}00002\ \textcolor{keyword}{import}\ os}
+\DoxyCodeLine{\Hypertarget{composibility_8py_source_l00003}00003\ \textcolor{keyword}{from}\ pycparser\ \textcolor{keyword}{import}\ parse\_file,\ c\_generator}
+\DoxyCodeLine{\Hypertarget{composibility_8py_source_l00004}00004\ \textcolor{keyword}{import}\ pycparser.c\_ast\ \textcolor{keyword}{as}\ cast}
+\DoxyCodeLine{\Hypertarget{composibility_8py_source_l00005}00005\ }
+\DoxyCodeLine{\Hypertarget{composibility_8py_source_l00006}00006\ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{composibility_8py_source_l00007}00007\ \textcolor{stringliteral}{@brief\ Main\ script\ for\ parsing\ a\ C\ file,\ modifying\ its\ AST,\ and\ saving\ the\ updated\ C\ file.}}
+\DoxyCodeLine{\Hypertarget{composibility_8py_source_l00008}00008\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{composibility_8py_source_l00009}00009\ \textcolor{stringliteral}{This\ script\ parses\ a\ C\ source\ file,\ processes\ the\ function\ definitions\ to\ replace\ function\ call\ outputs}}
+\DoxyCodeLine{\Hypertarget{composibility_8py_source_l00010}00010\ \textcolor{stringliteral}{with\ modified\ declarations\ and\ assignments,\ and\ writes\ the\ modified\ AST\ back\ to\ a\ new\ C\ source\ file.}}
+\DoxyCodeLine{\Hypertarget{composibility_8py_source_l00011}00011\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{composibility_8py_source_l00012}00012\ \textcolor{stringliteral}{@details}}
+\DoxyCodeLine{\Hypertarget{composibility_8py_source_l00013}00013\ \textcolor{stringliteral}{-\/\ Parses\ a\ C\ file\ using\ pycparser.}}
+\DoxyCodeLine{\Hypertarget{composibility_8py_source_l00014}00014\ \textcolor{stringliteral}{-\/\ Updates\ function\ calls\ by\ introducing\ new\ variable\ declarations\ and\ assignments.}}
+\DoxyCodeLine{\Hypertarget{composibility_8py_source_l00015}00015\ \textcolor{stringliteral}{-\/\ Generates\ a\ new\ C\ file\ with\ the\ updated\ AST.}}
+\DoxyCodeLine{\Hypertarget{composibility_8py_source_l00016}00016\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{composibility_8py_source_l00017}00017\ \textcolor{stringliteral}{@file}}
+\DoxyCodeLine{\Hypertarget{composibility_8py_source_l00018}00018\ \textcolor{stringliteral}{This\ script\ is\ designed\ to\ work\ with\ C\ files\ and\ requires\ the\ \`{}pycparser\`{}\ library.}}
+\DoxyCodeLine{\Hypertarget{composibility_8py_source_l00019}00019\ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{composibility_8py_source_l00020}00020\ }
+\DoxyCodeLine{\Hypertarget{composibility_8py_source_l00021}00021\ \textcolor{keywordflow}{if}\ \_\_name\_\_\ ==\ \textcolor{stringliteral}{"{}\_\_main\_\_"{}}:}
+\DoxyCodeLine{\Hypertarget{composibility_8py_source_l00022}\mbox{\hyperlink{namespaceRegBalancer_1_1src_1_1composibility_ac90ac852e2f9013cc56c2aef74a7e702}{00022}}\ \ \ \ \ filepath\ =\ \textcolor{stringliteral}{'../test/composibility/mult4.c'}}
+\DoxyCodeLine{\Hypertarget{composibility_8py_source_l00023}\mbox{\hyperlink{namespaceRegBalancer_1_1src_1_1composibility_a83d838e3813fb5999c0492e0d9474bd9}{00023}}\ \ \ \ \ ast\ =\ parse\_file(filepath,\ use\_cpp=\textcolor{keyword}{False})}
+\DoxyCodeLine{\Hypertarget{composibility_8py_source_l00024}\mbox{\hyperlink{namespaceRegBalancer_1_1src_1_1composibility_a66fdaaee4f1e3923f619ce48cda79c4b}{00024}}\ \ \ \ \ all\_functions\ =\ ast.ext}
+\DoxyCodeLine{\Hypertarget{composibility_8py_source_l00025}\mbox{\hyperlink{namespaceRegBalancer_1_1src_1_1composibility_a2ca84f740f9f5532d08ce6706ab8c818}{00025}}\ \ \ \ \ func\_def\ =\ all\_functions[0]}
+\DoxyCodeLine{\Hypertarget{composibility_8py_source_l00026}\mbox{\hyperlink{namespaceRegBalancer_1_1src_1_1composibility_ab591e3ac73982297a6110aac7105546f}{00026}}\ \ \ \ \ func\_call\_outputs\ =\ []}
+\DoxyCodeLine{\Hypertarget{composibility_8py_source_l00027}\mbox{\hyperlink{namespaceRegBalancer_1_1src_1_1composibility_a8ad9b335145f9b7a76cc1e6e2423cf0c}{00027}}\ \ \ \ \ new\_block\_items\ =\ []}
+\DoxyCodeLine{\Hypertarget{composibility_8py_source_l00028}\mbox{\hyperlink{namespaceRegBalancer_1_1src_1_1composibility_ac5d777fe9dcc7837f68dfdfd3688cdd6}{00028}}\ \ \ \ \ type\_decl\ =\ \{\}}
+\DoxyCodeLine{\Hypertarget{composibility_8py_source_l00029}00029\ \ \ \ \ \textcolor{keywordflow}{for}\ line\ \textcolor{keywordflow}{in}\ func\_def.body.block\_items:}
+\DoxyCodeLine{\Hypertarget{composibility_8py_source_l00030}00030\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isinstance(line,\ cast.Decl):}
+\DoxyCodeLine{\Hypertarget{composibility_8py_source_l00031}00031\ \ \ \ \ \ \ \ \ \ \ \ \ type\_decl[line.name]\ =\ line}
+\DoxyCodeLine{\Hypertarget{composibility_8py_source_l00032}00032\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isinstance(line,\ cast.Assignment):}
+\DoxyCodeLine{\Hypertarget{composibility_8py_source_l00033}\mbox{\hyperlink{namespaceRegBalancer_1_1src_1_1composibility_a204f446339af7929852f44df41484be5}{00033}}\ \ \ \ \ \ \ \ \ \ \ \ \ lhs\ =\ line.lvalue}
+\DoxyCodeLine{\Hypertarget{composibility_8py_source_l00034}\mbox{\hyperlink{namespaceRegBalancer_1_1src_1_1composibility_ac7f01b5df0ebd2339035b77990cda224}{00034}}\ \ \ \ \ \ \ \ \ \ \ \ \ rhs\ =\ line.rvalue}
+\DoxyCodeLine{\Hypertarget{composibility_8py_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isinstance(rhs,\ cast.FuncCall):}
+\DoxyCodeLine{\Hypertarget{composibility_8py_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ func\_call\_outputs.append(lhs.name)}
+\DoxyCodeLine{\Hypertarget{composibility_8py_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ arg\ \textcolor{keywordflow}{in}\ rhs.args:}
+\DoxyCodeLine{\Hypertarget{composibility_8py_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (arg.name\ \textcolor{keywordflow}{in}\ func\_call\_outputs):}
+\DoxyCodeLine{\Hypertarget{composibility_8py_source_l00039}\mbox{\hyperlink{namespaceRegBalancer_1_1src_1_1composibility_a1653f591881c9ae74c9113cd4af0e30f}{00039}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ new\_decl\ =\ deepcopy(type\_decl[arg.name])}
+\DoxyCodeLine{\Hypertarget{composibility_8py_source_l00040}\mbox{\hyperlink{namespaceRegBalancer_1_1src_1_1composibility_ac5c76c0448d4b265e8faf0bd0319ed41}{00040}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ new\_decl.type.declname\ =\ f\textcolor{stringliteral}{"{}\{arg.name\}\_prime"{}}}
+\DoxyCodeLine{\Hypertarget{composibility_8py_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ new\_block\_items.insert(0,\ new\_decl)}
+\DoxyCodeLine{\Hypertarget{composibility_8py_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ new\_block\_items.append(cast.Assignment(\textcolor{stringliteral}{'='},\ cast.ID(}
+\DoxyCodeLine{\Hypertarget{composibility_8py_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ f\textcolor{stringliteral}{"{}\{arg.name\}\_prime"{}}),\ cast.FuncCall(cast.ID(\textcolor{stringliteral}{'reg'}),\ cast.ExprList([cast.ID(arg.name)]))))}
+\DoxyCodeLine{\Hypertarget{composibility_8py_source_l00044}\mbox{\hyperlink{namespaceRegBalancer_1_1src_1_1composibility_ab74e6bf80237ddc4109968cedc58c151}{00044}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ arg.name\ =\ f\textcolor{stringliteral}{"{}\{arg.name\}\_prime"{}}}
+\DoxyCodeLine{\Hypertarget{composibility_8py_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ new\_block\_items.append(line)}
+\DoxyCodeLine{\Hypertarget{composibility_8py_source_l00046}00046\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{composibility_8py_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ new\_block\_items.append(line)}
+\DoxyCodeLine{\Hypertarget{composibility_8py_source_l00048}\mbox{\hyperlink{namespaceRegBalancer_1_1src_1_1composibility_aef6cb15d000f3eb44586433c8b067068}{00048}}\ \ \ \ \ func\_def.body.block\_items\ =\ new\_block\_items}
+\DoxyCodeLine{\Hypertarget{composibility_8py_source_l00049}\mbox{\hyperlink{namespaceRegBalancer_1_1src_1_1composibility_a3f696370e9fad0f95d9d7fef40cf2bcc}{00049}}\ \ \ \ \ c\_gen\ =\ c\_generator.CGenerator()}
+\DoxyCodeLine{\Hypertarget{composibility_8py_source_l00050}\mbox{\hyperlink{namespaceRegBalancer_1_1src_1_1composibility_ac08a79afda9b81d9c7649a4d2134905f}{00050}}\ \ \ \ \ rslt\ =\ c\_gen.visit(ast)}
+\DoxyCodeLine{\Hypertarget{composibility_8py_source_l00051}\mbox{\hyperlink{namespaceRegBalancer_1_1src_1_1composibility_a3de7b61ede0d638f2af04a7813e4d6da}{00051}}\ \ \ \ \ new\_filepath\ =\ f\textcolor{stringliteral}{"{}\{filepath[:-\/2]\}\_output.c"{}}}
+\DoxyCodeLine{\Hypertarget{composibility_8py_source_l00052}00052\ \ \ \ \ \textcolor{keyword}{with}\ open(new\_filepath,\ \textcolor{stringliteral}{'w+'})\ \textcolor{keyword}{as}\ fptr:}
+\DoxyCodeLine{\Hypertarget{composibility_8py_source_l00053}\mbox{\hyperlink{namespaceRegBalancer_1_1src_1_1composibility_a40a5d58ffa6e88aa578d6683ac413105}{00053}}\ \ \ \ \ \ \ \ \ print(rslt,\ file=fptr)}
+
+\end{DoxyCode}

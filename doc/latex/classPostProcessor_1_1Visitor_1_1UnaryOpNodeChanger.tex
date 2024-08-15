@@ -1,0 +1,146 @@
+\doxysection{Unary\+Op\+Node\+Changer Class Reference}
+\hypertarget{classPostProcessor_1_1Visitor_1_1UnaryOpNodeChanger}{}\label{classPostProcessor_1_1Visitor_1_1UnaryOpNodeChanger}\index{UnaryOpNodeChanger@{UnaryOpNodeChanger}}
+Inheritance diagram for Unary\+Op\+Node\+Changer\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classPostProcessor_1_1Visitor_1_1UnaryOpNodeChanger}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classPostProcessor_1_1Visitor_1_1UnaryOpNodeChanger_af13ea527c9feee6ce1064fb7884da028}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, \mbox{\hyperlink{classPostProcessor_1_1Visitor_1_1UnaryOpNodeChanger_a45d99513007ccd4190a027d805a8d0db}{unary\+Node\+Map}})
+\item 
+\mbox{\hyperlink{classPostProcessor_1_1Visitor_1_1UnaryOpNodeChanger_a9e92beaff94ac47de44785afbac8787f}{visit\+\_\+\+Binary\+Op}} (self, node)
+\item 
+\mbox{\hyperlink{classPostProcessor_1_1Visitor_1_1UnaryOpNodeChanger_a905ff50baff07f42b5c0a8d46148c755}{visit\+\_\+\+Func\+Call}} (self, node)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classPostProcessor_1_1Visitor_1_1UnaryOpNodeChanger_a45d99513007ccd4190a027d805a8d0db}{unary\+Node\+Map}} = unary\+Node\+Map
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb}Visitor for changing unary operation nodes in the AST based on a provided map.
+
+@param unaryNodeMap: A dictionary mapping unary operation variable names to new variable names.
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{Visitor_8py_source_l00020}{20}} of file \mbox{\hyperlink{Visitor_8py_source}{Visitor.\+py}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classPostProcessor_1_1Visitor_1_1UnaryOpNodeChanger_af13ea527c9feee6ce1064fb7884da028}\index{UnaryOpNodeChanger@{UnaryOpNodeChanger}!\_\_init\_\_@{\_\_init\_\_}}
+\index{\_\_init\_\_@{\_\_init\_\_}!UnaryOpNodeChanger@{UnaryOpNodeChanger}}
+\doxysubsubsection{\texorpdfstring{\_\_init\_\_()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily \label{classPostProcessor_1_1Visitor_1_1UnaryOpNodeChanger_af13ea527c9feee6ce1064fb7884da028} 
+\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{unary\+Node\+Map}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Initializes the UnaryOpNodeChanger.
+
+@param unaryNodeMap: A dictionary mapping unary operation variable names to new variable names.
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{Visitor_8py_source_l00026}{26}} of file \mbox{\hyperlink{Visitor_8py_source}{Visitor.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keyword}{def\ }\_\_init\_\_(self,unaryNodeMap): }
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{} }}
+\DoxyCodeLine{00028\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ Initializes\ the\ UnaryOpNodeChanger. }}
+\DoxyCodeLine{00029\ \textcolor{stringliteral}{ }}
+\DoxyCodeLine{00030\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @param\ unaryNodeMap:\ A\ dictionary\ mapping\ unary\ operation\ variable\ names\ to\ new\ variable\ names. }}
+\DoxyCodeLine{00031\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ "{}"{}"{}} }
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ self.unaryNodeMap\ =\ unaryNodeMap }
+\DoxyCodeLine{00033\ \ \ \ \  }
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classPostProcessor_1_1Visitor_1_1UnaryOpNodeChanger_a9e92beaff94ac47de44785afbac8787f}\index{UnaryOpNodeChanger@{UnaryOpNodeChanger}!visit\_BinaryOp@{visit\_BinaryOp}}
+\index{visit\_BinaryOp@{visit\_BinaryOp}!UnaryOpNodeChanger@{UnaryOpNodeChanger}}
+\doxysubsubsection{\texorpdfstring{visit\_BinaryOp()}{visit\_BinaryOp()}}
+{\footnotesize\ttfamily \label{classPostProcessor_1_1Visitor_1_1UnaryOpNodeChanger_a9e92beaff94ac47de44785afbac8787f} 
+visit\+\_\+\+Binary\+Op (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{node}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Visits binary operation nodes and replaces unary operation nodes with corresponding IDs.
+
+@param node: The binary operation node to visit.
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{Visitor_8py_source_l00034}{34}} of file \mbox{\hyperlink{Visitor_8py_source}{Visitor.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keyword}{def\ }visit\_BinaryOp(self,node): }
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{} }}
+\DoxyCodeLine{00036\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ Visits\ binary\ operation\ nodes\ and\ replaces\ unary\ operation\ nodes\ with\ corresponding\ IDs. }}
+\DoxyCodeLine{00037\ \textcolor{stringliteral}{ }}
+\DoxyCodeLine{00038\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @param\ node:\ The\ binary\ operation\ node\ to\ visit. }}
+\DoxyCodeLine{00039\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ "{}"{}"{}} }
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isinstance(node.right,c\_ast.UnaryOp): }
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \ \ \ \ node.right\ =\ c\_ast.ID(name=self.unaryNodeMap[node.right.expr.name]) }
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ self.generic\_visit(node.left) }}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isinstance(node.left,c\_ast.UnaryOp): }
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \ \ \ \ node.left\ =\ c\_ast.ID(name=self.unaryNodeMap[node.left.expr.name]) }
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ self.generic\_visit(node.right) }}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ self.generic\_visit(node) }
+\DoxyCodeLine{00047\ \ \ \ \  }
+
+\end{DoxyCode}
+\Hypertarget{classPostProcessor_1_1Visitor_1_1UnaryOpNodeChanger_a905ff50baff07f42b5c0a8d46148c755}\index{UnaryOpNodeChanger@{UnaryOpNodeChanger}!visit\_FuncCall@{visit\_FuncCall}}
+\index{visit\_FuncCall@{visit\_FuncCall}!UnaryOpNodeChanger@{UnaryOpNodeChanger}}
+\doxysubsubsection{\texorpdfstring{visit\_FuncCall()}{visit\_FuncCall()}}
+{\footnotesize\ttfamily \label{classPostProcessor_1_1Visitor_1_1UnaryOpNodeChanger_a905ff50baff07f42b5c0a8d46148c755} 
+visit\+\_\+\+Func\+Call (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{node}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Visits function call nodes and replaces unary operation arguments with corresponding IDs.
+
+@param node: The function call node to visit.
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{Visitor_8py_source_l00048}{48}} of file \mbox{\hyperlink{Visitor_8py_source}{Visitor.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keyword}{def\ }visit\_FuncCall(self,node): }
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{} }}
+\DoxyCodeLine{00050\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ Visits\ function\ call\ nodes\ and\ replaces\ unary\ operation\ arguments\ with\ corresponding\ IDs. }}
+\DoxyCodeLine{00051\ \textcolor{stringliteral}{ }}
+\DoxyCodeLine{00052\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @param\ node:\ The\ function\ call\ node\ to\ visit. }}
+\DoxyCodeLine{00053\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ "{}"{}"{}} }
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ param\ =\ node.args.exprs[0] }
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ isinstance(param,c\_ast.UnaryOp): }
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \ \ \ \ node.args.exprs[0]\ =\ c\_ast.ID(name=self.unaryNodeMap[param.expr.name]) }
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return} }
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}: }
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \ \ \ \ self.generic\_visit(node) }
+\DoxyCodeLine{00060\  }
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classPostProcessor_1_1Visitor_1_1UnaryOpNodeChanger_a45d99513007ccd4190a027d805a8d0db}\index{UnaryOpNodeChanger@{UnaryOpNodeChanger}!unaryNodeMap@{unaryNodeMap}}
+\index{unaryNodeMap@{unaryNodeMap}!UnaryOpNodeChanger@{UnaryOpNodeChanger}}
+\doxysubsubsection{\texorpdfstring{unaryNodeMap}{unaryNodeMap}}
+{\footnotesize\ttfamily \label{classPostProcessor_1_1Visitor_1_1UnaryOpNodeChanger_a45d99513007ccd4190a027d805a8d0db} 
+unary\+Node\+Map = unary\+Node\+Map}
+
+
+
+Definition at line \mbox{\hyperlink{Visitor_8py_source_l00032}{32}} of file \mbox{\hyperlink{Visitor_8py_source}{Visitor.\+py}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Post\+Processor/\mbox{\hyperlink{Visitor_8py}{Visitor.\+py}}\end{DoxyCompactItemize}

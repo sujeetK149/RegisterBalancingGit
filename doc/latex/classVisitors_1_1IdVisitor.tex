@@ -1,0 +1,120 @@
+\doxysection{Id\+Visitor Class Reference}
+\hypertarget{classVisitors_1_1IdVisitor}{}\label{classVisitors_1_1IdVisitor}\index{IdVisitor@{IdVisitor}}
+Inheritance diagram for Id\+Visitor\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classVisitors_1_1IdVisitor}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classVisitors_1_1IdVisitor_a42325f032412a1c82bafd4f11a984df3}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, \mbox{\hyperlink{classVisitors_1_1IdVisitor_a976941a4c7ae422cebf58ddfd2e8b479}{argument\+Map}}, \mbox{\hyperlink{classVisitors_1_1IdVisitor_ad7cca8103c884420bac50cbb68183848}{local\+Variables\+Map}})
+\item 
+\mbox{\hyperlink{classVisitors_1_1IdVisitor_a96d9baa4a0602d7577cbc4a3c0820de7}{visit\+\_\+\+ID}} (self, node)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classVisitors_1_1IdVisitor_a976941a4c7ae422cebf58ddfd2e8b479}{argument\+Map}}
+\item 
+\mbox{\hyperlink{classVisitors_1_1IdVisitor_ad7cca8103c884420bac50cbb68183848}{local\+Variables\+Map}} = local\+Variables\+Map
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb}@brief Visits identifier nodes and updates their names based on provided mappings.
+
+This visitor changes the names of identifiers according to the argument and local variable mappings.
+
+@param argumentMap: Mapping of argument names to new names.
+@type argumentMap: dict
+@param localVariablesMap: Mapping of local variable names to new names.
+@type localVariablesMap: dict
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{Visitors_8py_source_l00126}{126}} of file \mbox{\hyperlink{Visitors_8py_source}{Visitors.\+py}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classVisitors_1_1IdVisitor_a42325f032412a1c82bafd4f11a984df3}\index{IdVisitor@{IdVisitor}!\_\_init\_\_@{\_\_init\_\_}}
+\index{\_\_init\_\_@{\_\_init\_\_}!IdVisitor@{IdVisitor}}
+\doxysubsubsection{\texorpdfstring{\_\_init\_\_()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily \label{classVisitors_1_1IdVisitor_a42325f032412a1c82bafd4f11a984df3} 
+\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{argument\+Map}{, }\item[{}]{local\+Variables\+Map}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{Visitors_8py_source_l00137}{137}} of file \mbox{\hyperlink{Visitors_8py_source}{Visitors.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00137\ \ \ \ \ \textcolor{keyword}{def\ }\_\_init\_\_(self,argumentMap,localVariablesMap): }
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ self.localVariablesMap\ =\ localVariablesMap }
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ self.argumentMap\ =\ argumentMap }
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classVisitors_1_1IdVisitor_a96d9baa4a0602d7577cbc4a3c0820de7}\index{IdVisitor@{IdVisitor}!visit\_ID@{visit\_ID}}
+\index{visit\_ID@{visit\_ID}!IdVisitor@{IdVisitor}}
+\doxysubsubsection{\texorpdfstring{visit\_ID()}{visit\_ID()}}
+{\footnotesize\ttfamily \label{classVisitors_1_1IdVisitor_a96d9baa4a0602d7577cbc4a3c0820de7} 
+visit\+\_\+\+ID (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{node}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Updates identifier names based on argument and local variable mappings.
+
+@param node: The identifier node to be updated.
+@type node: pycparser.c_ast.ID
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{Visitors_8py_source_l00140}{140}} of file \mbox{\hyperlink{Visitors_8py_source}{Visitors.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00140\ \ \ \ \ \textcolor{keyword}{def\ }visit\_ID(self,\ node): }
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{} }}
+\DoxyCodeLine{00142\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @brief\ Updates\ identifier\ names\ based\ on\ argument\ and\ local\ variable\ mappings. }}
+\DoxyCodeLine{00143\ \textcolor{stringliteral}{ }}
+\DoxyCodeLine{00144\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @param\ node:\ The\ identifier\ node\ to\ be\ updated. }}
+\DoxyCodeLine{00145\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @type\ node:\ pycparser.c\_ast.ID }}
+\DoxyCodeLine{00146\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ "{}"{}"{}} }
+\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ node.name\ \textcolor{keywordflow}{in}\ self.argumentMap: }
+\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ \ \ \ \ node.name\ =\ self.argumentMap[node.name] }
+\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ node.name\ \textcolor{keywordflow}{in}\ self.localVariablesMap: }
+\DoxyCodeLine{00150\ \ \ \ \ \ \ \ \ \ \ \ \ node.name\ =\ self.localVariablesMap[node.name] }
+\DoxyCodeLine{00151\  }
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classVisitors_1_1IdVisitor_a976941a4c7ae422cebf58ddfd2e8b479}\index{IdVisitor@{IdVisitor}!argumentMap@{argumentMap}}
+\index{argumentMap@{argumentMap}!IdVisitor@{IdVisitor}}
+\doxysubsubsection{\texorpdfstring{argumentMap}{argumentMap}}
+{\footnotesize\ttfamily \label{classVisitors_1_1IdVisitor_a976941a4c7ae422cebf58ddfd2e8b479} 
+argument\+Map}
+
+
+
+Definition at line \mbox{\hyperlink{Visitors_8py_source_l00147}{147}} of file \mbox{\hyperlink{Visitors_8py_source}{Visitors.\+py}}.
+
+\Hypertarget{classVisitors_1_1IdVisitor_ad7cca8103c884420bac50cbb68183848}\index{IdVisitor@{IdVisitor}!localVariablesMap@{localVariablesMap}}
+\index{localVariablesMap@{localVariablesMap}!IdVisitor@{IdVisitor}}
+\doxysubsubsection{\texorpdfstring{localVariablesMap}{localVariablesMap}}
+{\footnotesize\ttfamily \label{classVisitors_1_1IdVisitor_ad7cca8103c884420bac50cbb68183848} 
+local\+Variables\+Map = local\+Variables\+Map}
+
+
+
+Definition at line \mbox{\hyperlink{Visitors_8py_source_l00138}{138}} of file \mbox{\hyperlink{Visitors_8py_source}{Visitors.\+py}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Inliner/\mbox{\hyperlink{Visitors_8py}{Visitors.\+py}}\end{DoxyCompactItemize}

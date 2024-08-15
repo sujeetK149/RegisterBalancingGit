@@ -1,0 +1,103 @@
+\doxysection{Di\+Graph.\+py}
+\hypertarget{DiGraph_8py_source}{}\label{DiGraph_8py_source}\index{Inliner/DiGraph.py@{Inliner/DiGraph.py}}
+\mbox{\hyperlink{DiGraph_8py}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00001}\mbox{\hyperlink{namespaceDiGraph}{00001}}\ \textcolor{keyword}{from}\ collections\ \textcolor{keyword}{import}\ deque}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00002}00002\ \textcolor{keyword}{from}\ pycparser\ \textcolor{keyword}{import}\ c\_ast}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00003}00003\ \textcolor{keyword}{import}\ copy}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00004}00004\ }
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00005}\mbox{\hyperlink{classDiGraph_1_1DiGraph}{00005}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classDiGraph_1_1DiGraph}{DiGraph}}():}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00006}00006\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00007}00007\ \textcolor{stringliteral}{\ \ \ \ @brief\ A\ class\ representing\ a\ directed\ graph\ with\ nodes\ and\ edges.}}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00008}00008\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00009}00009\ \textcolor{stringliteral}{\ \ \ \ This\ class\ provides\ methods\ for\ adding\ nodes\ and\ edges,\ retrieving\ in-\/degrees,\ and\ performing\ topological\ sorting.}}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00010}00010\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00011}\mbox{\hyperlink{classDiGraph_1_1DiGraph_abdd362d5f799ad16b5d6700efe590290}{00011}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classDiGraph_1_1DiGraph_abdd362d5f799ad16b5d6700efe590290}{\_\_init\_\_}}(self):}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00012}00012\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00013}00013\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @brief\ Initializes\ an\ empty\ directed\ graph.}}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00014}00014\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00015}00015\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ Sets\ up\ internal\ data\ structures\ to\ keep\ track\ of\ nodes,\ adjacency\ lists,\ and\ in-\/degrees.}}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00016}00016\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00017}00017\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classDiGraph_1_1DiGraph_a1ccacdf8b8e2b34871f69d7e6aa734d1}{\_\_inEdges}}\ =\ []}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00018}00018\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classDiGraph_1_1DiGraph_ae240a0653d21d15c943d604f65fb4cc2}{\_\_functionIndexMap}}\mbox{\hyperlink{classDiGraph_1_1DiGraph_a7f02546284799e20b34c624689e9e5bf}{\_\_functionIndexMap}}\ =\ \{\}}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00019}00019\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classDiGraph_1_1DiGraph_a40ab88a4eb1df6df89f9b0867b051a10}{\_\_indexFunctionMap}}\ =\ \{\}}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00020}00020\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classDiGraph_1_1DiGraph_a0e6929ae4db4143ae1e06839d3dabd88}{\_\_adjacencyList}}\ =\ []}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00021}\mbox{\hyperlink{classDiGraph_1_1DiGraph_af9bd6d4d8ecd1b0563241fd648435e14}{00021}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classDiGraph_1_1DiGraph_af9bd6d4d8ecd1b0563241fd648435e14}{numNodes}}\ =\ 0}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00022}00022\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00023}\mbox{\hyperlink{classDiGraph_1_1DiGraph_ade9ebd0692a6ecb1372462899f829296}{00023}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classDiGraph_1_1DiGraph_ade9ebd0692a6ecb1372462899f829296}{addFunction}}(self,fName):}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00024}00024\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00025}00025\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @brief\ Adds\ a\ function\ as\ a\ node\ to\ the\ graph.}}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00026}00026\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00027}00027\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ If\ the\ function\ is\ not\ already\ present,\ it\ adds\ it\ and\ initializes\ its\ adjacency\ list\ and\ in-\/degree.}}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00028}00028\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00029}00029\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @param\ fName:\ The\ name\ of\ the\ function\ to\ be\ added\ as\ a\ node.}}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00030}00030\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @type\ fName:\ str}}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00031}00031\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00032}00032\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @raises\ KeyError:\ If\ the\ function\ name\ is\ already\ in\ the\ graph.}}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00033}00033\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00034}\mbox{\hyperlink{classDiGraph_1_1DiGraph_a7f02546284799e20b34c624689e9e5bf}{00034}}\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ fName\ \textcolor{keywordflow}{not}\ \textcolor{keywordflow}{in}\ self.\mbox{\hyperlink{classDiGraph_1_1DiGraph_ae240a0653d21d15c943d604f65fb4cc2}{\_\_functionIndexMap}}\mbox{\hyperlink{classDiGraph_1_1DiGraph_a7f02546284799e20b34c624689e9e5bf}{\_\_functionIndexMap}}:}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classDiGraph_1_1DiGraph_ae240a0653d21d15c943d604f65fb4cc2}{\_\_functionIndexMap}}\mbox{\hyperlink{classDiGraph_1_1DiGraph_a7f02546284799e20b34c624689e9e5bf}{\_\_functionIndexMap}}[fName]\ =\ self.\mbox{\hyperlink{classDiGraph_1_1DiGraph_af9bd6d4d8ecd1b0563241fd648435e14}{numNodes}}}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classDiGraph_1_1DiGraph_a40ab88a4eb1df6df89f9b0867b051a10}{\_\_indexFunctionMap}}[self.\mbox{\hyperlink{classDiGraph_1_1DiGraph_af9bd6d4d8ecd1b0563241fd648435e14}{numNodes}}]\ =\ fName}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classDiGraph_1_1DiGraph_af9bd6d4d8ecd1b0563241fd648435e14}{numNodes}}\ +=\ 1}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classDiGraph_1_1DiGraph_a0e6929ae4db4143ae1e06839d3dabd88}{\_\_adjacencyList}}.append([])}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classDiGraph_1_1DiGraph_a1ccacdf8b8e2b34871f69d7e6aa734d1}{\_\_inEdges}}.append(0)}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00040}00040\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00041}\mbox{\hyperlink{classDiGraph_1_1DiGraph_a560a6d072e276178d55691affde91532}{00041}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classDiGraph_1_1DiGraph_a560a6d072e276178d55691affde91532}{addEdgeBetween}}(self,f1,f2):}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00042}00042\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00043}00043\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @brief\ Adds\ a\ directed\ edge\ from\ function\ f1\ to\ function\ f2.}}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00044}00044\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00045}00045\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ Updates\ the\ adjacency\ list\ and\ the\ in-\/degree\ of\ function\ f2.}}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00046}00046\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00047}00047\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @param\ f1:\ The\ name\ of\ the\ source\ function.}}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00048}00048\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @type\ f1:\ str}}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00049}00049\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @param\ f2:\ The\ name\ of\ the\ target\ function.}}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00050}00050\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @type\ f2:\ str}}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00051}00051\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00052}00052\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @raises\ KeyError:\ If\ either\ function\ name\ is\ not\ present\ in\ the\ graph.}}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00053}00053\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00054}00054\ \ \ \ \ \ \ \ \ f1Index\ =\ self.\mbox{\hyperlink{classDiGraph_1_1DiGraph_ae240a0653d21d15c943d604f65fb4cc2}{\_\_functionIndexMap}}\mbox{\hyperlink{classDiGraph_1_1DiGraph_a7f02546284799e20b34c624689e9e5bf}{\_\_functionIndexMap}}[f1]}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00055}00055\ \ \ \ \ \ \ \ \ f2Index\ =\ self.\mbox{\hyperlink{classDiGraph_1_1DiGraph_ae240a0653d21d15c943d604f65fb4cc2}{\_\_functionIndexMap}}\mbox{\hyperlink{classDiGraph_1_1DiGraph_a7f02546284799e20b34c624689e9e5bf}{\_\_functionIndexMap}}[f2]}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00056}00056\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ f2Index\ \textcolor{keywordflow}{not}\ \textcolor{keywordflow}{in}\ self.\mbox{\hyperlink{classDiGraph_1_1DiGraph_a0e6929ae4db4143ae1e06839d3dabd88}{\_\_adjacencyList}}[f1Index]:}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classDiGraph_1_1DiGraph_a0e6929ae4db4143ae1e06839d3dabd88}{\_\_adjacencyList}}[f1Index].append(f2Index)}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classDiGraph_1_1DiGraph_a1ccacdf8b8e2b34871f69d7e6aa734d1}{\_\_inEdges}}[f2Index]\ +=\ 1}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00059}00059\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00060}\mbox{\hyperlink{classDiGraph_1_1DiGraph_a0693c18cb0ce157e3c35fdbbcb251067}{00060}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classDiGraph_1_1DiGraph_a0693c18cb0ce157e3c35fdbbcb251067}{getIndegreeOf}}(self,fName):}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00061}00061\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00062}00062\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @brief\ Retrieves\ the\ in-\/degree\ of\ the\ specified\ function.}}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00063}00063\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00064}00064\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @param\ fName:\ The\ name\ of\ the\ function\ whose\ in-\/degree\ is\ to\ be\ retrieved.}}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00065}00065\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @type\ fName:\ str}}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00066}00066\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00067}00067\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @return:\ The\ in-\/degree\ of\ the\ specified\ function.}}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00068}00068\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @rtype:\ int}}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00069}00069\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00070}00070\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @raises\ KeyError:\ If\ the\ function\ name\ is\ not\ present\ in\ the\ graph.}}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00071}00071\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00072}00072\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ self.\mbox{\hyperlink{classDiGraph_1_1DiGraph_a1ccacdf8b8e2b34871f69d7e6aa734d1}{\_\_inEdges}}[self.\mbox{\hyperlink{classDiGraph_1_1DiGraph_ae240a0653d21d15c943d604f65fb4cc2}{\_\_functionIndexMap}}\mbox{\hyperlink{classDiGraph_1_1DiGraph_a7f02546284799e20b34c624689e9e5bf}{\_\_functionIndexMap}}[fName]]}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00073}00073\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00074}\mbox{\hyperlink{classDiGraph_1_1DiGraph_ac899fe7defd1bc0d2b1cdaa42a96176e}{00074}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classDiGraph_1_1DiGraph_ac899fe7defd1bc0d2b1cdaa42a96176e}{topoSort}}(self):}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00075}00075\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00076}00076\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @brief\ Performs\ a\ topological\ sort\ on\ the\ graph.}}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00077}00077\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00078}00078\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ Uses\ Kahn's\ algorithm\ to\ return\ a\ list\ of\ nodes\ in\ topologically\ sorted\ order.}}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00079}00079\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00080}00080\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @return:\ A\ list\ of\ function\ names\ in\ topologically\ sorted\ order.}}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00081}00081\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @rtype:\ list\ of\ str}}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00082}00082\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00083}00083\ \ \ \ \ \ \ \ \ q\ =\ deque()}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00084}00084\ \ \ \ \ \ \ \ \ inEdges\ =\ copy.deepcopy(self.\mbox{\hyperlink{classDiGraph_1_1DiGraph_a1ccacdf8b8e2b34871f69d7e6aa734d1}{\_\_inEdges}})}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00085}00085\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ index\ \textcolor{keywordflow}{in}\ range(self.\mbox{\hyperlink{classDiGraph_1_1DiGraph_af9bd6d4d8ecd1b0563241fd648435e14}{numNodes}}):}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ if(inEdges[index]\ ==\ 0):}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ q.append(index)}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00088}00088\ \ \ \ \ \ \ \ \ sortedList\ =\ []}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00089}00089\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ q:}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ node\ =\ q.popleft()}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ sortedList.append(self.\mbox{\hyperlink{classDiGraph_1_1DiGraph_a40ab88a4eb1df6df89f9b0867b051a10}{\_\_indexFunctionMap}}[node])}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ adj\ \textcolor{keywordflow}{in}\ self.\mbox{\hyperlink{classDiGraph_1_1DiGraph_a0e6929ae4db4143ae1e06839d3dabd88}{\_\_adjacencyList}}[node]:}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ inEdges[adj]\ -\/=\ 1}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ if(inEdges[adj]\ ==\ 0):}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ q.append(adj)}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00096}00096\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ sortedList}
+\DoxyCodeLine{\Hypertarget{DiGraph_8py_source_l00097}00097\ }
+
+\end{DoxyCode}
